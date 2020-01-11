@@ -4,5 +4,12 @@
   "description": "Client Application of Theseus project",
   "main": "index.js",
   "author": "Spec",
-  "private": true
+  "private": true,
+  "scripts": {
+    "build": "webpack --config webpack.config.js"
+  },
+  "devDependencies": {
+    "webpack": "^4.41.5",
+    "webpack-cli": "^3.3.10"
+  }
 }
