@@ -1,3 +1,13 @@
-document.addEventListener("DOMContentLoaded", function() {
-    document.getElementById('test').innerText = "Loaded HELLO WORLD";
- });
+import React from "react";
+import ReactDOM from "react-dom";
+
+import App from "./js/App.jsx";
+
+const mainAppEntryPoint = document.getElementById("app");
+
+if (mainAppEntryPoint) {
+    ReactDOM.render(
+        <App />,
+        mainAppEntryPoint
+    );
+}

@@ -356,3 +356,6 @@ healthchecksdb
 .history
 
 # End of https://www.gitignore.io/api/csharp,visualstudiocode
+
+### Custom ###
+src/Client/dist/
