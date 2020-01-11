@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import styles from "./App.scss"
 
 class App extends Component {
   constructor() {
@@ -7,7 +8,7 @@ class App extends Component {
 
   render() {
     return (
-      <p>Hello World</p>
+      <p className={styles.test}>Hello World</p>
     );
   }
 }
