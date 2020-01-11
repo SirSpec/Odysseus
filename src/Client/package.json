@@ -6,9 +6,11 @@
   "author": "Spec",
   "private": true,
   "scripts": {
-    "build": "webpack --config webpack.config.js"
+    "dev": "webpack --config webpack.config.js --mode development",
+    "prod": "webpack --config webpack.config.js --mode production"
   },
   "devDependencies": {
+    "clean-webpack-plugin": "^3.0.0",
     "webpack": "^4.41.5",
     "webpack-cli": "^3.3.10"
   }
