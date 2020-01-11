@@ -1,0 +1,8 @@
+{
+  "name": "theseus",
+  "version": "1.0.0",
+  "description": "Client Application of Theseus project",
+  "main": "index.js",
+  "author": "Spec",
+  "private": true
+}
