@@ -1,13 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
-import App from "./js/App.jsx";
+import App from "./App";
 
-const mainAppEntryPoint = document.getElementById("app");
+const root = document.getElementById("root");
 
-if (mainAppEntryPoint) {
-    ReactDOM.render(
-        <App />,
-        mainAppEntryPoint
-    );
+if (root) {
+    ReactDOM.render(<App />, root);
 }

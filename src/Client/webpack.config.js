@@ -48,6 +48,9 @@ module.exports = {
             }
         ]
     },
+    resolve: {
+        extensions: ['.js', '.jsx', '.scss']
+    },
     entry: {
         main: './src/index.js',
     },
