@@ -1,13 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const Span = (props) => {
-    return (
-        <span className={"nes-text " + props.type}>
-            {props.children}
-        </span>
-    );
-};
+const Span = (props) => (
+    <span className={"nes-text " + props.type}>
+        {props.children}
+    </span>
+);
 
 Span.types = {
     PRIMARY: "is-primary",
