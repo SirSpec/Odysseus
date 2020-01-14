@@ -1,16 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const Button = (props) => {
-    return (
-        <button
-            type="button"
-            className={"nes-btn " + props.type}
-            onClick={() => props.onClick()}>
-            {props.children}
-        </button>
-    );
-};
+const Button = (props) => (
+    <button
+        type="button"
+        className={"nes-btn " + props.type}
+        onClick={() => props.onClick()}>
+        {props.children}
+    </button>
+);
 
 Button.types = {
     PRIMARY: "is-primary",
