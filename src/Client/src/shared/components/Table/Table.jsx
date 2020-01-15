@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 const Table = (props) => (
     <div className="nes-table-responsive">
-        <table className={"nes-table is-bordered" + (props.isDark ? " is-dark" : "")}>
+        <table className="nes-table is-bordered is-centered">
             <thead>
                 <tr>
                     {props.headers
@@ -32,8 +32,7 @@ const Table = (props) => (
 
 Table.propTypes = {
     rows: PropTypes.arrayOf(PropTypes.array.isRequired),
-    headers: PropTypes.array,
-    isDark: PropTypes.bool,
+    headers: PropTypes.array
 };
 
 export default Table;
