@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 const Container = (props) => (
     <div className={
-        "nes-container" +
+        (props.className ? props.className + " nes-container": "nes-container") +
         (props.isCentered ? " is-centered" : "") +
         (props.isDark ? " is-dark" : "") +
         (props.isRounded ? " is-rounded" : "") +

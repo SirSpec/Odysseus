@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 
 const Span = (props) => (
-    <span className={"nes-text " + props.type}>
+    <span className={props.type ? "nes-text " + props.type : "nes-text"}>
         {props.children}
     </span>
 );
@@ -17,7 +17,7 @@ Span.types = {
 
 Span.propTypes = {
     children: PropTypes.any,
-    type: PropTypes.oneOf(Object.values(Span.types)).isRequired
+    type: PropTypes.oneOf(Object.values(Span.types))
 };
 
 export default Span;
