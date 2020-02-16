@@ -1,7 +1,7 @@
 import React from 'react';
-import Window from "./Window"
+import Window from "./components/GameWindow/Window";
 
-import "./shared/styles/global"
+import "./styles/global";
 
 const App = () => {
   return (
