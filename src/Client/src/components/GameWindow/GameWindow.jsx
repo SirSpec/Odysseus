@@ -6,6 +6,7 @@ import GameMenu from "./GameMenu";
 import InteractionMenu from "./InteractionMenu";
 import ActivityLog from "./ActivityLog";
 import ContextMenu from "./ContextMenu";
+import Map from "./Map";
 
 import styles from "./styles";
 
@@ -51,12 +52,10 @@ const GameWindow = () => {
   return (
     <div className={styles.column}>
       <div className={styles.row}>
-        <canvas
-          ref={canvasRef}
-          id="map"
-          width={CanvasConfiguration.width}
-          height={CanvasConfiguration.height}
-          onClick={handleCanvasClick}
+        <Map
+          canvasRef={canvasRef}
+          canvasConfiguration={CanvasConfiguration}
+          handleCanvasClick={handleCanvasClick}
         />
         <PlayerStatus />
         <GameMenu />
