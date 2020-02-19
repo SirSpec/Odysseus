@@ -4,7 +4,7 @@ import Span from "../Span/Span";
 
 import styles from "./styles";
 
-const Interaction = () => {
+const InteractionMenu = () => {
   return (
     <Container className={styles.flex1} isDark withTitle title="Interaction">
       <Span>Informacje po kliknieciu + mozliwe opcje interakcji</Span>
@@ -12,4 +12,4 @@ const Interaction = () => {
   );
 };
 
-export default Interaction;
+export default InteractionMenu;

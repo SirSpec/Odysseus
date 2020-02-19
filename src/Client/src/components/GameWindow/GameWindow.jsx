@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import Canvas from "../../Canvas";
 
-import Statistics from "./Statistics";
-import Menu from "./Menu";
-import Interaction from "./Interaction";
-import History from "./History";
+import PlayerStatus from "./PlayerStatus";
+import GameMenu from "./GameMenu";
+import InteractionMenu from "./InteractionMenu";
+import ActivityLog from "./ActivityLog";
 import ContextMenu from "./ContextMenu";
 
 import styles from "./styles";
@@ -28,7 +28,7 @@ const CanvasConfiguration = {
   height: Math.floor(window.innerHeight / (2 * DisplayOptions.fontSize)) * DisplayOptions.fontSize
 }
 
-const Window = () => {
+const GameWindow = () => {
   const canvasRef = React.useRef(null);
   const [canvas, setCanvas] = useState(null);
 
@@ -58,13 +58,13 @@ const Window = () => {
           height={CanvasConfiguration.height}
           onClick={handleCanvasClick}
         />
-        <Statistics />
-        <Menu />
+        <PlayerStatus />
+        <GameMenu />
       </div>
-      <div className={styles.row + " " + styles.flex1}>
-        <div className={styles.column + " " + styles.flex1}>
-          <Interaction />
-          <History />
+      <div className={`${styles.row} ${styles.flex1}`}>
+        <div className={`${styles.column} ${styles.flex1}`}>
+          <InteractionMenu />
+          <ActivityLog />
         </div>
         <ContextMenu />
       </div>
@@ -72,4 +72,4 @@ const Window = () => {
   );
 };
 
-export default Window;
+export default GameWindow;
