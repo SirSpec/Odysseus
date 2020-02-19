@@ -4,7 +4,7 @@ import Span from "../Span/Span";
 
 import styles from "./styles";
 
-const Statistics = () => {
+const PlayerStatus = () => {
   return (
     <Container isDark className={styles.flex2}>
       <div className={styles.row}>
@@ -58,4 +58,4 @@ const Statistics = () => {
   );
 };
 
-export default Statistics;
+export default PlayerStatus;

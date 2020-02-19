@@ -5,7 +5,7 @@ import Button from "../Button/Button";
 
 import styles from "./styles";
 
-const Menu = () => {
+const GameMenu = () => {
   return (
     <Container className={styles.flex1} isCentered>
       <p><Button type={Button.types.PRIMARY}>Keys</Button></p>
@@ -18,4 +18,4 @@ const Menu = () => {
   );
 };
 
-export default Menu;
+export default GameMenu;

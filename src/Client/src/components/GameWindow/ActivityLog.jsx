@@ -4,7 +4,7 @@ import Span from "../Span/Span";
 
 import styles from "./styles";
 
-const History = () => {
+const ActivityLog = () => {
   return (
     <Container className={styles.flex1} isDark withTitle title="Log">
       <Span>Informacje po kliknieciu + mozliwe opcje interakcji</Span><br />
@@ -15,4 +15,4 @@ const History = () => {
   );
 };
 
-export default History;
+export default ActivityLog;
