@@ -15,8 +15,12 @@ const Map = (props) => {
 
 Map.propTypes = {
   canvasRef: PropTypes.any.isRequired,
-  canvasConfiguration: PropTypes.any.isRequired,
-  handleCanvasClick: PropTypes.any.isRequired,
+  canvasConfiguration: PropTypes.shape(
+    {
+      width: PropTypes.number.isRequired,
+      height: PropTypes.number.isRequired
+    }).isRequired,
+  handleCanvasClick: PropTypes.func.isRequired,
 };
 
 export default Map;
