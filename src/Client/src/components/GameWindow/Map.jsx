@@ -15,11 +15,10 @@ const Map = (props) => {
 
 Map.propTypes = {
   canvasRef: PropTypes.any.isRequired,
-  canvasConfiguration: PropTypes.shape(
-    {
-      width: PropTypes.number.isRequired,
-      height: PropTypes.number.isRequired
-    }).isRequired,
+  canvasConfiguration: PropTypes.shape({
+    width: PropTypes.number.isRequired,
+    height: PropTypes.number.isRequired
+  }).isRequired,
   handleCanvasClick: PropTypes.func.isRequired,
 };
 
