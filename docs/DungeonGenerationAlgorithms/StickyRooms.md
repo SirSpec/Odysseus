@@ -26,8 +26,7 @@ Inspired by: https://www.gamasutra.com/blogs/AAdonaac/20150903/252889/Procedural
 3. Select next room and go to step 2 until rooms are not intersecting with circle radius
 4. Select main rooms
     - Pick rooms that are above width/height threshold.
-5. Take all the midpoints of the selected rooms and feed that into the Delaunay procedure.
-    - https://en.wikipedia.org/wiki/Delaunay_triangulation
+5. Take all the midpoints of the selected rooms and feed that into the Graph by picking 3 nearest rooms.
 6. Generate a minimum spanning tree from the graph
     - https://en.wikipedia.org/wiki/Minimum_spanning_tree
     - The minimum spanning tree will ensure that all main rooms in the dungeon are reachable but also will make it so that they're not all connected as before. This is useful because by default we usually don't want a super connected dungeon but we also don't want unreachable islands. However, we also usually don't want a dungeon that only has one linear path, so what we do now is add a few edges back from the Delaunay graph.
