@@ -1,17 +1,17 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26124.0
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29519.181
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{B36FD639-52DE-4CB0-85F3-BC78C4131416}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "server", "server", "{E3F23BAD-33CB-49FC-8073-B1F4FEA24B9E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MapGenerator", "src\server\MapGenerator\MapGenerator.csproj", "{58C003FA-EE71-4507-85E4-22BAF7B7ACC0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MapGenerator", "src\server\MapGenerator\MapGenerator.csproj", "{58C003FA-EE71-4507-85E4-22BAF7B7ACC0}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{C2AED7DD-2A2F-4285-B98D-7D235DED91DE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MapGeneratorTest", "test\MapGeneratorTest\MapGeneratorTest.csproj", "{A3A17B04-4F14-4A17-A438-E68100C6A7DC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MapGeneratorTest", "test\MapGeneratorTest\MapGeneratorTest.csproj", "{A3A17B04-4F14-4A17-A438-E68100C6A7DC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,9 +21,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 		Release|x64 = Release|x64
 		Release|x86 = Release|x86
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{58C003FA-EE71-4507-85E4-22BAF7B7ACC0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
