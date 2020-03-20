@@ -2,6 +2,7 @@
 
 namespace Theseus.MapGenerator
 {
+    // https://en.wikipedia.org/wiki/Prim%27s_algorithm
     public class MinimumSpanningTree : Graph
     {
         public MinimumSpanningTree(Graph graph) : base()
