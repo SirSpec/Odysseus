@@ -21,18 +21,16 @@ namespace Theseus.MapGenerator
             }
         }
 
-        private bool DoesNotHaveTheSameNumberOfVertices(Graph graph)
-        {
-            return Vertices.Count() != graph.Vertices.Count();
-        }
+        private bool DoesNotHaveTheSameNumberOfVertices(Graph graph) =>
+            Vertices.Count() != graph.Vertices.Count();
 
-        private Edge FindAvailableShortestNonCircularEdge(Graph graph)
-        {
-            return graph
-                .Edges
-                .Where(edge => Vertices.Contains(edge.From) && !Vertices.Contains(edge.To))
+        private Edge FindAvailableShortestNonCircularEdge(Graph graph) =>
+            graph.Edges
+                .Where(IsAvailableAndNonCircular)
                 .OrderBy(edge => edge.Weight)
                 .First();
-        }
+
+        private bool IsAvailableAndNonCircular(Edge edge) =>
+            Vertices.Contains(edge.From) && !Vertices.Contains(edge.To);
     }
 }
