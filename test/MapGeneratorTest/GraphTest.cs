@@ -26,10 +26,10 @@ namespace Theseus.MapGeneratorTest
             var testObject = new Graph();
 
             //Act
-            var result = testObject.Edges.Count();
+            var result = testObject.Edges;
 
             //Assert
-            Assert.Equal(0, result);
+            Assert.Empty(result);
         }
 
         [Fact]
@@ -40,11 +40,11 @@ namespace Theseus.MapGeneratorTest
             testObject.TryAddVertex(new Vertex());
 
             //Act
-            var resultCount = testObject.Vertices.Count();
+            var resultVertices = testObject.Vertices;
             var resultVertex = testObject.Vertices.First();
 
             //Assert
-            Assert.Equal(1, resultCount);
+            Assert.Single(resultVertices);
             Assert.Equal((0, 0), (resultVertex.X, resultVertex.Y));
         }
 
@@ -79,12 +79,12 @@ namespace Theseus.MapGeneratorTest
             //Act
             var resultAdd1 = testObject.TryAddVertex(testVertex1);
             var resultAdd2 = testObject.TryAddVertex(testVertex2);
-            var resultCount = testObject.Vertices.Count();
+            var resultVertices = testObject.Vertices;
 
             //Assert
             Assert.True(resultAdd1);
             Assert.False(resultAdd2);
-            Assert.Equal(1, resultCount);
+            Assert.Single(resultVertices);
         }
 
         [Fact]
@@ -120,18 +120,21 @@ namespace Theseus.MapGeneratorTest
         {
             //Arrange
             var testObject = new Graph();
-            testObject.TryAddVertex(new Vertex(1, 2));
-            testObject.TryAddVertex(new Vertex(2, 3));
+            var vertex1 = new Vertex(1, 2);
+            var vertex2 = new Vertex(2, 3);
+            
+            testObject.TryAddVertex(vertex1);
+            testObject.TryAddVertex(vertex2);
 
             //Act
-            var resultDelete = testObject.TryRemoveVertex(new Vertex(1, 2));
-            var resultCount = testObject.Vertices.Count();
+            var resultDelete = testObject.TryRemoveVertex(vertex1);
+            var resultVertices = testObject.Vertices;
             var resultOnlyVertex = testObject.Vertices.First();
 
             //Assert
             Assert.True(resultDelete);
-            Assert.Equal(1, resultCount);
-            Assert.Equal((2, 3), (resultOnlyVertex.X, resultOnlyVertex.Y));
+            Assert.Single(resultVertices);
+            Assert.Equal(vertex2, resultOnlyVertex);
         }
 
         [Fact]
@@ -143,11 +146,11 @@ namespace Theseus.MapGeneratorTest
 
             //Act
             var resultAdd = testObject.TryAddEdge(edge);
-            var resultCount = testObject.Edges.Count();
+            var resultEdges = testObject.Edges;
 
             //Assert
             Assert.False(resultAdd);
-            Assert.Equal(0, resultCount);
+            Assert.Empty(resultEdges);
         }
 
         [Fact]
@@ -160,11 +163,11 @@ namespace Theseus.MapGeneratorTest
 
             //Act
             var resultAdd = testObject.TryAddEdge(edge);
-            var resultCount = testObject.Edges.Count();
+            var resultEdges = testObject.Edges;
 
             //Assert
             Assert.True(resultAdd);
-            Assert.Equal(1, resultCount);
+            Assert.Single(resultEdges);
         }
 
         [Fact]
@@ -172,15 +175,15 @@ namespace Theseus.MapGeneratorTest
         {
             //Arrange
             var testObject = new Graph();
-            var edge = new Edge((new Vertex(1, 2), new Vertex(2, 3)), 0);
+            var edge = new Edge(new Vertex(1, 2), new Vertex(2, 3), 0);
 
             //Act
             var resultAdd = testObject.TryAddEdge(edge);
-            var resultCount = testObject.Edges.Count();
+            var resultEdges = testObject.Edges;
 
             //Assert
             Assert.False(resultAdd);
-            Assert.Equal(0, resultCount);
+            Assert.Empty(resultEdges);
         }
 
         [Fact]
@@ -188,16 +191,16 @@ namespace Theseus.MapGeneratorTest
         {
             //Arrange
             var testObject = new Graph();
-            var edge = new Edge((new Vertex(1, 2), new Vertex(2, 3)), 0);
+            var edge = new Edge(new Vertex(1, 2), new Vertex(2, 3), 0);
             testObject.TryAddVertex(new Vertex(1, 2));
 
             //Act
             var resultAdd = testObject.TryAddEdge(edge);
-            var resultCount = testObject.Edges.Count();
+            var resultEdges = testObject.Edges;
 
             //Assert
             Assert.False(resultAdd);
-            Assert.Equal(0, resultCount);
+            Assert.Empty(resultEdges);
         }
 
         [Fact]
@@ -208,17 +211,17 @@ namespace Theseus.MapGeneratorTest
 
             var vertexA = new Vertex(1, 2);
             var vertexB = new Vertex(2, 3);
-            var edge = new Edge((new Vertex(1, 2), new Vertex(2, 3)), 0);
+            var edge = new Edge(new Vertex(1, 2), new Vertex(2, 3), 0);
             testObject.TryAddVertex(vertexA);
             testObject.TryAddVertex(vertexB);
 
             //Act
             var resultAdd = testObject.TryAddEdge(edge);
-            var resultCount = testObject.Edges.Count();
+            var resultEdges = testObject.Edges;
 
             //Assert
             Assert.True(resultAdd);
-            Assert.Equal(1, resultCount);
+            Assert.Single(resultEdges);
         }
 
         [Fact]
@@ -227,16 +230,16 @@ namespace Theseus.MapGeneratorTest
             //Arrange
             var testObject = new Graph();
             var vertexA = new Vertex(1, 2);
-            var testEdge = new Edge((new Vertex(1, 2), new Vertex(1, 2)), 0);
+            var testEdge = new Edge(new Vertex(1, 2), new Vertex(1, 2), 0);
             testObject.TryAddVertex(vertexA);
 
             //Act
             var resultAdd = testObject.TryAddEdge(testEdge);
-            var resultCount = testObject.Edges.Count();
+            var resultEdges = testObject.Edges;
 
             //Assert
             Assert.True(resultAdd);
-            Assert.Equal(1, resultCount);
+            Assert.Single(resultEdges);
         }
 
         [Fact]
@@ -246,7 +249,7 @@ namespace Theseus.MapGeneratorTest
             var testObject = new Graph();
             var vertexA = new Vertex(1, 2);
             var vertexB = new Vertex(2, 3);
-            var testEdge = new Edge((new Vertex(1, 2), new Vertex(2, 3)), 2);
+            var testEdge = new Edge(new Vertex(1, 2), new Vertex(2, 3), 2);
             testObject.TryAddVertex(vertexA);
             testObject.TryAddVertex(vertexB);
 
@@ -265,7 +268,7 @@ namespace Theseus.MapGeneratorTest
             var testObject = new Graph();
             var vertexA = new Vertex(1, 2);
             var vertexB = new Vertex(2, 3);
-            var testEdge = new Edge((new Vertex(1, 2), new Vertex(2, 3)), 2);
+            var testEdge = new Edge(new Vertex(1, 2), new Vertex(2, 3), 2);
             testObject.TryAddVertex(vertexA);
             testObject.TryAddVertex(vertexB);
 
@@ -274,8 +277,8 @@ namespace Theseus.MapGeneratorTest
             var result = testObject.Edges.First();
 
             //Assert
-            Assert.Equal((1, 2), (result.Vertices.first.X, result.Vertices.first.Y));
-            Assert.Equal((2, 3), (result.Vertices.second.X, result.Vertices.second.Y));
+            Assert.Equal(vertexA, result.From);
+            Assert.Equal(vertexB, result.To);
             Assert.Equal(2, result.Weight);
         }
 
@@ -286,18 +289,18 @@ namespace Theseus.MapGeneratorTest
             var testObject = new Graph();
             var vertexA = new Vertex(1, 2);
             var vertexB = new Vertex(2, 3);
-            var testEdge = new Edge((new Vertex(1, 2), new Vertex(2, 3)), 2);
+            var testEdge = new Edge(new Vertex(1, 2), new Vertex(2, 3), 2);
             testObject.TryAddVertex(vertexA);
             testObject.TryAddVertex(vertexB);
             testObject.TryAddEdge(testEdge);
 
             //Act
             var resultAdd = testObject.TryAddEdge(testEdge);
-            var resultCount = testObject.Edges.Count();
+            var resultEdges = testObject.Edges;
 
             //Assert
             Assert.False(resultAdd);
-            Assert.Equal(1, resultCount);
+            Assert.Single(resultEdges);
         }
 
         [Fact]
@@ -307,8 +310,8 @@ namespace Theseus.MapGeneratorTest
             var testObject = new Graph();
             var vertexA = new Vertex(1, 2);
             var vertexB = new Vertex(2, 3);
-            var testEdge1 = new Edge((new Vertex(1, 2), new Vertex(2, 3)), 2);
-            var testEdge2 = new Edge((new Vertex(1, 2), new Vertex(2, 3)), 5);
+            var testEdge1 = new Edge(vertexA, vertexB, 2);
+            var testEdge2 = new Edge(vertexA, vertexB, 5);
             testObject.TryAddVertex(vertexA);
             testObject.TryAddVertex(vertexB);
             testObject.TryAddEdge(testEdge1);
@@ -322,19 +325,19 @@ namespace Theseus.MapGeneratorTest
             Assert.True(resultAdd);
             Assert.Equal(2, resultCount);
             Assert.Equal(5, resultEdge.Weight);
-            Assert.Equal((1, 2), (resultEdge.Vertices.first.X, resultEdge.Vertices.first.Y));
-            Assert.Equal((2, 3), (resultEdge.Vertices.second.X, resultEdge.Vertices.second.Y));
+            Assert.Equal(vertexA, resultEdge.From);
+            Assert.Equal(vertexB, resultEdge.To);
         }
 
         [Fact]
-        public void TryAddEdge_TheSameEdgesAreIndirect_False()
+        public void TryAddEdge_EdgesAreDirected_True()
         {
             //Arrange
             var testObject = new Graph();
             var vertexA = new Vertex(1, 2);
             var vertexB = new Vertex(2, 3);
-            var testEdge1 = new Edge((new Vertex(1, 2), new Vertex(2, 3)), 2);
-            var testEdge2 = new Edge((new Vertex(2, 3), new Vertex(1, 2)), 2);
+            var testEdge1 = new Edge(vertexA, vertexB, 2);
+            var testEdge2 = new Edge(vertexB, vertexA, 2);
             testObject.TryAddVertex(vertexA);
             testObject.TryAddVertex(vertexB);
             testObject.TryAddEdge(testEdge1);
@@ -344,8 +347,8 @@ namespace Theseus.MapGeneratorTest
             var resultCount = testObject.Edges.Count();
 
             //Assert
-            Assert.False(resultAdd);
-            Assert.Equal(1, resultCount);
+            Assert.True(resultAdd);
+            Assert.Equal(2, resultCount);
         }
 
         [Fact]
@@ -355,8 +358,8 @@ namespace Theseus.MapGeneratorTest
             var testObject = new Graph();
             var vertexA = new Vertex(1, 2);
             var vertexB = new Vertex(2, 3);
-            var testEdge1 = new Edge((new Vertex(1, 2), new Vertex(2, 3)), 2);
-            var testEdge2 = new Edge((new Vertex(2, 3), new Vertex(1, 2)), 5);
+            var testEdge1 = new Edge(vertexA, vertexB, 2);
+            var testEdge2 = new Edge(vertexB, vertexA, 5);
             testObject.TryAddVertex(vertexA);
             testObject.TryAddVertex(vertexB);
             testObject.TryAddEdge(testEdge1);
@@ -370,8 +373,8 @@ namespace Theseus.MapGeneratorTest
             Assert.True(resultAdd);
             Assert.Equal(2, resultCount);
             Assert.Equal(5, resultEdge.Weight);
-            Assert.Equal((2, 3), (resultEdge.Vertices.first.X, resultEdge.Vertices.first.Y));
-            Assert.Equal((1, 2), (resultEdge.Vertices.second.X, resultEdge.Vertices.second.Y));
+            Assert.Equal(vertexB, resultEdge.From);
+            Assert.Equal(vertexA, resultEdge.To);
         }
 
         [Fact]
@@ -397,11 +400,11 @@ namespace Theseus.MapGeneratorTest
 
             //Act
             var resultRemove = testObject.TryRemoveEdge(new Edge());
-            var resultCount = testObject.Edges.Count();
+            var resultEdges = testObject.Edges;
 
             //Assert
             Assert.True(resultRemove);
-            Assert.Equal(0, resultCount);
+            Assert.Empty(resultEdges);
         }
 
         [Fact]
@@ -413,19 +416,19 @@ namespace Theseus.MapGeneratorTest
             testObject.TryAddVertex(new Vertex(1, 2));
             testObject.TryAddVertex(new Vertex(2, 3));
             testObject.TryAddEdge(new Edge());
-            testObject.TryAddEdge(new Edge((new Vertex(1, 2), new Vertex(2, 3)), 0));
+            testObject.TryAddEdge(new Edge(new Vertex(1, 2), new Vertex(2, 3), 0));
 
             //Act
             var resultRemove = testObject.TryRemoveEdge(new Edge());
-            var resultCount = testObject.Edges.Count();
+            var resultEdges = testObject.Edges;
 
             //Assert
             Assert.True(resultRemove);
-            Assert.Equal(1, resultCount);
+            Assert.Single(resultEdges);
         }
 
         [Fact]
-        public void TryRemoveEdge_TwoExistingEdgesRemoveOneInverted_TrueAndOneLeft()
+        public void TryRemoveEdge_TwoExistingEdgesRemoveOneInverted_False()
         {
             //Arrange
             var testObject = new Graph();
@@ -433,15 +436,15 @@ namespace Theseus.MapGeneratorTest
             testObject.TryAddVertex(new Vertex(1, 2));
             testObject.TryAddVertex(new Vertex(2, 3));
             testObject.TryAddEdge(new Edge());
-            testObject.TryAddEdge(new Edge((new Vertex(1, 2), new Vertex(2, 3)), 0));
+            testObject.TryAddEdge(new Edge(new Vertex(1, 2), new Vertex(2, 3), 0));
 
             //Act
-            var resultRemove = testObject.TryRemoveEdge(new Edge((new Vertex(2, 3), new Vertex(1, 2)), 0));
+            var resultRemove = testObject.TryRemoveEdge(new Edge(new Vertex(2, 3), new Vertex(1, 2), 0));
             var resultCount = testObject.Edges.Count();
 
             //Assert
-            Assert.True(resultRemove);
-            Assert.Equal(1, resultCount);
+            Assert.False(resultRemove);
+            Assert.Equal(2, resultCount);
         }
 
         [Fact]
@@ -454,10 +457,10 @@ namespace Theseus.MapGeneratorTest
             var vertex3 = new Vertex(4, 5);
             var vertex4 = new Vertex(6, 7);
 
-            var edgeShouldBeRemoved1 = new Edge((vertex1, vertexToRemove), 1);
-            var edgeShouldBeRemoved2 = new Edge((vertexToRemove, vertex3), 2);
-            var edgeShouldBeRemoved3 = new Edge((vertexToRemove, vertex4), 3);
-            var edgeShouldStay = new Edge((vertex3, vertex4), 4);
+            var edgeShouldBeRemoved1 = new Edge(vertex1, vertexToRemove, 1);
+            var edgeShouldBeRemoved2 = new Edge(vertexToRemove, vertex3, 2);
+            var edgeShouldBeRemoved3 = new Edge(vertexToRemove, vertex4, 3);
+            var edgeShouldStay = new Edge(vertex3, vertex4, 4);
 
             testObject.TryAddVertex(vertex1);
             testObject.TryAddVertex(vertexToRemove);
@@ -473,15 +476,78 @@ namespace Theseus.MapGeneratorTest
             var resultRemove = testObject.TryRemoveVertex(vertexToRemove);
             var resultVerticesCount = testObject.Vertices.Count();
             var resultEdgesCount = testObject.Edges.Count();
-            var (resultEdgeVertices, weight) = testObject.Edges.First();
+            var resultEdge = testObject.Edges.First();
 
             //Assert
             Assert.True(resultRemove);
             Assert.Equal(3, resultVerticesCount);
             Assert.Equal(1, resultEdgesCount);
-            Assert.Equal(4, weight);
-            Assert.Equal(vertex3, resultEdgeVertices.first);
-            Assert.Equal(vertex4, resultEdgeVertices.second);
+            Assert.Equal(4, resultEdge.Weight);
+            Assert.Equal(vertex3, resultEdge.From);
+            Assert.Equal(vertex4, resultEdge.To);
+        }
+
+        [Fact]
+        public void FindAdjacentOf_UndirectedVertices_CorrectVertices()
+        {
+            //Arrange
+            var testObject = new Graph();
+            var vertex1 = new Vertex(1, 2);
+            var vertex2 = new Vertex(3, 4);
+            var vertex3 = new Vertex(5, 6);
+
+            testObject.TryAddVertex(vertex1);
+            testObject.TryAddVertex(vertex2);
+            testObject.TryAddVertex(vertex3);
+
+            testObject.TryAddUndirectedEdge(vertex1, vertex2, 0);
+            testObject.TryAddUndirectedEdge(vertex1, vertex3, 0);
+
+            //Act
+            var result1 = testObject.FindAdjacentOf(vertex1);
+            var result2 = testObject.FindAdjacentOf(vertex2);
+            var result3 = testObject.FindAdjacentOf(vertex3);
+
+            //Assert
+            Assert.Equal(2, result1.Count());
+            Assert.Equal(vertex2, result1.ElementAt(0));
+            Assert.Equal(vertex3, result1.ElementAt(1));
+
+            Assert.Single(result2);
+            Assert.Equal(vertex1, result2.ElementAt(0));
+
+            Assert.Single(result3);
+            Assert.Equal(vertex1, result3.ElementAt(0));
+        }
+
+        [Fact]
+        public void FindAdjacentOf_DirectedVertices_CorrectVertices()
+        {
+            //Arrange
+            var testObject = new Graph();
+            var vertex1 = new Vertex(1, 2);
+            var vertex2 = new Vertex(3, 4);
+            var vertex3 = new Vertex(5, 6);
+
+            testObject.TryAddVertex(vertex1);
+            testObject.TryAddVertex(vertex2);
+            testObject.TryAddVertex(vertex3);
+
+            testObject.TryAddDirectedEdge(vertex1, vertex2, 0);
+            testObject.TryAddDirectedEdge(vertex1, vertex3, 0);
+
+            //Act
+            var result1 = testObject.FindAdjacentOf(vertex1);
+            var result2 = testObject.FindAdjacentOf(vertex2);
+            var result3 = testObject.FindAdjacentOf(vertex3);
+
+            //Assert
+            Assert.Equal(2, result1.Count());
+            Assert.Equal(vertex2, result1.ElementAt(0));
+            Assert.Equal(vertex3, result1.ElementAt(1));
+
+            Assert.Empty(result2);
+            Assert.Empty(result3);
         }
     }
 }
