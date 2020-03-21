@@ -9,10 +9,10 @@ namespace Theseus.MapGeneratorTest
         public void DefaultContructor_EmptyObject_EmptyProperties()
         {
             //Arrange
-            var testObject = new Room();
+            var sut = new Room();
 
             //Act
-            var (topLeftLocation, size) = testObject;
+            var (topLeftLocation, size) = sut;
 
             //Assert
             Assert.Equal((0, 0), (topLeftLocation.X, topLeftLocation.Y));
@@ -23,13 +23,13 @@ namespace Theseus.MapGeneratorTest
         public void ParameterizedConstructor_ValidValues_ValidProperties()
         {
             //Arrange
-            var testObject = new Room(new Tile(1, 2), new Size(3, 4));
+            var sut = new Room(new Tile(1, 2), new Size(3, 4));
 
             //Act
-            var (topLeftLocation, size) = testObject;
+            var (topLeft, size) = sut;
 
             //Assert
-            Assert.Equal((1, 2), (topLeftLocation.X, topLeftLocation.Y));
+            Assert.Equal((1, 2), (topLeft.X, topLeft.Y));
             Assert.Equal((3, 4), (size.Width, size.Height));
         }
 
@@ -37,13 +37,13 @@ namespace Theseus.MapGeneratorTest
         public void Equals_EmptyObjects_True()
         {
             //Arrange
-            var testObject1 = new Room();
-            var testObject2 = new Room();
+            var sut1 = new Room();
+            var sut2 = new Room();
 
             //Act
-            var result1 = testObject1.Equals(testObject1);
-            var result2 = testObject1.Equals(testObject2);
-            var result3 = testObject2.Equals(testObject1);
+            var result1 = sut1.Equals(sut1);
+            var result2 = sut1.Equals(sut2);
+            var result3 = sut2.Equals(sut1);
 
             //Assert
             Assert.True(result1);
@@ -55,13 +55,13 @@ namespace Theseus.MapGeneratorTest
         public void Equals_SameParameters_True()
         {
             //Arrange
-            var testObject1 = new Room(new Tile(1, 2), new Size(3, 4));
-            var testObject2 = new Room(new Tile(1, 2), new Size(3, 4));
+            var sut1 = new Room(new Tile(1, 2), new Size(3, 4));
+            var sut2 = new Room(new Tile(1, 2), new Size(3, 4));
 
             //Act
-            var result1 = testObject1.Equals(testObject1);
-            var result2 = testObject1.Equals(testObject2);
-            var result3 = testObject2.Equals(testObject1);
+            var result1 = sut1.Equals(sut1);
+            var result2 = sut1.Equals(sut2);
+            var result3 = sut2.Equals(sut1);
 
             //Assert
             Assert.True(result1);
@@ -73,18 +73,18 @@ namespace Theseus.MapGeneratorTest
         public void Equals_DifferentParameters_False()
         {
             //Arrange
-            var testObject1 = new Room(new Tile(1, 2), new Size(3, 4));
-            var testObject2 = new Room(new Tile(1, 2), new Size(3, 5));
+            var sut1 = new Room(new Tile(1, 2), new Size(3, 4));
+            var sut2 = new Room(new Tile(1, 2), new Size(3, 5));
 
-            var testObject3 = new Room(new Tile(5, 2), new Size(3, 4));
-            var testObject4 = new Room(new Tile(6, 2), new Size(3, 4));
+            var sut3 = new Room(new Tile(5, 2), new Size(3, 4));
+            var sut4 = new Room(new Tile(6, 2), new Size(3, 4));
 
             //Act
-            var result1 = testObject1.Equals(testObject2);
-            var result2 = testObject2.Equals(testObject1);
+            var result1 = sut1.Equals(sut2);
+            var result2 = sut2.Equals(sut1);
 
-            var result3 = testObject3.Equals(testObject4);
-            var result4 = testObject4.Equals(testObject3);
+            var result3 = sut3.Equals(sut4);
+            var result4 = sut4.Equals(sut3);
 
             //Assert
             Assert.False(result1);
