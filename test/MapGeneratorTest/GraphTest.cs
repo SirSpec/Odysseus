@@ -1,512 +1,541 @@
 using Xunit;
 using System.Linq;
 using Theseus.MapGenerator;
+using System;
 
 namespace Theseus.MapGeneratorTest
 {
     public class GraphTest
     {
+        private const string TestValue1 = "TestValue1";
+        private const string TestValue2 = "TestValue2";
+
+        private readonly Vertex<string> TestVertex1 = new Vertex<string>(TestValue1);
+        private readonly Vertex<string> TestVertex2 = new Vertex<string>(TestValue2);
+
+        private readonly Vertex<string> EmptyVertex = new Vertex<string>(string.Empty);
+        private Edge<string> FeedbackEdge => new Edge<string>(EmptyVertex, EmptyVertex, 0);
+
         [Fact]
         public void Vertices_EmptyGraph_Zero()
         {
             //Arrange
-            var testObject = new Graph();
+            var sut = new Graph<string>();
 
             //Act
-            var result = testObject.Vertices.Count();
-
-            //Assert
-            Assert.Equal(0, result);
-        }
-
-        [Fact]
-        public void Edges_EmptyGraph_Zero()
-        {
-            //Arrange
-            var testObject = new Graph();
-
-            //Act
-            var result = testObject.Edges;
+            var result = sut.Vertices;
 
             //Assert
             Assert.Empty(result);
         }
 
         [Fact]
-        public void TryAddVertex_One_NumberOfVerticesOne()
+        public void Edges_EmptyGraph_Zero()
         {
             //Arrange
-            var testObject = new Graph();
-            testObject.TryAddVertex(new Vertex());
+            var sut = new Graph<string>();
 
             //Act
-            var resultVertices = testObject.Vertices;
-            var resultVertex = testObject.Vertices.First();
+            var result = sut.Edges;
 
             //Assert
-            Assert.Single(resultVertices);
-            Assert.Equal((0, 0), (resultVertex.X, resultVertex.Y));
+            Assert.Empty(result);
         }
 
         [Fact]
-        public void TryAddVertex_TwoDifferentVertices_NumberOfVerticesTwo()
+        public void AddVertex_One_NumberOfVerticesOne()
         {
             //Arrange
-            var testObject = new Graph();
-            var testVertex1 = new Vertex(1, 2);
-            var testVertex2 = new Vertex(2, 3);
-            testObject.TryAddVertex(testVertex1);
-            testObject.TryAddVertex(testVertex2);
+            var sut = new Graph<string>();
+            sut.AddVertex(EmptyVertex);
 
             //Act
-            var resultCount = testObject.Vertices.Count();
-            var resultVertices = testObject.Vertices.ToArray();
+            var resultVertices = sut.Vertices;
+            var resultVertex = sut.Vertices.First();
+
+            //Assert
+            Assert.Single(resultVertices);
+            Assert.Equal(string.Empty, resultVertex.Value);
+        }
+
+        [Fact]
+        public void AddVertex_TwoDifferentVertices_NumberOfVerticesTwo()
+        {
+            //Arrange
+            var sut = new Graph<string>();
+            sut.AddVertex(TestVertex1);
+            sut.AddVertex(TestVertex2);
+
+            //Act
+            var resultCount = sut.Vertices.Count();
+            var resultVertices = sut.Vertices.ToArray();
 
             //Assert
             Assert.Equal(2, resultCount);
-            Assert.Equal(testVertex1, resultVertices[0]);
-            Assert.Equal(testVertex2, resultVertices[1]);
+            Assert.Equal(TestVertex1, resultVertices[0]);
+            Assert.Equal(TestVertex2, resultVertices[1]);
         }
 
         [Fact]
-        public void TryAddVertex_TheSameCoordinates_SecondVertexNotAdded()
+        public void AddVertex_TheSameVertexTwice_SecondThrowsInvalidOperationException()
         {
             //Arrange
-            var testObject = new Graph();
-            var testVertex1 = new Vertex(1, 2);
-            var testVertex2 = new Vertex(1, 2);
+            var sut = new Graph<string>();
+            sut.AddVertex(TestVertex1);
 
             //Act
-            var resultAdd1 = testObject.TryAddVertex(testVertex1);
-            var resultAdd2 = testObject.TryAddVertex(testVertex2);
-            var resultVertices = testObject.Vertices;
+            Action result = () => sut.AddVertex(TestVertex1);
 
             //Assert
-            Assert.True(resultAdd1);
-            Assert.False(resultAdd2);
+            Assert.Throws<InvalidOperationException>(result);
+        }
+
+        [Fact]
+        public void DeleteVertex_VertexDoesNotExist_ThrowsInvalidOperationException()
+        {
+            //Arrange
+            var sut = new Graph<string>();
+
+            //Act
+            Action result = () => sut.RemoveVertex(TestVertex1);
+
+            //Assert
+            Assert.Throws<InvalidOperationException>(result);
+        }
+
+        [Fact]
+        public void DeleteVertex_AddAndRemovedTheSameVertex_EmptyGraph()
+        {
+            //Arrange
+            var sut = new Graph<string>();
+
+            //Act
+            sut.AddVertex(TestVertex1);
+            sut.RemoveVertex(TestVertex1);
+
+            //Assert
+            Assert.Empty(sut.Vertices);
+        }
+
+
+        [Fact]
+        public void DeleteVertex_TwoVerticesAddedOneRemoved_SingleVertexGraph()
+        {
+            //Arrange
+            var sut = new Graph<string>();
+            
+            sut.AddVertex(TestVertex1);
+            sut.AddVertex(TestVertex2);
+
+            //Act
+            sut.RemoveVertex(TestVertex1);
+            var resultVertices = sut.Vertices;
+            var resultOnlyVertex = sut.Vertices.First();
+
+            //Assert
             Assert.Single(resultVertices);
+            Assert.Equal(TestVertex2, resultOnlyVertex);
         }
 
         [Fact]
-        public void TryDeleteVertex_VertexDoesNotExist_False()
+        public void AddEdge_AddEmptyEdgeToEmptyGraph_ThrowsInvalidOperationException()
         {
             //Arrange
-            var testObject = new Graph();
+            var sut = new Graph<string>();
 
             //Act
-            var result = testObject.TryRemoveVertex(new Vertex(1, 2));
+            Action result = () => sut.AddEdge(FeedbackEdge);
 
             //Assert
-            Assert.False(result);
+            Assert.Throws<InvalidOperationException>(result);
         }
 
         [Fact]
-        public void TryDeleteVertex_VertexExistsAndRemoved_True()
+        public void AddEdge_FeedbackEdge_SingleEdge()
         {
             //Arrange
-            var testObject = new Graph();
+            var sut = new Graph<string>();
+            sut.AddVertex(EmptyVertex);
 
             //Act
-            testObject.TryAddVertex(new Vertex(1, 2));
-            var result = testObject.TryRemoveVertex(new Vertex(1, 2));
+            sut.AddEdge(FeedbackEdge);
+
+            //Assert
+            Assert.Single(sut.Edges);
+        }
+
+        [Fact]
+        public void AddEdge_AddEdgeToNonExistingVertices_ThrowsInvalidOperationException()
+        {
+            //Arrange
+            var sut = new Graph<string>();
+            var edge = new Edge<string>(TestVertex1, TestVertex2, 0);
+
+            //Act
+            Action result = () => sut.AddEdge(edge);
+
+            //Assert
+            Assert.Throws<InvalidOperationException>(result);
+        }
+
+        [Fact]
+        public void AddEdge_OneVertexExistsSecondNot_ThrowsInvalidOperationException()
+        {
+            //Arrange
+            var sut = new Graph<string>();
+            var edge = new Edge<string>(TestVertex1, TestVertex2, 0);
+
+            sut.AddVertex(TestVertex1);
+
+            //Act
+            Action result = () => sut.AddEdge(edge);
+
+            //Assert
+            Assert.Throws<InvalidOperationException>(result);
+        }
+
+        [Fact]
+        public void AddEdge_TwoExistingVerticesAndAddedEdge_SingleEdge()
+        {
+            //Arrange
+            var sut = new Graph<string>();
+            var testEdge = new Edge<string>(TestVertex1, TestVertex2, 0);
+
+            sut.AddVertex(TestVertex1);
+            sut.AddVertex(TestVertex2);
+
+            //Act
+            sut.AddEdge(testEdge);
+
+            //Assert
+            Assert.Single(sut.Edges);
+        }
+
+        [Fact]
+        public void AddEdge_FeedbackLoopEdge_SingleEdge()
+        {
+            //Arrange
+            var sut = new Graph<string>();
+            var testEdge = new Edge<string>(TestVertex1, TestVertex1, 0);
+            
+            sut.AddVertex(TestVertex1);
+
+            //Act
+            sut.AddEdge(testEdge);
+
+            //Assert
+            Assert.Single(sut.Edges);
+        }
+
+        [Fact]
+        public void AddEdge_SetWeight_ValidWeight()
+        {
+            //Arrange
+            var sut = new Graph<string>();
+            var testEdge = new Edge<string>(TestVertex1, TestVertex2, 2);
+
+            sut.AddVertex(TestVertex1);
+            sut.AddVertex(TestVertex2);
+
+            //Act
+            sut.AddEdge(testEdge);
+            var result = sut.Edges.First();
+
+            //Assert
+            Assert.Equal(2, result.Weight);
+        }
+
+        [Fact]
+        public void AddEdge_ValidEdge_ValidValues()
+        {
+            //Arrange
+            var sut = new Graph<string>();
+            var testEdge = new Edge<string>(TestVertex1, TestVertex2, 2);
+
+            sut.AddVertex(TestVertex1);
+            sut.AddVertex(TestVertex2);
+
+            //Act
+            sut.AddEdge(testEdge);
+            var result = sut.Edges.First();
+
+            //Assert
+            Assert.Equal(TestVertex1, result.Tail);
+            Assert.Equal(TestVertex2, result.Head);
+            Assert.Equal(2, result.Weight);
+        }
+
+        [Fact]
+        public void AddEdge_AddTheSameEdgeTwice_ThrowsInvalidOperationException()
+        {
+            //Arrange
+            var sut = new Graph<string>();
+            var testEdge = new Edge<string>(TestVertex1, TestVertex2, 2);
+
+            sut.AddVertex(TestVertex1);
+            sut.AddVertex(TestVertex2);
+
+            sut.AddEdge(testEdge);
+
+            //Act
+            Action result = () => sut.AddEdge(testEdge);
+
+            //Assert
+            Assert.Throws<InvalidOperationException>(result);
+        }
+
+        [Fact]
+        public void AddEdge_EdgeWithSameCoordinatesButDifferentWeight_TwoEdgesAdded()
+        {
+            //Arrange
+            var sut = new Graph<string>();
+            var testEdge1 = new Edge<string>(TestVertex1, TestVertex2, 2);
+            var testEdge2 = new Edge<string>(TestVertex1, TestVertex2, 5);
+
+            sut.AddVertex(TestVertex1);
+            sut.AddVertex(TestVertex2);
+            sut.AddEdge(testEdge1);
+
+            //Act
+            sut.AddEdge(testEdge2);
+            var resultCount = sut.Edges.Count();
+            var resultEdge = sut.Edges.ElementAt(1);
+
+            //Assert
+            Assert.Equal(2, resultCount);
+            Assert.Equal(5, resultEdge.Weight);
+            Assert.Equal(TestVertex1, resultEdge.Tail);
+            Assert.Equal(TestVertex2, resultEdge.Head);
+        }
+
+        [Fact]
+        public void AddEdge_EdgesAreDirected_TwoEdgesAdded()
+        {
+            //Arrange
+            var sut = new Graph<string>();
+            var testEdge1 = new Edge<string>(TestVertex1, TestVertex2, 2);
+            var testEdge2 = new Edge<string>(TestVertex2, TestVertex1, 2);
+
+            sut.AddVertex(TestVertex1);
+            sut.AddVertex(TestVertex2);
+            sut.AddEdge(testEdge1);
+
+            //Act
+            sut.AddEdge(testEdge2);
+            var resultCount = sut.Edges.Count();
+
+            //Assert
+            Assert.Equal(2, resultCount);
+        }
+
+        [Fact]
+        public void AddEdge_ReversedEdgesWithDifferentWeight_TwoEdgesAdded()
+        {
+            //Arrange
+            var sut = new Graph<string>();
+            var testEdge1 = new Edge<string>(TestVertex1, TestVertex2, 2);
+            var testEdge2 = new Edge<string>(TestVertex2, TestVertex1, 5);
+            
+            sut.AddVertex(TestVertex1);
+            sut.AddVertex(TestVertex2);
+            sut.AddEdge(testEdge1);
+
+            //Act
+            sut.AddEdge(testEdge2);
+            var resultCount = sut.Edges.Count();
+            var resultEdge = sut.Edges.ElementAt(1);
+
+            //Assert
+            Assert.Equal(2, resultCount);
+            Assert.Equal(5, resultEdge.Weight);
+            Assert.Equal(TestVertex2, resultEdge.Tail);
+            Assert.Equal(TestVertex1, resultEdge.Head);
+        }
+
+        [Fact]
+        public void RemoveEdge_NonExistingEdge_ThrowsInvalidOperationException()
+        {
+            //Arrange
+            var sut = new Graph<string>();
+
+            //Act
+            Action result = () => sut.RemoveEdge(FeedbackEdge);
+
+            //Assert
+            Assert.Throws<InvalidOperationException>(result);
+        }
+
+        [Fact]
+        public void RemoveEdge_ExistingEdge_EmptyEdges()
+        {
+            //Arrange
+            var sut = new Graph<string>();
+            sut.AddVertex(EmptyVertex);
+            sut.AddEdge(FeedbackEdge);
+
+            //Act
+            sut.RemoveEdge(FeedbackEdge);
+
+            //Assert
+            Assert.Empty(sut.Edges);
+        }
+
+        [Fact]
+        public void RemoveEdge_TwoExistingEdgesRemoveOne_SingleEdge()
+        {
+            //Arrange
+            var sut = new Graph<string>();
+
+            sut.AddVertex(EmptyVertex);
+            sut.AddVertex(TestVertex1);
+            sut.AddVertex(TestVertex2);
+
+            sut.AddEdge(FeedbackEdge);
+            sut.AddEdge(new Edge<string>(TestVertex1, TestVertex2, 0));
+
+            //Act
+            sut.RemoveEdge(FeedbackEdge);
+
+            //Assert
+            Assert.Single(sut.Edges);
+        }
+
+        [Fact]
+        public void RemoveEdge_TwoExistingEdgesRemoveOneNewObject_SingleEdge()
+        {
+            //Arrange
+            var sut = new Graph<string>();
+
+            sut.AddVertex(EmptyVertex);
+            sut.AddVertex(TestVertex1);
+            sut.AddVertex(TestVertex2);
+
+            sut.AddEdge(FeedbackEdge);
+            sut.AddEdge(new Edge<string>(TestVertex1, TestVertex2, 0));
+
+            //Act
+            sut.RemoveEdge(new Edge<string>(TestVertex1, TestVertex2, 0));
+
+            //Assert
+            Assert.Single(sut.Edges);
+        }
+
+        [Fact]
+        public void RemoveEdge_TwoExistingEdgesRemoveOneInverted_ThrowsInvalidOperationException()
+        {
+            //Arrange
+            var sut = new Graph<string>();
+
+            sut.AddVertex(EmptyVertex);
+            sut.AddVertex(TestVertex1);
+            sut.AddVertex(TestVertex2);
+
+            sut.AddEdge(FeedbackEdge);
+            sut.AddEdge(new Edge<string>(TestVertex1, TestVertex2, 0));
+
+            //Act
+            Action resultRemove = () => sut.RemoveEdge(new Edge<string>(TestVertex2, TestVertex1, 0));
+            var resultCount = sut.Edges.Count();
+
+            //Assert
+            Assert.Throws<InvalidOperationException>(resultRemove);
+            Assert.Equal(2, resultCount);
+        }
+
+        [Fact]
+        public void ContainsSymmetric_ContainsTwoSymetricEdges_True()
+        {
+            //Arrange
+            var sut = new Graph<string>();
+
+            sut.AddVertex(TestVertex1);
+            sut.AddVertex(TestVertex2);
+
+            sut.AddEdge(new Edge<string>(TestVertex1, TestVertex2, 0));
+
+            //Act
+            var result = sut.ContainsSymmetric(new Edge<string>(TestVertex2, TestVertex1, 0));
 
             //Assert
             Assert.True(result);
         }
 
-
         [Fact]
-        public void TryDeleteVertex_TwoVerticesAddedOneRemoved_TrueAndOneLeft()
+        public void ContainsSymmetric_DoesNotContainTwoSymetricEdges_False()
         {
             //Arrange
-            var testObject = new Graph();
-            var vertex1 = new Vertex(1, 2);
-            var vertex2 = new Vertex(2, 3);
-            
-            testObject.TryAddVertex(vertex1);
-            testObject.TryAddVertex(vertex2);
+            var sut = new Graph<string>();
+
+            sut.AddVertex(TestVertex1);
+            sut.AddVertex(TestVertex2);
+
+            sut.AddEdge(new Edge<string>(TestVertex1, TestVertex2, 0));
 
             //Act
-            var resultDelete = testObject.TryRemoveVertex(vertex1);
-            var resultVertices = testObject.Vertices;
-            var resultOnlyVertex = testObject.Vertices.First();
-
-            //Assert
-            Assert.True(resultDelete);
-            Assert.Single(resultVertices);
-            Assert.Equal(vertex2, resultOnlyVertex);
-        }
-
-        [Fact]
-        public void TryAddEdge_AddEmptyEdgeWithoutEmptyVertex_False()
-        {
-            //Arrange
-            var testObject = new Graph();
-            var edge = new Edge();
-
-            //Act
-            var resultAdd = testObject.TryAddEdge(edge);
-            var resultEdges = testObject.Edges;
-
-            //Assert
-            Assert.False(resultAdd);
-            Assert.Empty(resultEdges);
-        }
-
-        [Fact]
-        public void TryAddEdge_AddEmptyEdgeWithEmptyVertex_True()
-        {
-            //Arrange
-            var testObject = new Graph();
-            var edge = new Edge();
-            testObject.TryAddVertex(new Vertex());
-
-            //Act
-            var resultAdd = testObject.TryAddEdge(edge);
-            var resultEdges = testObject.Edges;
-
-            //Assert
-            Assert.True(resultAdd);
-            Assert.Single(resultEdges);
-        }
-
-        [Fact]
-        public void TryAddEdge_AddEdgeToNonExistingVertices_False()
-        {
-            //Arrange
-            var testObject = new Graph();
-            var edge = new Edge(new Vertex(1, 2), new Vertex(2, 3), 0);
-
-            //Act
-            var resultAdd = testObject.TryAddEdge(edge);
-            var resultEdges = testObject.Edges;
-
-            //Assert
-            Assert.False(resultAdd);
-            Assert.Empty(resultEdges);
-        }
-
-        [Fact]
-        public void TryAddEdge_OneVertexExistsSecondNot_False()
-        {
-            //Arrange
-            var testObject = new Graph();
-            var edge = new Edge(new Vertex(1, 2), new Vertex(2, 3), 0);
-            testObject.TryAddVertex(new Vertex(1, 2));
-
-            //Act
-            var resultAdd = testObject.TryAddEdge(edge);
-            var resultEdges = testObject.Edges;
-
-            //Assert
-            Assert.False(resultAdd);
-            Assert.Empty(resultEdges);
-        }
-
-        [Fact]
-        public void TryAddEdge_TwoExistingVerticesAndAddedEdge_True()
-        {
-            //Arrange
-            var testObject = new Graph();
-
-            var vertexA = new Vertex(1, 2);
-            var vertexB = new Vertex(2, 3);
-            var edge = new Edge(new Vertex(1, 2), new Vertex(2, 3), 0);
-            testObject.TryAddVertex(vertexA);
-            testObject.TryAddVertex(vertexB);
-
-            //Act
-            var resultAdd = testObject.TryAddEdge(edge);
-            var resultEdges = testObject.Edges;
-
-            //Assert
-            Assert.True(resultAdd);
-            Assert.Single(resultEdges);
-        }
-
-        [Fact]
-        public void TryAddEdge_FeedbackLoopEdge_True()
-        {
-            //Arrange
-            var testObject = new Graph();
-            var vertexA = new Vertex(1, 2);
-            var testEdge = new Edge(new Vertex(1, 2), new Vertex(1, 2), 0);
-            testObject.TryAddVertex(vertexA);
-
-            //Act
-            var resultAdd = testObject.TryAddEdge(testEdge);
-            var resultEdges = testObject.Edges;
-
-            //Assert
-            Assert.True(resultAdd);
-            Assert.Single(resultEdges);
-        }
-
-        [Fact]
-        public void TryAddEdge_SetWeight_ValidWeight()
-        {
-            //Arrange
-            var testObject = new Graph();
-            var vertexA = new Vertex(1, 2);
-            var vertexB = new Vertex(2, 3);
-            var testEdge = new Edge(new Vertex(1, 2), new Vertex(2, 3), 2);
-            testObject.TryAddVertex(vertexA);
-            testObject.TryAddVertex(vertexB);
-
-            //Act
-            testObject.TryAddEdge(testEdge);
-            var result = testObject.Edges.First();
-
-            //Assert
-            Assert.Equal(2, result.Weight);
-        }
-
-        [Fact]
-        public void TryAddEdge_ValidEdge_ValidValues()
-        {
-            //Arrange
-            var testObject = new Graph();
-            var vertexA = new Vertex(1, 2);
-            var vertexB = new Vertex(2, 3);
-            var testEdge = new Edge(new Vertex(1, 2), new Vertex(2, 3), 2);
-            testObject.TryAddVertex(vertexA);
-            testObject.TryAddVertex(vertexB);
-
-            //Act
-            testObject.TryAddEdge(testEdge);
-            var result = testObject.Edges.First();
-
-            //Assert
-            Assert.Equal(vertexA, result.From);
-            Assert.Equal(vertexB, result.To);
-            Assert.Equal(2, result.Weight);
-        }
-
-        [Fact]
-        public void TryAddEdge_AddTheSameEdgeTwice_False()
-        {
-            //Arrange
-            var testObject = new Graph();
-            var vertexA = new Vertex(1, 2);
-            var vertexB = new Vertex(2, 3);
-            var testEdge = new Edge(new Vertex(1, 2), new Vertex(2, 3), 2);
-            testObject.TryAddVertex(vertexA);
-            testObject.TryAddVertex(vertexB);
-            testObject.TryAddEdge(testEdge);
-
-            //Act
-            var resultAdd = testObject.TryAddEdge(testEdge);
-            var resultEdges = testObject.Edges;
-
-            //Assert
-            Assert.False(resultAdd);
-            Assert.Single(resultEdges);
-        }
-
-        [Fact]
-        public void TryAddEdge_EdgeWithSameCoordinatesButDifferentWeight_True()
-        {
-            //Arrange
-            var testObject = new Graph();
-            var vertexA = new Vertex(1, 2);
-            var vertexB = new Vertex(2, 3);
-            var testEdge1 = new Edge(vertexA, vertexB, 2);
-            var testEdge2 = new Edge(vertexA, vertexB, 5);
-            testObject.TryAddVertex(vertexA);
-            testObject.TryAddVertex(vertexB);
-            testObject.TryAddEdge(testEdge1);
-
-            //Act
-            var resultAdd = testObject.TryAddEdge(testEdge2);
-            var resultCount = testObject.Edges.Count();
-            var resultEdge = testObject.Edges.ElementAt(1);
-
-            //Assert
-            Assert.True(resultAdd);
-            Assert.Equal(2, resultCount);
-            Assert.Equal(5, resultEdge.Weight);
-            Assert.Equal(vertexA, resultEdge.From);
-            Assert.Equal(vertexB, resultEdge.To);
-        }
-
-        [Fact]
-        public void TryAddEdge_EdgesAreDirected_True()
-        {
-            //Arrange
-            var testObject = new Graph();
-            var vertexA = new Vertex(1, 2);
-            var vertexB = new Vertex(2, 3);
-            var testEdge1 = new Edge(vertexA, vertexB, 2);
-            var testEdge2 = new Edge(vertexB, vertexA, 2);
-            testObject.TryAddVertex(vertexA);
-            testObject.TryAddVertex(vertexB);
-            testObject.TryAddEdge(testEdge1);
-
-            //Act
-            var resultAdd = testObject.TryAddEdge(testEdge2);
-            var resultCount = testObject.Edges.Count();
-
-            //Assert
-            Assert.True(resultAdd);
-            Assert.Equal(2, resultCount);
-        }
-
-        [Fact]
-        public void TryAddEdge_IndirectEdgesWithTheSameCoordinatesButDifferentWeight_True()
-        {
-            //Arrange
-            var testObject = new Graph();
-            var vertexA = new Vertex(1, 2);
-            var vertexB = new Vertex(2, 3);
-            var testEdge1 = new Edge(vertexA, vertexB, 2);
-            var testEdge2 = new Edge(vertexB, vertexA, 5);
-            testObject.TryAddVertex(vertexA);
-            testObject.TryAddVertex(vertexB);
-            testObject.TryAddEdge(testEdge1);
-
-            //Act
-            var resultAdd = testObject.TryAddEdge(testEdge2);
-            var resultCount = testObject.Edges.Count();
-            var resultEdge = testObject.Edges.ElementAt(1);
-
-            //Assert
-            Assert.True(resultAdd);
-            Assert.Equal(2, resultCount);
-            Assert.Equal(5, resultEdge.Weight);
-            Assert.Equal(vertexB, resultEdge.From);
-            Assert.Equal(vertexA, resultEdge.To);
-        }
-
-        [Fact]
-        public void TryRemoveEdge_NonExistingEdge_False()
-        {
-            //Arrange
-            var testObject = new Graph();
-
-            //Act
-            var result = testObject.TryRemoveEdge(new Edge());
+            var result = sut.ContainsSymmetric(new Edge<string>(TestVertex1, TestVertex2, 0));
 
             //Assert
             Assert.False(result);
         }
 
         [Fact]
-        public void TryRemoveEdge_ExistingEdge_True()
+        public void RemoveVertex_ConnectedGraph_RemoveTestVertexAndConnectedEdges()
         {
             //Arrange
-            var testObject = new Graph();
-            testObject.TryAddVertex(new Vertex());
-            testObject.TryAddEdge(new Edge());
+            var sut = new Graph<string>();
+            var vertexToRemove = TestVertex2;
+            var vertex3 = new Vertex<string>("testValue3");
+            var vertex4 = new Vertex<string>("testValue4");
+
+            var edgeShouldBeRemoved1 = new Edge<string>(TestVertex1, vertexToRemove, 1);
+            var edgeShouldBeRemoved2 = new Edge<string>(vertexToRemove, vertex3, 2);
+            var edgeShouldBeRemoved3 = new Edge<string>(vertexToRemove, vertex4, 3);
+            var edgeShouldStay = new Edge<string>(vertex3, vertex4, 4);
+
+            sut.AddVertex(TestVertex1);
+            sut.AddVertex(vertexToRemove);
+            sut.AddVertex(vertex3);
+            sut.AddVertex(vertex4);
+
+            sut.AddEdge(edgeShouldBeRemoved1);
+            sut.AddEdge(edgeShouldBeRemoved2);
+            sut.AddEdge(edgeShouldBeRemoved3);
+            sut.AddEdge(edgeShouldStay);
 
             //Act
-            var resultRemove = testObject.TryRemoveEdge(new Edge());
-            var resultEdges = testObject.Edges;
+            sut.RemoveVertex(vertexToRemove);
+            var resultVerticesCount = sut.Vertices.Count();
+            var resultEdgesCount = sut.Edges.Count();
+            var resultEdge = sut.Edges.First();
 
             //Assert
-            Assert.True(resultRemove);
-            Assert.Empty(resultEdges);
-        }
-
-        [Fact]
-        public void TryRemoveEdge_TwoExistingEdgesRemoveOne_TrueAndOneLeft()
-        {
-            //Arrange
-            var testObject = new Graph();
-            testObject.TryAddVertex(new Vertex());
-            testObject.TryAddVertex(new Vertex(1, 2));
-            testObject.TryAddVertex(new Vertex(2, 3));
-            testObject.TryAddEdge(new Edge());
-            testObject.TryAddEdge(new Edge(new Vertex(1, 2), new Vertex(2, 3), 0));
-
-            //Act
-            var resultRemove = testObject.TryRemoveEdge(new Edge());
-            var resultEdges = testObject.Edges;
-
-            //Assert
-            Assert.True(resultRemove);
-            Assert.Single(resultEdges);
-        }
-
-        [Fact]
-        public void TryRemoveEdge_TwoExistingEdgesRemoveOneInverted_False()
-        {
-            //Arrange
-            var testObject = new Graph();
-            testObject.TryAddVertex(new Vertex());
-            testObject.TryAddVertex(new Vertex(1, 2));
-            testObject.TryAddVertex(new Vertex(2, 3));
-            testObject.TryAddEdge(new Edge());
-            testObject.TryAddEdge(new Edge(new Vertex(1, 2), new Vertex(2, 3), 0));
-
-            //Act
-            var resultRemove = testObject.TryRemoveEdge(new Edge(new Vertex(2, 3), new Vertex(1, 2), 0));
-            var resultCount = testObject.Edges.Count();
-
-            //Assert
-            Assert.False(resultRemove);
-            Assert.Equal(2, resultCount);
-        }
-
-        [Fact]
-        public void TryRemoveVertex_ConnectedGraph_RemoveVertexAndConnectedEdges()
-        {
-            //Arrange
-            var testObject = new Graph();
-            var vertex1 = new Vertex(1, 2);
-            var vertexToRemove = new Vertex(2, 3);
-            var vertex3 = new Vertex(4, 5);
-            var vertex4 = new Vertex(6, 7);
-
-            var edgeShouldBeRemoved1 = new Edge(vertex1, vertexToRemove, 1);
-            var edgeShouldBeRemoved2 = new Edge(vertexToRemove, vertex3, 2);
-            var edgeShouldBeRemoved3 = new Edge(vertexToRemove, vertex4, 3);
-            var edgeShouldStay = new Edge(vertex3, vertex4, 4);
-
-            testObject.TryAddVertex(vertex1);
-            testObject.TryAddVertex(vertexToRemove);
-            testObject.TryAddVertex(vertex3);
-            testObject.TryAddVertex(vertex4);
-
-            testObject.TryAddEdge(edgeShouldBeRemoved1);
-            testObject.TryAddEdge(edgeShouldBeRemoved2);
-            testObject.TryAddEdge(edgeShouldBeRemoved3);
-            testObject.TryAddEdge(edgeShouldStay);
-
-            //Act
-            var resultRemove = testObject.TryRemoveVertex(vertexToRemove);
-            var resultVerticesCount = testObject.Vertices.Count();
-            var resultEdgesCount = testObject.Edges.Count();
-            var resultEdge = testObject.Edges.First();
-
-            //Assert
-            Assert.True(resultRemove);
             Assert.Equal(3, resultVerticesCount);
             Assert.Equal(1, resultEdgesCount);
             Assert.Equal(4, resultEdge.Weight);
-            Assert.Equal(vertex3, resultEdge.From);
-            Assert.Equal(vertex4, resultEdge.To);
+            Assert.Equal(vertex3, resultEdge.Tail);
+            Assert.Equal(vertex4, resultEdge.Head);
         }
 
         [Fact]
         public void FindAdjacentOf_UndirectedVertices_CorrectVertices()
         {
             //Arrange
-            var testObject = new Graph();
-            var vertex1 = new Vertex(1, 2);
-            var vertex2 = new Vertex(3, 4);
-            var vertex3 = new Vertex(5, 6);
+            var sut = new Graph<string>();
+            var vertex1 = TestVertex1;
+            var vertex2 = new Vertex<string>("testValue3");
+            var vertex3 = new Vertex<string>("testValue4");
 
-            testObject.TryAddVertex(vertex1);
-            testObject.TryAddVertex(vertex2);
-            testObject.TryAddVertex(vertex3);
+            sut.AddVertex(vertex1);
+            sut.AddVertex(vertex2);
+            sut.AddVertex(vertex3);
 
-            testObject.TryAddUndirectedEdge(vertex1, vertex2, 0);
-            testObject.TryAddUndirectedEdge(vertex1, vertex3, 0);
+            sut.AddUndirectedEdge(vertex1, vertex2, 0);
+            sut.AddUndirectedEdge(vertex1, vertex3, 0);
 
             //Act
-            var result1 = testObject.FindAdjacentOf(vertex1);
-            var result2 = testObject.FindAdjacentOf(vertex2);
-            var result3 = testObject.FindAdjacentOf(vertex3);
+            var result1 = sut.FindAdjacentOf(vertex1);
+            var result2 = sut.FindAdjacentOf(vertex2);
+            var result3 = sut.FindAdjacentOf(vertex3);
 
             //Assert
             Assert.Equal(2, result1.Count());
@@ -524,22 +553,22 @@ namespace Theseus.MapGeneratorTest
         public void FindAdjacentOf_DirectedVertices_CorrectVertices()
         {
             //Arrange
-            var testObject = new Graph();
-            var vertex1 = new Vertex(1, 2);
-            var vertex2 = new Vertex(3, 4);
-            var vertex3 = new Vertex(5, 6);
+            var sut = new Graph<string>();
+            var vertex1 = TestVertex1;
+            var vertex2 = new Vertex<string>("testValue3");
+            var vertex3 = new Vertex<string>("testValue4");
 
-            testObject.TryAddVertex(vertex1);
-            testObject.TryAddVertex(vertex2);
-            testObject.TryAddVertex(vertex3);
+            sut.AddVertex(vertex1);
+            sut.AddVertex(vertex2);
+            sut.AddVertex(vertex3);
 
-            testObject.TryAddDirectedEdge(vertex1, vertex2, 0);
-            testObject.TryAddDirectedEdge(vertex1, vertex3, 0);
+            sut.AddDirectedEdge(vertex1, vertex2, 0);
+            sut.AddDirectedEdge(vertex1, vertex3, 0);
 
             //Act
-            var result1 = testObject.FindAdjacentOf(vertex1);
-            var result2 = testObject.FindAdjacentOf(vertex2);
-            var result3 = testObject.FindAdjacentOf(vertex3);
+            var result1 = sut.FindAdjacentOf(vertex1);
+            var result2 = sut.FindAdjacentOf(vertex2);
+            var result3 = sut.FindAdjacentOf(vertex3);
 
             //Assert
             Assert.Equal(2, result1.Count());

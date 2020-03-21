@@ -5,14 +5,19 @@ namespace Theseus.MapGeneratorTest
 {
     public class EdgeTest
     {
+        private const string TestValue1 = "TestValue1";
+        private const string TestValue2 = "TestValue2";
+        private readonly Vertex<string> TestVertex1 = new Vertex<string>(TestValue1);
+        private readonly Vertex<string> TestVertex2 = new Vertex<string>(TestValue2);
+
         [Fact]
         public void Equals_OneObject_True()
         {
             //Arrange
-            var testObject = new Edge();
+            var sut = new Edge<string>(TestVertex1, TestVertex2, 0);
 
             //Act
-            var result = testObject.Equals(testObject);
+            var result = sut.Equals(sut);
 
             //Assert
             Assert.True(result);
@@ -22,12 +27,12 @@ namespace Theseus.MapGeneratorTest
         public void Equals_TwoTheSameObjects_True()
         {
             //Arrange
-            var testObject1 = new Edge(new Vertex(1, 2), new Vertex(2, 3), 2);
-            var testObject2 = new Edge(new Vertex(1, 2), new Vertex(2, 3), 2);
+            var sut1 = new Edge<string>(TestVertex1, TestVertex2, 2);
+            var sut2 = new Edge<string>(TestVertex1, TestVertex2, 2);
 
             //Act
-            var result1 = testObject1.Equals(testObject2);
-            var result2 = testObject2.Equals(testObject1);
+            var result1 = sut1.Equals(sut2);
+            var result2 = sut2.Equals(sut1);
 
             //Assert
             Assert.True(result1);
@@ -38,12 +43,12 @@ namespace Theseus.MapGeneratorTest
         public void Equals_ObjectsWithReversedCoordinates_False()
         {
             //Arrange
-            var testObject1 = new Edge(new Vertex(1, 2), new Vertex(2, 3), 2);
-            var testObject2 = new Edge(new Vertex(2, 3), new Vertex(1, 2), 2);
+            var sut1 = new Edge<string>(TestVertex1, TestVertex2, 2);
+            var sut2 = new Edge<string>(TestVertex2, TestVertex1, 2);
 
             //Act
-            var result1 = testObject1.Equals(testObject2);
-            var result2 = testObject2.Equals(testObject1);
+            var result1 = sut1.Equals(sut2);
+            var result2 = sut2.Equals(sut1);
 
             //Assert
             Assert.False(result1);
@@ -54,12 +59,12 @@ namespace Theseus.MapGeneratorTest
         public void Equals_TwoDifferentObjects_False()
         {
             //Arrange
-            var testObject1 = new Edge(new Vertex(1, 2), new Vertex(2, 3), 2);
-            var testObject2 = new Edge(new Vertex(2, 3), new Vertex(5, 2), 5);
+            var sut1 = new Edge<string>(TestVertex1, TestVertex2, 2);
+            var sut2 = new Edge<string>(TestVertex2, new Vertex<string>("TestValue3"), 5);
 
             //Act
-            var result1 = testObject1.Equals(testObject2);
-            var result2 = testObject2.Equals(testObject1);
+            var result1 = sut1.Equals(sut2);
+            var result2 = sut2.Equals(sut1);
 
             //Assert
             Assert.False(result1);

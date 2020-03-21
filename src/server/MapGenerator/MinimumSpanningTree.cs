@@ -1,36 +1,37 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 
 namespace Theseus.MapGenerator
 {
-    // https://en.wikipedia.org/wiki/Prim%27s_algorithm
-    public class MinimumSpanningTree : Graph
+    // https://en.wikipedia.org/wiki/Kruskal%27s_algorithm
+    public class MinimumSpanningTree<TValue> : Graph<TValue>
+        where TValue : notnull
     {
-        public MinimumSpanningTree(Graph graph) : base()
+        public MinimumSpanningTree(Graph<TValue> graph) : base()
         {
-            if (!graph.IsEmpty) CalculateMinimumSpanningTree(graph);
+            CalculateMinimumSpanningTree(graph);
         }
 
-        private void CalculateMinimumSpanningTree(Graph graph)
+        private void CalculateMinimumSpanningTree(Graph<TValue> graph)
         {
-            TryAddVertex(graph.Vertices.First());
-            while (DoesNotHaveTheSameNumberOfVertices(graph))
+            var disjointSet = new DisjointSet<Vertex<TValue>>(graph.Vertices);
+
+            foreach (var shortestEdge in graph.Edges.OrderBy(edge => edge.Weight))
             {
-                var shortestEdge = FindAvailableShortestNonCircularEdge(graph);
-                TryAddVertex(shortestEdge.To);
-                TryAddEdge(shortestEdge);
+                if (graph.ContainsSymmetric(shortestEdge) ||!disjointSet.HaveTheSameRoot(shortestEdge.Tail, shortestEdge.Head))
+                {
+                    CreateNewConnection(shortestEdge);
+                    disjointSet.Union(shortestEdge.Tail, shortestEdge.Head);
+                }
             }
         }
 
-        private bool DoesNotHaveTheSameNumberOfVertices(Graph graph) =>
-            Vertices.Count() != graph.Vertices.Count();
+        private void CreateNewConnection(Edge<TValue> shortestEdge)
+        {
+            if (!Vertices.Contains(shortestEdge.Head)) AddVertex(shortestEdge.Head);
+            if (!Vertices.Contains(shortestEdge.Tail)) AddVertex(shortestEdge.Tail);
 
-        private Edge FindAvailableShortestNonCircularEdge(Graph graph) =>
-            graph.Edges
-                .Where(IsAvailableAndNonCircular)
-                .OrderBy(edge => edge.Weight)
-                .First();
-
-        private bool IsAvailableAndNonCircular(Edge edge) =>
-            Vertices.Contains(edge.From) && !Vertices.Contains(edge.To);
+            AddEdge(shortestEdge);
+        }
     }
 }

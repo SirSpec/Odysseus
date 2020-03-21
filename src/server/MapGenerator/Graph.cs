@@ -4,84 +4,74 @@ using System.Linq;
 
 namespace Theseus.MapGenerator
 {
-    public class Graph
+    public class Graph<TValue> where TValue : notnull
     {
-        private readonly IList<Vertex> vertices = new List<Vertex>();
-        private readonly IList<Edge> edges = new List<Edge>();
+        private readonly IList<Vertex<TValue>> vertices = new List<Vertex<TValue>>();
+        private readonly IList<Edge<TValue>> edges = new List<Edge<TValue>>();
 
-        public IEnumerable<Vertex> Vertices => vertices;
-        public IEnumerable<Edge> Edges => edges;
+        public IEnumerable<Vertex<TValue>> Vertices => vertices;
+        public IEnumerable<Edge<TValue>> Edges => edges;
 
         public bool IsEmpty => !Vertices.Any();
 
-        public IEnumerable<Vertex> FindAdjacentOf(Vertex vertex) =>
-            Edges.Where(edge => edge.From.Equals(vertex)).Select(edge => edge.To);
+        public IEnumerable<Vertex<TValue>> FindAdjacentOf(Vertex<TValue> vertex) =>
+            Edges.Where(edge => edge.Tail.Equals(vertex)).Select(edge => edge.Head);
 
-        public bool Contains(Vertex vertex) =>
+        public bool Contains(Vertex<TValue> vertex) =>
             Vertices.Contains(vertex);
 
-        public bool TryAddVertex(Vertex vertex)
+        public bool ContainsSymmetric(Edge<TValue> edge) =>
+            Edges.Any(existingEdge => AreSymmetric(existingEdge, edge));
+
+
+        public void AddVertex(Vertex<TValue> vertex)
         {
-            if (!vertices.Contains(vertex))
-            {
-                vertices.Add(vertex);
-                return true;
-            }
-            else return false;
+            if (!vertices.Contains(vertex)) vertices.Add(vertex);
+            else throw new InvalidOperationException($"Vertex{{{vertex}}} already exists.");
         }
 
-        public bool TryAddDirectedEdge(Vertex from, Vertex to, double weight)
+        public void AddDirectedEdge(Vertex<TValue> tail, Vertex<TValue> head, double weight) =>
+            AddEdge(new Edge<TValue>(tail, head, weight));
+
+        public void AddUndirectedEdge(Vertex<TValue> a, Vertex<TValue> b, double weight)
         {
-            var newEdge = new Edge(from, to, weight);
-            return TryAddEdge(newEdge);
+            AddEdge(new Edge<TValue>(a, b, weight));
+            AddEdge(new Edge<TValue>(b, a, weight));
         }
 
-        public bool TryAddUndirectedEdge(Vertex a, Vertex b, double weight)
+        public void AddEdge(Edge<TValue> edge)
         {
-            var newEdge1 = new Edge(a, b, weight);
-            var newEdge2 = new Edge(b, a, weight);
-
-            return TryAddEdge(newEdge1) && TryAddEdge(newEdge2);
-        }
-
-        public bool TryAddEdge(Edge edge)
-        {
-            if (!Edges.Contains(edge) && Vertices.Contains(edge.From) && Vertices.Contains(edge.To))
-            {
+            if (!Edges.Contains(edge) && Vertices.Contains(edge.Head) && Vertices.Contains(edge.Tail))
                 edges.Add(edge);
-                return true;
-            }
-            else return false;
+            else throw new InvalidOperationException($"Edge{{{edge.Head} - {edge.Weight} -> {edge.Tail}}} already exists.");
         }
 
-        public bool TryRemoveEdge(Edge edge)
+        public void RemoveEdge(Edge<TValue> edge)
         {
-            if (Edges.Contains(edge))
-            {
-                edges.Remove(edge);
-                return true;
-            }
-            else return false;
+            if (Edges.Contains(edge)) edges.Remove(edge);
+            else throw new InvalidOperationException($"Edge{{{edge.Head} - {edge.Weight} -> {edge.Tail}}} does not exist.");
         }
 
-        public bool TryRemoveVertex(Vertex vertex)
+        public void RemoveVertex(Vertex<TValue> vertex)
         {
             if (Vertices.Contains(vertex))
             {
                 RemoveEdgesThatContain(vertex);
                 vertices.Remove(vertex);
-                return true;
             }
-            else return false;
+            else throw new InvalidOperationException($"Vertex{{{vertex}}} does not exist.");
         }
 
-        private void RemoveEdgesThatContain(Vertex vertex)
+        private void RemoveEdgesThatContain(Vertex<TValue> vertex)
         {
-            var edgesToRemove = Edges.Where(edge => edge.From.Equals(vertex) || edge.To.Equals(vertex)).ToList();
+            var edgesToRemove = Edges.Where(edge => edge.Head.Equals(vertex) || edge.Tail.Equals(vertex)).ToList();
             foreach (var edge in edgesToRemove)
             {
                 edges.Remove(edge);
             }
         }
+
+        private bool AreSymmetric(Edge<TValue> a, Edge<TValue> b) =>
+            a.Head.Equals(b.Tail) && a.Tail.Equals(b.Head) && a.Weight == b.Weight;
     }
 }
