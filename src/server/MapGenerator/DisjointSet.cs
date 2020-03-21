@@ -13,6 +13,14 @@ namespace Theseus.MapGenerator
         {
             set = values.Select(value => (value, value)).ToList();
         }
+
+        public bool HaveTheSameRoot(TValue elementA, TValue elementB)
+        {
+            var elementRootA = FindRoot(elementA);
+            var elementRootB = FindRoot(elementB);
+
+            return elementRootA.Equals(elementRootB);
+        }
         
         public TValue FindRoot(TValue element)
         {

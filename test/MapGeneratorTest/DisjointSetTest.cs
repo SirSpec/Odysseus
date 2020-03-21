@@ -52,5 +52,19 @@ namespace Theseus.MapGeneratorTest
             Assert.Equal(TestObjects[1], resultRoot1);
             Assert.Equal(TestObjects[1], resultRoot2);
         }
+
+        [Fact]
+        public void HaveTheSameRoot_UnionOfTwoElements_True()
+        {
+            //Arrange
+            var sut = new DisjointSet<Vertex<string>>(TestObjects);
+
+            //Act
+            sut.Union(TestObjects[0], TestObjects[1]);
+            var result = sut.HaveTheSameRoot(TestObjects[0], TestObjects[1]);
+
+            //Assert
+            Assert.True(result);
+        }
     }
 }

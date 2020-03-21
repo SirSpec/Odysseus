@@ -2,16 +2,18 @@
 
 namespace Theseus.MapGenerator
 {
-    public readonly struct Edge : IEquatable<Edge>
+    public class Edge<TValue> : IEquatable<Edge<TValue>>
+        where TValue : notnull
     {
-        public Vertex From { get; }
-        public Vertex To { get; }
+        public Vertex<TValue> Tail { get; }
+        public Vertex<TValue> Head { get; }
         public double Weight { get; }
 
-        public Edge(Vertex from, Vertex to, double weight) =>
-            (From, To, Weight) = (from, to, weight);
+        public Edge(Vertex<TValue> tail, Vertex<TValue> head, double weight) =>
+            (Tail, Head, Weight) = (tail, head, weight);
 
-        public bool Equals(Edge other) =>
-            Weight == other.Weight && From.Equals(other.From) && To.Equals(other.To);
+        public bool Equals(Edge<TValue> other) =>
+            this == other ||
+            (Weight == other.Weight && Tail.Equals(other.Tail) && Head.Equals(other.Head));
     }
 }
