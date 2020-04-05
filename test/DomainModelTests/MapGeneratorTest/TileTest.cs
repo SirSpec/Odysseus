@@ -1,7 +1,7 @@
 using Odysseus.DomainModel.MapGenerator;
 using Xunit;
 
-namespace Odysseus.DomainModelTests.MapGeneratorTest
+namespace Odysseus.DomainModel.MapGeneratorTest
 {
     public class TileTest
     {
@@ -92,6 +92,48 @@ namespace Odysseus.DomainModelTests.MapGeneratorTest
 
             Assert.False(result3);
             Assert.False(result4);
+        }
+
+        [Fact]
+        public void OffsetBy_OffsetLeftTopBy2_ValidTile()
+        {
+            //Arrange
+            var sut1 = new Tile(1, 1);
+            var sut2 = new Offset(-2, 2);
+
+            //Act
+            var result = sut1.OffsetBy(sut2);
+
+            //Assert
+            Assert.Equal((-1, 3), (result.X, result.Y));
+        }
+
+        [Fact]
+        public void OffsetBy_OffsetRightBottomBy2_ValidTile()
+        {
+            //Arrange
+            var sut1 = new Tile(1, 1);
+            var sut2 = new Offset(2, -2);
+
+            //Act
+            var result = sut1.OffsetBy(sut2);
+
+            //Assert
+            Assert.Equal((3, -1), (result.X, result.Y));
+        }
+
+        [Fact]
+        public void OffsetBy_OffsetZero_TheSameTile()
+        {
+            //Arrange
+            var sut1 = new Tile(1, 1);
+            var sut2 = new Offset();
+
+            //Act
+            var result = sut1.OffsetBy(sut2);
+
+            //Assert
+            Assert.Equal((1, 1), (result.X, result.Y));
         }
     }
 }
