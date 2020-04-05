@@ -1,44 +1,44 @@
-using Theseus.MapGenerator;
+using Odysseus.DomainModel.MapGenerator;
 using Xunit;
 
-namespace Theseus.MapGeneratorTest
+namespace Odysseus.DomainModelTests.MapGeneratorTest
 {
-    public class SizeTest
+    public class CorridorTest
     {
         [Fact]
         public void DefaultContructor_EmptyObject_EmptyProperties()
         {
             //Arrange
-            var sut = new Size();
+            var sut = new Corridor();
 
             //Act
-            var (width, height) = sut;
+            var (start, end) = sut.Vector;
 
             //Assert
-            Assert.Equal(0, width);
-            Assert.Equal(0, height);
+            Assert.Equal((0, 0), (start.X, start.Y));
+            Assert.Equal((0, 0), (end.X, end.Y));
         }
 
         [Fact]
         public void ParameterizedConstructor_ValidValues_ValidProperties()
         {
             //Arrange
-            var sut = new Size(1, 2);
+            var sut = new Corridor(new Vector(new Tile(1, 2), new Tile(3, 4)));
 
             //Act
-            var (width, height) = sut;
+            var (start, end) = sut.Vector;
 
             //Assert
-            Assert.Equal(1, width);
-            Assert.Equal(2, height);
+            Assert.Equal((1, 2), (start.X, start.Y));
+            Assert.Equal((3, 4), (end.X, end.Y));
         }
 
         [Fact]
         public void Equals_EmptyObjects_True()
         {
             //Arrange
-            var sut1 = new Size();
-            var sut2 = new Size();
+            var sut1 = new Corridor();
+            var sut2 = new Corridor();
 
             //Act
             var result1 = sut1.Equals(sut1);
@@ -55,8 +55,8 @@ namespace Theseus.MapGeneratorTest
         public void Equals_SameParameters_True()
         {
             //Arrange
-            var sut1 = new Size(1, 2);
-            var sut2 = new Size(1, 2);
+            var sut1 = new Corridor(new Vector(new Tile(1, 2), new Tile(3, 4)));
+            var sut2 = new Corridor(new Vector(new Tile(1, 2), new Tile(3, 4)));
 
             //Act
             var result1 = sut1.Equals(sut1);
@@ -73,11 +73,11 @@ namespace Theseus.MapGeneratorTest
         public void Equals_DifferentParameters_False()
         {
             //Arrange
-            var sut1 = new Size(1, 3);
-            var sut2 = new Size(1, 2);
+            var sut1 = new Corridor(new Vector(new Tile(1, 2), new Tile(3, 4)));
+            var sut2 = new Corridor(new Vector(new Tile(1, 2), new Tile(3, 5)));
 
-            var sut3 = new Size(1, 2);
-            var sut4 = new Size(2, 2);
+            var sut3 = new Corridor(new Vector(new Tile(5, 2), new Tile(3, 4)));
+            var sut4 = new Corridor(new Vector(new Tile(6, 2), new Tile(3, 4)));
 
             //Act
             var result1 = sut1.Equals(sut2);

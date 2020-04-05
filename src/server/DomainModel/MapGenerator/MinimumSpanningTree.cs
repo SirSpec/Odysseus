@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace Theseus.MapGenerator
+namespace Odysseus.DomainModel.MapGenerator
 {
     // https://en.wikipedia.org/wiki/Kruskal%27s_algorithm
     public class MinimumSpanningTree<TValue> : Graph<TValue>

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Theseus.MapGenerator
+namespace Odysseus.DomainModel.MapGenerator
 {
     public readonly struct Size : IEquatable<Size>
     {

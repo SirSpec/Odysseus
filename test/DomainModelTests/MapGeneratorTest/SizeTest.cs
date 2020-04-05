@@ -1,44 +1,44 @@
-using Theseus.MapGenerator;
+using Odysseus.DomainModel.MapGenerator;
 using Xunit;
 
-namespace Theseus.MapGeneratorTest
+namespace Odysseus.DomainModelTests.MapGeneratorTest
 {
-    public class TileTest
+    public class SizeTest
     {
         [Fact]
         public void DefaultContructor_EmptyObject_EmptyProperties()
         {
             //Arrange
-            var sut = new Tile();
+            var sut = new Size();
 
             //Act
-            var (x, y) = sut;
+            var (width, height) = sut;
 
             //Assert
-            Assert.Equal(0, x);
-            Assert.Equal(0, y);
+            Assert.Equal(0, width);
+            Assert.Equal(0, height);
         }
 
         [Fact]
         public void ParameterizedConstructor_ValidValues_ValidProperties()
         {
             //Arrange
-            var sut = new Tile(1, 2);
+            var sut = new Size(1, 2);
 
             //Act
-            var (x, y) = sut;
+            var (width, height) = sut;
 
             //Assert
-            Assert.Equal(1, x);
-            Assert.Equal(2, y);
+            Assert.Equal(1, width);
+            Assert.Equal(2, height);
         }
 
         [Fact]
         public void Equals_EmptyObjects_True()
         {
             //Arrange
-            var sut1 = new Tile();
-            var sut2 = new Tile();
+            var sut1 = new Size();
+            var sut2 = new Size();
 
             //Act
             var result1 = sut1.Equals(sut1);
@@ -55,8 +55,8 @@ namespace Theseus.MapGeneratorTest
         public void Equals_SameParameters_True()
         {
             //Arrange
-            var sut1 = new Tile(1, 2);
-            var sut2 = new Tile(1, 2);
+            var sut1 = new Size(1, 2);
+            var sut2 = new Size(1, 2);
 
             //Act
             var result1 = sut1.Equals(sut1);
@@ -73,11 +73,11 @@ namespace Theseus.MapGeneratorTest
         public void Equals_DifferentParameters_False()
         {
             //Arrange
-            var sut1 = new Tile(1, 3);
-            var sut2 = new Tile(1, 2);
+            var sut1 = new Size(1, 3);
+            var sut2 = new Size(1, 2);
 
-            var sut3 = new Tile(1, 2);
-            var sut4 = new Tile(2, 2);
+            var sut3 = new Size(1, 2);
+            var sut4 = new Size(2, 2);
 
             //Act
             var result1 = sut1.Equals(sut2);
