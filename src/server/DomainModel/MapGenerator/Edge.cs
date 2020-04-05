@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Theseus.MapGenerator
+namespace Odysseus.DomainModel.MapGenerator
 {
     public class Edge<TValue> : IEquatable<Edge<TValue>>
         where TValue : notnull

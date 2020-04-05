@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Theseus.MapGenerator
+namespace Odysseus.DomainModel.MapGenerator
 {
     public class Vertex<TValue> : IEquatable<Vertex<TValue>>
         where TValue : notnull

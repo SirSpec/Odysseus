@@ -1,9 +1,9 @@
 using Xunit;
 using System.Linq;
-using Theseus.MapGenerator;
+using Odysseus.DomainModel.MapGenerator;
 using System;
 
-namespace Theseus.MapGeneratorTest
+namespace Odysseus.DomainModelTests.MapGeneratorTest
 {
     public class GraphTest
     {

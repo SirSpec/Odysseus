@@ -1,44 +1,44 @@
-using Theseus.MapGenerator;
+using Odysseus.DomainModel.MapGenerator;
 using Xunit;
 
-namespace Theseus.MapGeneratorTest
+namespace Odysseus.DomainModelTests.MapGeneratorTest
 {
-    public class CorridorTest
+    public class RoomTest
     {
         [Fact]
         public void DefaultContructor_EmptyObject_EmptyProperties()
         {
             //Arrange
-            var sut = new Corridor();
+            var sut = new Room();
 
             //Act
-            var (start, end) = sut.Vector;
+            var (topLeftLocation, size) = sut;
 
             //Assert
-            Assert.Equal((0, 0), (start.X, start.Y));
-            Assert.Equal((0, 0), (end.X, end.Y));
+            Assert.Equal((0, 0), (topLeftLocation.X, topLeftLocation.Y));
+            Assert.Equal((0, 0), (size.Width, size.Height));
         }
 
         [Fact]
         public void ParameterizedConstructor_ValidValues_ValidProperties()
         {
             //Arrange
-            var sut = new Corridor(new Vector(new Tile(1, 2), new Tile(3, 4)));
+            var sut = new Room(new Tile(1, 2), new Size(3, 4));
 
             //Act
-            var (start, end) = sut.Vector;
+            var (topLeft, size) = sut;
 
             //Assert
-            Assert.Equal((1, 2), (start.X, start.Y));
-            Assert.Equal((3, 4), (end.X, end.Y));
+            Assert.Equal((1, 2), (topLeft.X, topLeft.Y));
+            Assert.Equal((3, 4), (size.Width, size.Height));
         }
 
         [Fact]
         public void Equals_EmptyObjects_True()
         {
             //Arrange
-            var sut1 = new Corridor();
-            var sut2 = new Corridor();
+            var sut1 = new Room();
+            var sut2 = new Room();
 
             //Act
             var result1 = sut1.Equals(sut1);
@@ -55,8 +55,8 @@ namespace Theseus.MapGeneratorTest
         public void Equals_SameParameters_True()
         {
             //Arrange
-            var sut1 = new Corridor(new Vector(new Tile(1, 2), new Tile(3, 4)));
-            var sut2 = new Corridor(new Vector(new Tile(1, 2), new Tile(3, 4)));
+            var sut1 = new Room(new Tile(1, 2), new Size(3, 4));
+            var sut2 = new Room(new Tile(1, 2), new Size(3, 4));
 
             //Act
             var result1 = sut1.Equals(sut1);
@@ -73,11 +73,11 @@ namespace Theseus.MapGeneratorTest
         public void Equals_DifferentParameters_False()
         {
             //Arrange
-            var sut1 = new Corridor(new Vector(new Tile(1, 2), new Tile(3, 4)));
-            var sut2 = new Corridor(new Vector(new Tile(1, 2), new Tile(3, 5)));
+            var sut1 = new Room(new Tile(1, 2), new Size(3, 4));
+            var sut2 = new Room(new Tile(1, 2), new Size(3, 5));
 
-            var sut3 = new Corridor(new Vector(new Tile(5, 2), new Tile(3, 4)));
-            var sut4 = new Corridor(new Vector(new Tile(6, 2), new Tile(3, 4)));
+            var sut3 = new Room(new Tile(5, 2), new Size(3, 4));
+            var sut4 = new Room(new Tile(6, 2), new Size(3, 4));
 
             //Act
             var result1 = sut1.Equals(sut2);

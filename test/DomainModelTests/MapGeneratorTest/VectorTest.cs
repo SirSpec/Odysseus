@@ -1,7 +1,7 @@
-using Theseus.MapGenerator;
+using Odysseus.DomainModel.MapGenerator;
 using Xunit;
 
-namespace Theseus.MapGeneratorTest
+namespace Odysseus.DomainModelTests.MapGeneratorTest
 {
     public class VectorTest
     {

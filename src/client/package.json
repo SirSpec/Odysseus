@@ -1,7 +1,7 @@
 {
-  "name": "theseus",
+  "name": "odysseus",
   "version": "1.0.0",
-  "description": "Client Application of Theseus project",
+  "description": "Client Application of Odysseus project",
   "main": "index.js",
   "author": "Spec",
   "private": true,

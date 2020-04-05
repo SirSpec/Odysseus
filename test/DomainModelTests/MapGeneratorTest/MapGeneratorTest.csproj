@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\server\MapGenerator\MapGenerator.csproj" />
+    <ProjectReference Include="..\..\..\src\server\DomainModel\MapGenerator\MapGenerator.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,44 +1,44 @@
-using Theseus.MapGenerator;
+using Odysseus.DomainModel.MapGenerator;
 using Xunit;
 
-namespace Theseus.MapGeneratorTest
+namespace Odysseus.DomainModelTests.MapGeneratorTest
 {
-    public class RoomTest
+    public class TileTest
     {
         [Fact]
         public void DefaultContructor_EmptyObject_EmptyProperties()
         {
             //Arrange
-            var sut = new Room();
+            var sut = new Tile();
 
             //Act
-            var (topLeftLocation, size) = sut;
+            var (x, y) = sut;
 
             //Assert
-            Assert.Equal((0, 0), (topLeftLocation.X, topLeftLocation.Y));
-            Assert.Equal((0, 0), (size.Width, size.Height));
+            Assert.Equal(0, x);
+            Assert.Equal(0, y);
         }
 
         [Fact]
         public void ParameterizedConstructor_ValidValues_ValidProperties()
         {
             //Arrange
-            var sut = new Room(new Tile(1, 2), new Size(3, 4));
+            var sut = new Tile(1, 2);
 
             //Act
-            var (topLeft, size) = sut;
+            var (x, y) = sut;
 
             //Assert
-            Assert.Equal((1, 2), (topLeft.X, topLeft.Y));
-            Assert.Equal((3, 4), (size.Width, size.Height));
+            Assert.Equal(1, x);
+            Assert.Equal(2, y);
         }
 
         [Fact]
         public void Equals_EmptyObjects_True()
         {
             //Arrange
-            var sut1 = new Room();
-            var sut2 = new Room();
+            var sut1 = new Tile();
+            var sut2 = new Tile();
 
             //Act
             var result1 = sut1.Equals(sut1);
@@ -55,8 +55,8 @@ namespace Theseus.MapGeneratorTest
         public void Equals_SameParameters_True()
         {
             //Arrange
-            var sut1 = new Room(new Tile(1, 2), new Size(3, 4));
-            var sut2 = new Room(new Tile(1, 2), new Size(3, 4));
+            var sut1 = new Tile(1, 2);
+            var sut2 = new Tile(1, 2);
 
             //Act
             var result1 = sut1.Equals(sut1);
@@ -73,11 +73,11 @@ namespace Theseus.MapGeneratorTest
         public void Equals_DifferentParameters_False()
         {
             //Arrange
-            var sut1 = new Room(new Tile(1, 2), new Size(3, 4));
-            var sut2 = new Room(new Tile(1, 2), new Size(3, 5));
+            var sut1 = new Tile(1, 3);
+            var sut2 = new Tile(1, 2);
 
-            var sut3 = new Room(new Tile(5, 2), new Size(3, 4));
-            var sut4 = new Room(new Tile(6, 2), new Size(3, 4));
+            var sut3 = new Tile(1, 2);
+            var sut4 = new Tile(2, 2);
 
             //Act
             var result1 = sut1.Equals(sut2);

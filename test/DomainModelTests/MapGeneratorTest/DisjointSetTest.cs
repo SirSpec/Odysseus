@@ -1,9 +1,9 @@
 using Xunit;
-using Theseus.MapGenerator;
+using Odysseus.DomainModel.MapGenerator;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Theseus.MapGeneratorTest
+namespace Odysseus.DomainModelTests.MapGeneratorTest
 {
     public class DisjointSetTest
     {
