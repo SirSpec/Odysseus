@@ -3,7 +3,7 @@ using System.Linq;
 using Odysseus.DomainModel.MapGenerator;
 using System;
 
-namespace Odysseus.DomainModelTests.MapGeneratorTest
+namespace Odysseus.DomainModel.MapGeneratorTest
 {
     public class GraphTest
     {

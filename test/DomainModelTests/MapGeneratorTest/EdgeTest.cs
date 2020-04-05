@@ -1,7 +1,7 @@
 using Odysseus.DomainModel.MapGenerator;
 using Xunit;
 
-namespace Odysseus.DomainModelTests.MapGeneratorTest
+namespace Odysseus.DomainModel.MapGeneratorTest
 {
     public class EdgeTest
     {
