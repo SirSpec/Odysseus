@@ -3,7 +3,7 @@ using Odysseus.DomainModel.MapGenerator;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Odysseus.DomainModelTests.MapGeneratorTest
+namespace Odysseus.DomainModel.MapGeneratorTest
 {
     public class DisjointSetTest
     {
