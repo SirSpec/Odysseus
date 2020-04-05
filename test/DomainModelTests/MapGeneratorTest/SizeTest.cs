@@ -1,7 +1,8 @@
+using System;
 using Odysseus.DomainModel.MapGenerator;
 using Xunit;
 
-namespace Odysseus.DomainModelTests.MapGeneratorTest
+namespace Odysseus.DomainModel.MapGeneratorTest
 {
     public class SizeTest
     {
@@ -17,6 +18,16 @@ namespace Odysseus.DomainModelTests.MapGeneratorTest
             //Assert
             Assert.Equal(0, width);
             Assert.Equal(0, height);
+        }
+
+        [Fact]
+        public void Contructor_NegativeValues_ArgumentException()
+        {
+            //Arrange
+            Action sut = () => new Size(-1, -1);
+
+            //Assert
+            Assert.Throws<ArgumentException>(sut);
         }
 
         [Fact]
