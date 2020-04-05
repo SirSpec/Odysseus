@@ -2,14 +2,40 @@
 
 namespace Odysseus.DomainModel.MapGenerator
 {
-    public readonly struct Room : IEquatable<Room>
+    public class Room : IEquatable<Room>, IOffsettable<Room>
     {
         public Tile TopLeft { get; }
+        public Tile BottomRight { get; }
         public Size Size { get; }
 
-        public Room(Tile topLeft, Size size) => (TopLeft, Size) = (topLeft, size);
-        public void Deconstruct(out Tile topLeftLocation, out Size size) => (topLeftLocation, size) = (TopLeft, Size);
+        public Room(Tile topLeft, Tile bottomRight)
+        {
+            if (topLeft.X > bottomRight.X || topLeft.Y < bottomRight.Y)
+            {
+                throw new ArgumentException($"Arguments " + 
+                    $"{nameof(topLeft)}({topLeft.X}, {topLeft.Y}), " +
+                    $"{nameof(bottomRight)}({bottomRight.X}, {bottomRight.Y}) are invalid.");
+            }
 
-        public bool Equals(Room other) => TopLeft.Equals(other.TopLeft) && Size.Equals(other.Size);
+            (TopLeft, BottomRight) = (topLeft, bottomRight);
+            Size = CalculateSize(topLeft, bottomRight);
+        }
+
+        public void Deconstruct(out Tile topLeft, out Tile bottomRight, out Size size) =>
+            (topLeft, bottomRight, size) = (TopLeft, BottomRight, Size);
+
+        public bool Equals(Room other) => 
+            this == other || (TopLeft.Equals(other.TopLeft) && BottomRight.Equals(other.BottomRight));
+
+        public Room OffsetBy(Offset offset) =>
+            new Room(TopLeft.OffsetBy(offset), BottomRight.OffsetBy(offset));
+
+        private Size CalculateSize(Tile topLeft, Tile bottomRight)
+        {
+            var horizontalTiles = Math.Abs(bottomRight.X - topLeft.X) + 1;
+            var verticalTiles = Math.Abs(topLeft.Y - bottomRight.Y) + 1;
+
+            return new Size(horizontalTiles, verticalTiles);
+        }
     }
 }
