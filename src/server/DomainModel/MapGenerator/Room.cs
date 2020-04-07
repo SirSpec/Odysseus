@@ -21,6 +21,13 @@ namespace Odysseus.DomainModel.MapGenerator
             Size = CalculateSize(topLeft, bottomRight);
         }
 
+        public Room(Tile topLeft, Size size)
+        {
+            TopLeft = topLeft;
+            Size = size;
+            BottomRight = CalculateBottomRight(topLeft, size);
+        }
+
         public void Deconstruct(out Tile topLeft, out Tile bottomRight, out Size size) =>
             (topLeft, bottomRight, size) = (TopLeft, BottomRight, Size);
 
@@ -37,5 +44,8 @@ namespace Odysseus.DomainModel.MapGenerator
 
             return new Size(horizontalTiles, verticalTiles);
         }
+
+        private Tile CalculateBottomRight(Tile topLeft, Size size) =>
+            topLeft.OffsetBy(new Offset(size.Width - 1, -(size.Height - 1)));
     }
 }
