@@ -13,9 +13,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MapGenerator", "src\server\
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{CCF6DEBE-3BD2-4C6D-9A6E-8302CC684612}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DomainModelTests", "DomainModelTests", "{3CD8522A-C71A-4B1C-8F4B-58080B4FCCAE}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DomainModel", "DomainModel", "{3CD8522A-C71A-4B1C-8F4B-58080B4FCCAE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MapGeneratorTest", "test\DomainModelTests\MapGeneratorTest\MapGeneratorTest.csproj", "{C5C64E30-59D5-41C1-9BE2-D3314558134E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MapGeneratorTest", "test\DomainModel\MapGeneratorTest\MapGeneratorTest.csproj", "{C5C64E30-59D5-41C1-9BE2-D3314558134E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
