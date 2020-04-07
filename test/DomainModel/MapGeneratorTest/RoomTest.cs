@@ -17,7 +17,7 @@ namespace Odysseus.DomainModel.MapGeneratorTest
         }
 
         [Fact]
-        public void ParameterizedConstructor_ValidValues_ValidProperties()
+        public void PositionedConstructor_ValidValues_ValidProperties()
         {
             //Arrange
             var sut = new Room(new Tile(1, 2), new Tile(3, -4));
@@ -28,6 +28,20 @@ namespace Odysseus.DomainModel.MapGeneratorTest
             //Assert
             Assert.Equal((1, 2), (topLeft.X, topLeft.Y));
             Assert.Equal((3, -4), (bottomRight.X, bottomRight.Y));
+        }
+
+        [Fact]
+        public void SizeConstructor_ValidSize_ValidPosition()
+        {
+            //Arrange
+            var sut = new Room(new Tile(1, 2), new Size(3, 4));
+
+            //Act
+            var (topLeft, bottomRight, size) = sut;
+
+            //Assert
+            Assert.Equal((1, 2), (topLeft.X, topLeft.Y));
+            Assert.Equal((3, -1), (bottomRight.X, bottomRight.Y));
         }
 
         [Fact]
