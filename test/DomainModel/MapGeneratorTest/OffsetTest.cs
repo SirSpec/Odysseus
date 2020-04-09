@@ -189,5 +189,18 @@ namespace Odysseus.DomainModel.MapGeneratorTest
             Assert.False(result1);
             Assert.False(result2);
         }
+
+        [Fact]
+        public void Then_ValidOffset_ValidMovedOffset()
+        {
+            //Arrange
+            var sut = new Offset(-1, 1);
+
+            //Act
+            var result = sut.Then(Offset.BottomBy(2)).Then(Offset.RightBy(1));
+
+            //Assert
+            Assert.Equal((0, -1), (result.X, result.Y));
+        }
     }
 }
