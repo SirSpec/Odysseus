@@ -6,11 +6,21 @@ namespace Odysseus.DomainModel.MapGenerator
 {
     public class Graph<TValue> where TValue : notnull
     {
-        private readonly IList<Vertex<TValue>> vertices = new List<Vertex<TValue>>();
+        private readonly IList<Vertex<TValue>> vertices;
         private readonly IList<Edge<TValue>> edges = new List<Edge<TValue>>();
 
         public IEnumerable<Vertex<TValue>> Vertices => vertices;
         public IEnumerable<Edge<TValue>> Edges => edges;
+
+        public Graph()
+        {
+            vertices = new List<Vertex<TValue>>();
+        }
+
+        public Graph(IEnumerable<TValue> values)
+        {
+            vertices = values.Select(value => new Vertex<TValue>(value)).ToList();
+        }
 
         public bool IsEmpty => !Vertices.Any();
 
