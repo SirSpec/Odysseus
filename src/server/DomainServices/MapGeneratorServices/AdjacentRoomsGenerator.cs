@@ -1,4 +1,5 @@
 ﻿using Odysseus.DomainModel.MapGenerator;
+using Odysseus.Framework.Randomizer;
 using System.Collections.Generic;
 
 namespace Odysseus.DomainServices.MapGenerator

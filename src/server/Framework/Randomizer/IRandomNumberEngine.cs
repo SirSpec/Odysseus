@@ -1,4 +1,4 @@
-﻿namespace Odysseus.DomainModel.MapGenerator
+﻿namespace Odysseus.Framework.Randomizer
 {
     public interface IRandomNumberEngine
     {
