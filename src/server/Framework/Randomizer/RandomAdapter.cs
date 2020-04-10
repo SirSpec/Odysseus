@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Odysseus.DomainModel.MapGenerator
+namespace Odysseus.Framework.Randomizer
 {
     public class RandomAdapter : IRandomNumberEngine
     {

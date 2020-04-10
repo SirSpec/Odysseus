@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Odysseus.DomainModel.MapGenerator
+namespace Odysseus.Framework.Randomizer
 {
     public readonly struct ConstraintRange<TValue> : IEquatable<ConstraintRange<TValue>>
         where TValue : IComparable<TValue>, IEquatable<TValue>

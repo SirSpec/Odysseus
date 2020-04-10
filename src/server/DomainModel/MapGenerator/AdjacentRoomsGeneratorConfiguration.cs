@@ -1,4 +1,6 @@
-﻿namespace Odysseus.DomainModel.MapGenerator
+﻿using Odysseus.Framework.Randomizer;
+
+namespace Odysseus.DomainModel.MapGenerator
 {
     public readonly struct AdjacentRoomsGeneratorConfiguration
     {

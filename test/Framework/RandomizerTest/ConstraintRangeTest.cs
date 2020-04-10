@@ -1,8 +1,8 @@
 using System;
-using Odysseus.DomainModel.MapGenerator;
+using Odysseus.Framework.Randomizer;
 using Xunit;
 
-namespace Odysseus.DomainModel.MapGeneratorTest
+namespace Odysseus.Framework.RandomizerTest
 {
     public class ConstraintRangeTest
     {
