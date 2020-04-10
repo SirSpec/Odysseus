@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Odysseus.DomainModel.MapGenerator
+namespace Odysseus.Framework.Mathematica
 {
     public class Graph<TValue> where TValue : notnull
     {

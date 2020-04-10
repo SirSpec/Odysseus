@@ -1,7 +1,7 @@
+using Odysseus.Framework.Mathematica;
 using Xunit;
-using Odysseus.DomainModel.MapGenerator;
 
-namespace Odysseus.DomainModel.MapGeneratorTest
+namespace Odysseus.Framework.MathematicaTest
 {
     public class MinimumSpanningTreeTest
     {

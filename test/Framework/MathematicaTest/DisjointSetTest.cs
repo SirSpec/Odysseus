@@ -1,9 +1,9 @@
 using Xunit;
-using Odysseus.DomainModel.MapGenerator;
 using System.Collections.Generic;
 using System.Linq;
+using Odysseus.Framework.Mathematica;
 
-namespace Odysseus.DomainModel.MapGeneratorTest
+namespace Odysseus.Framework.MathematicaTest
 {
     public class DisjointSetTest
     {
