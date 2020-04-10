@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Odysseus.DomainModel.MapGenerator
+namespace Odysseus.Framework.Mathematica
 {
     public class Edge<TValue> : IEquatable<Edge<TValue>>
         where TValue : notnull

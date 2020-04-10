@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Odysseus.DomainModel.MapGenerator
+namespace Odysseus.Framework.Mathematica
 {
     public static class MathExtensions
     {
