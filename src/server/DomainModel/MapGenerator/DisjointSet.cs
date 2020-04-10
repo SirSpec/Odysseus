@@ -21,7 +21,7 @@ namespace Odysseus.DomainModel.MapGenerator
 
             return elementRootA.Equals(elementRootB);
         }
-        
+
         public TValue FindRoot(TValue element)
         {
             var parent = this[element];
@@ -34,7 +34,7 @@ namespace Odysseus.DomainModel.MapGenerator
         {
             var subsetRootA = FindRoot(subsetElementA);
             var subsetRootB = FindRoot(subsetElementB);
-            
+
             this[subsetRootA] = subsetRootB;
         }
 
