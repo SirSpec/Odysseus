@@ -1,7 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using Odysseus.DomainModel.MapGenerator;
+using System.Collections.Generic;
 using System.Linq;
 
-namespace Odysseus.DomainModel.MapGenerator
+namespace Odysseus.DomainServices.MapGenerator
 {
     public class CorridorsGenerator : ICorridorsGenerator
     {
