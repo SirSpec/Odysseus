@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace Odysseus.DomainModel.MapGenerator
 {
-    public class CorridorsGenerator
+    public class CorridorsGenerator : ICorridorsGenerator
     {
         private readonly double roomRatioThreshold;
         private readonly int neighborsNumber;
@@ -17,22 +16,18 @@ namespace Odysseus.DomainModel.MapGenerator
 
         public IEnumerable<Corridor> Generate(IEnumerable<Room> rooms)
         {
-            var midPointOfMainRooms = rooms.Where(room => CalculateRoomRatio(room) > roomRatioThreshold).Select(CalculateMidpoint);
+            var midPointOfMainRooms = rooms
+                .Where(room => RoomRatio(room) > roomRatioThreshold)
+                .Select(Midpoint);
             var graph = GetGraphOfConnections(midPointOfMainRooms);
+
             return MapToCorridors(graph);
         }
 
-        private IEnumerable<Corridor> MapToCorridors(Graph<Tile> graph)
-        {
-            return graph.Vertices.SelectMany(vertex =>
+        private IEnumerable<Corridor> MapToCorridors(Graph<Tile> graph) =>
+            graph.Vertices.SelectMany(vertex =>
                 graph.FindAdjacentOf(vertex)
                     .Select(adjacentVertex => new Corridor(new Vector(adjacentVertex.Value, vertex.Value))));
-        }
-
-        private double CalculateRoomRatio(Room room)
-        {
-            return (double)room.Size.Width / room.Size.Height;
-        }
 
         private Graph<Tile> GetGraphOfConnections(IEnumerable<Tile> midPoints)
         {
@@ -52,19 +47,21 @@ namespace Odysseus.DomainModel.MapGenerator
             return new MinimumSpanningTree<Tile>(graph);
         }
 
-        private Tile CalculateMidpoint(Room room)
+        private double RoomRatio(Room room) =>
+            room.Size.Width <= room.Size.Height
+                ? (double)room.Size.Width / room.Size.Height
+                : (double)room.Size.Height / room.Size.Width;
+
+        private Tile Midpoint(Room room)
         {
-            var x = (room.TopLeft.X + room.BottomRight.X) / 2;
-            var y = (room.TopLeft.Y + room.BottomRight.Y) / 2;
-            return new Tile(x, y);
+            var midPoint = MathExtensions.Midpoint(
+                (room.TopLeft.X, room.TopLeft.Y),
+                (room.BottomRight.X, room.BottomRight.Y));
+
+            return new Tile((int)midPoint.X, (int)midPoint.Y);
         }
 
-        private double Distance(Tile a, Tile b)
-        {
-            var deltaX = a.X - b.X;
-            var deltaY = a.Y - b.Y;
-
-            return Math.Sqrt(deltaX * deltaX + deltaY * deltaY);
-        }
+        private double Distance(Tile a, Tile b) =>
+            MathExtensions.Distance((a.X, a.Y), (b.X, b.Y));
     }
 }
