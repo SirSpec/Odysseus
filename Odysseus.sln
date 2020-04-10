@@ -9,21 +9,21 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "server", "server", "{E3F23B
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DomainModel", "DomainModel", "{1AA5AD3C-F4D8-401A-BA82-A243426338A0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MapGenerator", "src\server\DomainModel\MapGenerator\MapGenerator.csproj", "{EB12F8FD-3E01-4E94-BAF0-0B817397DB71}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MapGenerator", "src\server\DomainModel\MapGenerator\MapGenerator.csproj", "{EB12F8FD-3E01-4E94-BAF0-0B817397DB71}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{CCF6DEBE-3BD2-4C6D-9A6E-8302CC684612}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DomainModel", "DomainModel", "{3CD8522A-C71A-4B1C-8F4B-58080B4FCCAE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MapGeneratorTest", "test\DomainModel\MapGeneratorTest\MapGeneratorTest.csproj", "{C5C64E30-59D5-41C1-9BE2-D3314558134E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MapGeneratorTest", "test\DomainModel\MapGeneratorTest\MapGeneratorTest.csproj", "{C5C64E30-59D5-41C1-9BE2-D3314558134E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DomainServices", "DomainServices", "{656CF0D9-C9D7-4089-A9E1-91554B5B0289}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MapGenerator", "src\server\DomainServices\MapGenerator\MapGenerator.csproj", "{1C2AFFD5-2A07-4A44-AA67-C215B513D9DC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MapGeneratorServices", "src\server\DomainServices\MapGeneratorServices\MapGeneratorServices.csproj", "{1C2AFFD5-2A07-4A44-AA67-C215B513D9DC}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DomainServices", "DomainServices", "{05C6FD01-1968-4DE5-93D4-DD4B0DA1DED3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MapGeneratorTest", "test\DomainServices\MapGeneratorTest\MapGeneratorTest.csproj", "{B06B09AA-1C6B-4880-8060-47C17C264B6C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MapGeneratorServicesTest", "test\DomainServices\MapGeneratorServicesTest\MapGeneratorServicesTest.csproj", "{B06B09AA-1C6B-4880-8060-47C17C264B6C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
