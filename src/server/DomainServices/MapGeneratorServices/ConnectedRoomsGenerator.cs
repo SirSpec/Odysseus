@@ -22,7 +22,7 @@ namespace Odysseus.DomainServices.MapGenerator
             var rooms = roomsGenerator.Generate();
             var corridors = corridorsGenerator.Generate(rooms);
 
-            var tiles = rooms.SelectMany(GetTile);
+            var tiles = rooms.SelectMany(GetTile).Concat(corridors.SelectMany(GetTile));
 
             return new Map(tiles);
         }
@@ -36,6 +36,28 @@ namespace Odysseus.DomainServices.MapGenerator
                     yield return new Tile(x, y);
                 }
             }
+        }
+
+        public IEnumerable<Tile> GetTile(Corridor corridor)
+        {
+            var (start, end) = corridor.Vector;
+
+            yield return start;
+            yield return end;
+
+            if (start.X <= end.X)
+                for (int x = start.X; x < end.X; x++)
+                    yield return new Tile(x, start.Y);
+            else
+                for (int x = end.X; x < start.X; x++)
+                    yield return new Tile(x, start.Y);
+
+            if (start.Y <= end.Y)
+                for (int y = start.Y; y < end.Y; y++)
+                    yield return new Tile(start.X, y);
+            else
+                for (int y = end.Y; y < start.Y; y++)
+                    yield return new Tile(start.X, y);
         }
     }
 }
