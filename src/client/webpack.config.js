@@ -3,6 +3,7 @@ const HtmlWebPackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
+    mode: 'development',
     plugins: [
         new CleanWebpackPlugin(),
         new HtmlWebPackPlugin({
@@ -61,5 +62,6 @@ module.exports = {
     output: {
         filename: '[name].js',
         path: path.resolve(__dirname, 'dist'),
+        publicPath: '/',
     },
 };
