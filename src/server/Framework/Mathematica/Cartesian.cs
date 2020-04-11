@@ -2,7 +2,7 @@
 
 namespace Odysseus.Framework.Mathematica
 {
-    public static class MathExtensions
+    public static class Cartesian
     {
         public static double Distance((double X, double Y) a, (double X, double Y) b)
         {
@@ -15,7 +15,7 @@ namespace Odysseus.Framework.Mathematica
         public static (double X, double Y) Midpoint((double X, double Y) a, (double X, double Y) b)
         {
             var x = (a.X + b.X) / 2;
-            var y = (a.Y + a.Y) / 2;
+            var y = (a.Y + b.Y) / 2;
             return (x, y);
         }
     }

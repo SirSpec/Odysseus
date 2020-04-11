@@ -29,7 +29,7 @@ namespace Odysseus.DomainServices.MapGenerator
         private IEnumerable<Corridor> MapToCorridors(Graph<Tile> graph) =>
             graph.Vertices.SelectMany(vertex =>
                 graph.FindAdjacentOf(vertex)
-                    .Select(adjacentVertex => new Corridor(new Vector(adjacentVertex.Value, vertex.Value))));
+                    .Select(adjacentVertex => new Corridor(new Vector(vertex.Value, adjacentVertex.Value))));
 
         private Graph<Tile> GetGraphOfConnections(IEnumerable<Tile> midPoints)
         {
@@ -56,7 +56,7 @@ namespace Odysseus.DomainServices.MapGenerator
 
         private Tile Midpoint(Room room)
         {
-            var midPoint = MathExtensions.Midpoint(
+            var midPoint = Cartesian.Midpoint(
                 (room.TopLeft.X, room.TopLeft.Y),
                 (room.BottomRight.X, room.BottomRight.Y));
 
@@ -64,6 +64,6 @@ namespace Odysseus.DomainServices.MapGenerator
         }
 
         private double Distance(Tile a, Tile b) =>
-            MathExtensions.Distance((a.X, a.Y), (b.X, b.Y));
+            Cartesian.Distance((a.X, a.Y), (b.X, b.Y));
     }
 }
