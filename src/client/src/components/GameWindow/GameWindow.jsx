@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux'
+
 import Canvas from "../../Canvas";
 
 import PlayerStatus from "./PlayerStatus";
@@ -29,7 +31,7 @@ const CanvasConfiguration = {
   height: Math.floor(window.innerHeight / (2 * DisplayOptions.fontSize)) * DisplayOptions.fontSize
 }
 
-const GameWindow = () => {
+let GameWindow = () => {
   const canvasRef = React.useRef(null);
   const [canvas, setCanvas] = useState(null);
 
@@ -70,5 +72,19 @@ const GameWindow = () => {
     </div>
   );
 };
+
+const mapStateToProps = state => {
+  return {
+    // todos: getVisibleTodos(state.todos, state.visibilityFilter)
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    // onTodoClick: id => dispatch(toggleTodo(id))
+  }
+}
+
+GameWindow = connect(mapStateToProps, mapDispatchToProps)(GameWindow)
 
 export default GameWindow;
