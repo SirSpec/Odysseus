@@ -14,21 +14,14 @@
 npm install
 ```
 
-## Webpack
-### Turn on development watch mode
-```
-npm run watch
-```
+## NPM development scripts
+`npm run watch` - Turn on webpack development watch mode
 
-### Build in development mode
-```
-npm run dev
-```
+`npm run dev` - Build in development mode
 
-### Build in production mode
-```
-npm run prod
-```
+`npm run prod` - Build in production mode
+
+`npm run server` - Run client server
 
 ## Storybook
 ```
