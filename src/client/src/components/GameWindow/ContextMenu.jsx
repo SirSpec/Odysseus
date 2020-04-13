@@ -4,10 +4,10 @@ import Span from "../Span/Span";
 
 import styles from "./styles";
 
-const ContextMenu = () => {
+const ContextMenu = (props) => {
   return (
     <Container className={styles.flex1} isDark withTitle title="Inventory">
-      <Span>Context Menu</Span>
+      <Span>{props.text}</Span>
     </Container>
   );
 };
