@@ -2,12 +2,6 @@ export default class Canvas {
   constructor(context, options) {
     this.context = context;
     this.options = options;
-    
-    this.context.textBaseline = 'top';
-    this.context.font = this.options.fontSize + 'px monospace';
-    
-    this.cellWidth = this.options.fontSize;//Math.floor(this.context.measureText(" ").width);
-    this.cellHeight = this.options.fontSize;
   }
 
   drawCanvas() {
@@ -17,24 +11,31 @@ export default class Canvas {
 
   draw(map, root) {
     this.drawCanvas()
+    this.context.textBaseline = 'top';
+    this.context.font = this.options.tileSize + 'px monospace';
 
     map.tiles.forEach(tile => {
-        this.context.fillStyle = "grey";
-        this.context.fillText("A", (root.x + tile.x) * this.cellWidth, (root.y + tile.y) * this.cellHeight);
+      this.context.fillStyle = "grey";
+      this.drawTile(tile, root)
+      
+      //testing
+      this.context.fillStyle = "red";
+      this.context.fillText("A", (root.x + tile.x) * this.options.tileSize, (root.y + tile.y) * this.options.tileSize);
     });
   }
 
-  drawTest() {
-    this.context.fillStyle = "red";
-    this.context.fillRect(10, 10, this.options.fontSize, this.options.fontSize);
+  drawTile(tile, root) {
+    var contentSize = this.options.tileSize - this.options.tileSpacing;
+    this.context.fillRect((tile.x + root.x) * this.options.tileSize, (tile.y + root.y) * this.options.tileSize, contentSize, contentSize);
   }
 
   mousePosition(mousePosition) {
     this.context.fillStyle = "green";
 
-    let x = Math.floor(mousePosition.x / this.cellWidth);
-    let y = Math.floor(mousePosition.y / this.cellHeight);
+    let x = Math.floor(mousePosition.x / this.options.tileSize);
+    let y = Math.floor(mousePosition.y / this.options.tileSize);
 
-    this.context.fillText("G", x * this.cellWidth, y * this.cellHeight);
+    var contentSize = this.options.tileSize - this.options.tileSpacing;
+    this.context.fillRect(x * this.options.tileSize, y * this.options.tileSize, contentSize, contentSize);
   }
 }
