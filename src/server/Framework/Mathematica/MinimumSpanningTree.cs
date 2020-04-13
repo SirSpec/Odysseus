@@ -18,7 +18,7 @@ namespace Odysseus.Framework.Mathematica
 
             foreach (var shortestEdge in graph.Edges.OrderBy(edge => edge.Weight))
             {
-                if (graph.ContainsSymmetric(shortestEdge) ||!disjointSet.HaveTheSameRoot(shortestEdge.Tail, shortestEdge.Head))
+                if (graph.ContainsSymmetric(shortestEdge) || !disjointSet.HaveTheSameRoot(shortestEdge.Tail, shortestEdge.Head))
                 {
                     CreateNewConnection(shortestEdge);
                     disjointSet.Union(shortestEdge.Tail, shortestEdge.Head);
