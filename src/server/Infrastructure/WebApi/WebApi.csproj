@@ -5,4 +5,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\DomainModel\MapGenerator\MapGenerator.csproj" />
+    <ProjectReference Include="..\..\DomainServices\MapGeneratorServices\MapGeneratorServices.csproj" />
+  </ItemGroup>
+
 </Project>
