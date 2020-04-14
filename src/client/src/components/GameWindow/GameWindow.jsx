@@ -10,19 +10,26 @@ import Map from "./Map";
 
 import styles from "./styles";
 
+const CanvasConfiguration = {
+  width: Math.floor(window.innerWidth / 2.5),
+  height: window.innerHeight
+}
+
 let GameWindow = () => {
-  const [menuText, setMenuText] = useState("");
+  const [hoveredTile, setHoveredTile] = useState(null);
 
   function handleCanvasClick(e) {
-    setMenuText(e);
+    setHoveredTile(`${e.x}, ${e.y}`);
   }
 
   return (
     <div className={styles.full_height}>
-      <Map handleCanvasClick={handleCanvasClick} />
+      <Map
+        canvasConfiguration={CanvasConfiguration}
+        handleCanvasClick={handleCanvasClick} />
       <div className={styles.column}>
         <div className={styles.row}>
-          <PlayerStatus />
+          <PlayerStatus hoveredTile={hoveredTile} />
           <GameMenu />
         </div>
         <div className={`${styles.row} ${styles.flex1}`}>
@@ -30,7 +37,7 @@ let GameWindow = () => {
             <InteractionMenu />
             <ActivityLog />
           </div>
-          <ContextMenu text={menuText} />
+          <ContextMenu />
         </div>
       </div>
     </div>
