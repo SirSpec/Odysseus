@@ -4,7 +4,7 @@ import Span from "../Span/Span";
 
 import styles from "./styles";
 
-const PlayerStatus = () => {
+const PlayerStatus = (props) => {
   return (
     <Container isDark className={styles.flex2}>
       <div className={styles.row}>
@@ -53,7 +53,14 @@ const PlayerStatus = () => {
         </div>
       </div>
       <br />
-      <Span>Standing: Empty Tile<br /></Span>
+      <div className={styles.row}>
+        <div className={styles.flex1}>
+          <Span>Standing: Empty Tile<br /></Span>
+        </div>
+        <div className={styles.flex1}>
+          <Span>Hovered: {props.hoveredTile}<br /></Span>
+        </div>
+      </div>
     </Container>
   );
 };
