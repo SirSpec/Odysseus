@@ -24,7 +24,7 @@ const Map = (props) => {
     setCanvas(new Canvas(canvasRef.current.getContext('2d'), DisplayOptions));
 
     async function fetchMyAPI() {
-      const url = "https://localhost:44319/weatherforecast"
+      const url = "https://localhost:44301/"
       var response = await fetch(url);
       var data = await response.json();
       setMap(data);
