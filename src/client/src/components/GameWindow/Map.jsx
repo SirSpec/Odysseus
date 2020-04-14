@@ -6,28 +6,22 @@ import styles from "./styles";
 
 const DisplayOptions = {
   tileSize: 20,
-  tileSpacing: 5,
-  
-  backgroundColor: '#000000', //Black
-  foregroundColor: '#ffffff' //White
-}
+  tilePadding: 5,
 
-const CanvasConfiguration = {
-  width: Math.floor(window.innerWidth / 2.5),
-  height: window.innerHeight
+  backgroundColor: '#000000', //Black
+  foregroundColor: '#ffffff', //White
+  clickedTileColor: "lightgrey",
+  tileColor: "grey",
 }
 
 const Map = (props) => {
   const canvasRef = React.useRef(null);
   const [canvas, setCanvas] = useState(null);
   const [map, setMap] = useState(null);
-  const [c, setC] = useState(null);
   const [root, setRoot] = useState({ x: 0, y: 0 });
-  const [mouse, setMouse] = useState("");
 
   useEffect(() => {
     setCanvas(new Canvas(canvasRef.current.getContext('2d'), DisplayOptions));
-    setC(canvasRef.current.getContext('2d'))
 
     async function fetchMyAPI() {
       const url = "https://localhost:44319/weatherforecast"
@@ -42,13 +36,12 @@ const Map = (props) => {
   useEffect(() => {
     if (canvas) {
       canvas.drawCanvas();
-      // canvas.draw(map);
     }
   }, [canvas]);
 
   useEffect(() => {
     if (canvas) {
-      canvas.draw(map, root);
+      canvas.drawMap(map, root);
     }
   }, [map, root]);
 
@@ -72,23 +65,15 @@ const Map = (props) => {
   }
 
   function mouseClick(e) {
-    var rect = canvasRef.current.getBoundingClientRect();
-    const newLocation = { x: e.pageX - rect.x - window.scrollX, y: e.pageY - rect.y - window.scrollY }
-    canvas.mousePosition(newLocation);
+    var canvasElement = canvasRef.current.getBoundingClientRect();
+    const newLocation = canvas.mousePosition(e, canvasElement)
+    canvas.clickTile(newLocation);
   }
 
   function handleCanvasClick(e) {
     var rect = canvasRef.current.getBoundingClientRect();
-
-    const mouseText = `Client: ${e.clientX}, ${e.clientY} => Page:${e.pageX}, ${e.pageY} => Screen:${e.screenX}, ${e.screenY}`
-    const windowText = ` // Window Inner: ${window.innerWidth}, ${window.innerHeight} => Window outer: ${window.outerWidth}, ${window.outerHeight}`
-    const canvasText = ` // Canvas : ${c.canvas.width}, ${c.canvas.height}`
-
-    const rectText = ` // Rect : ${rect.x}, ${rect.y} => Rect Size: ${rect.width}, ${rect.height}`
-    const mouseOnCanvas = ` // mouseOnCanvas : ${e.pageX - rect.x - window.scrollX}, ${e.pageY - rect.y - window.scrollY}`
-    setMouse(mouseText + windowText + canvasText + rectText + mouseOnCanvas);
-
-    props.handleCanvasClick(mouse)
+    var mouseOnCanvas = canvas.mousePosition(e, rect)
+    props.handleCanvasClick(canvas.tileCoordinates(mouseOnCanvas))
   }
 
   return (
@@ -97,8 +82,8 @@ const Map = (props) => {
       tabIndex="0"
       className={styles.floatLeft}
       ref={canvasRef}
-      width={CanvasConfiguration.width}
-      height={CanvasConfiguration.height}
+      width={props.canvasConfiguration.width}
+      height={props.canvasConfiguration.height}
       onMouseMove={handleCanvasClick}
       onClick={mouseClick}
       onKeyPress={handler}

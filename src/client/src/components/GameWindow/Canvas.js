@@ -2,6 +2,8 @@ export default class Canvas {
   constructor(context, options) {
     this.context = context;
     this.options = options;
+
+    this.contentSize = this.options.tileSize - this.options.tilePadding
   }
 
   drawCanvas() {
@@ -9,33 +11,49 @@ export default class Canvas {
     this.context.fillRect(0, 0, this.context.canvas.width, this.context.canvas.height);
   }
 
-  draw(map, root) {
+  drawMap(map, root) {
     this.drawCanvas()
-    this.context.textBaseline = 'top';
-    this.context.font = this.options.tileSize + 'px monospace';
 
     map.tiles.forEach(tile => {
-      this.context.fillStyle = "grey";
-      this.drawTile(tile, root)
-      
-      //testing
-      this.context.fillStyle = "red";
-      this.context.fillText("A", (root.x + tile.x) * this.options.tileSize, (root.y + tile.y) * this.options.tileSize);
+      this.context.fillStyle = this.options.tileColor;
+      this.drawTileRelative(tile, root)
     });
   }
 
-  drawTile(tile, root) {
-    var contentSize = this.options.tileSize - this.options.tileSpacing;
-    this.context.fillRect((tile.x + root.x) * this.options.tileSize, (tile.y + root.y) * this.options.tileSize, contentSize, contentSize);
+  clickTile(mousePosition) {
+    this.context.fillStyle = this.options.clickedTileColor
+    var tile = this.tileCoordinates(mousePosition)
+
+    this.drawTile(tile)
   }
 
-  mousePosition(mousePosition) {
-    this.context.fillStyle = "green";
+  drawTileRelative(tileCoordinates, root) {
+    this.context.fillRect(
+      (tileCoordinates.x + root.x) * this.options.tileSize,
+      (tileCoordinates.y + root.y) * this.options.tileSize,
+      this.contentSize,
+      this.contentSize);
+  }
 
-    let x = Math.floor(mousePosition.x / this.options.tileSize);
-    let y = Math.floor(mousePosition.y / this.options.tileSize);
+  drawTile(tileCoordinates) {
+    this.context.fillRect(
+      tileCoordinates.x * this.options.tileSize,
+      tileCoordinates.y * this.options.tileSize,
+      this.contentSize,
+      this.contentSize);
+  }
 
-    var contentSize = this.options.tileSize - this.options.tileSpacing;
-    this.context.fillRect(x * this.options.tileSize, y * this.options.tileSize, contentSize, contentSize);
+  tileCoordinates(mousePosition) {
+    let x = Math.floor(mousePosition.x / this.options.tileSize)
+    let y = Math.floor(mousePosition.y / this.options.tileSize)
+
+    return { x, y }
+  }
+
+  mousePosition(mouseEvent, canvasElement) {
+    var x = mouseEvent.pageX - canvasElement.x - window.scrollX
+    var y = mouseEvent.pageY - canvasElement.y - window.scrollY
+
+    return { x, y }
   }
 }
