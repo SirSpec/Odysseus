@@ -11,13 +11,24 @@ export default class Canvas {
     this.context.fillRect(0, 0, this.context.canvas.width, this.context.canvas.height);
   }
 
-  drawMap(map, root) {
+  drawMap(map, actor, screenCenter) {
     this.drawCanvas()
 
     map.tiles.forEach(tile => {
       this.context.fillStyle = this.options.tileColor;
-      this.drawTileRelative(tile, root)
+      this.drawTileRelative(tile, screenCenter)
     });
+
+    this.context.fillStyle = this.options.rootColor;
+    this.drawTileRelative(actor, screenCenter)
+  }
+
+  drawActor(oldHero, actor, screenCenter) {
+    this.context.fillStyle = this.options.tileColor;
+    this.drawTileRelative(oldHero, screenCenter)
+
+    this.context.fillStyle = this.options.rootColor;
+    this.drawTileRelative(actor, screenCenter)
   }
 
   clickTile(mousePosition) {
@@ -27,10 +38,10 @@ export default class Canvas {
     this.drawTile(tile)
   }
 
-  drawTileRelative(tileCoordinates, root) {
+  drawTileRelative(tileCoordinates, screenCenter) {
     this.context.fillRect(
-      (tileCoordinates.x + root.x) * this.options.tileSize,
-      (tileCoordinates.y + root.y) * this.options.tileSize,
+      (tileCoordinates.x + screenCenter.x) * this.options.tileSize,
+      (tileCoordinates.y + screenCenter.y) * this.options.tileSize,
       this.contentSize,
       this.contentSize);
   }

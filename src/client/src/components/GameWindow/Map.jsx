@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from "prop-types";
 
 import Canvas from "./Canvas";
+import InputService from "./InputService";
+import MapService from "./MapService";
 import styles from "./styles";
 
 const DisplayOptions = {
@@ -12,13 +14,16 @@ const DisplayOptions = {
   foregroundColor: '#ffffff', //White
   clickedTileColor: "lightgrey",
   tileColor: "grey",
+  rootColor: "red"
 }
 
 const Map = (props) => {
   const canvasRef = React.useRef(null);
   const [canvas, setCanvas] = useState(null);
   const [map, setMap] = useState(null);
-  const [root, setRoot] = useState({ x: 0, y: 0 });
+  const [screenCenter, setScreenCenter] = useState({ x: 0, y: 0 });
+  const [actor, setActor] = useState({ x: 0, y: 0 });
+  const [oldActor, setOldActor] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
     setCanvas(new Canvas(canvasRef.current.getContext('2d'), DisplayOptions));
@@ -41,26 +46,28 @@ const Map = (props) => {
 
   useEffect(() => {
     if (canvas) {
-      canvas.drawMap(map, root);
+      canvas.drawMap(map, actor, screenCenter);
     }
-  }, [map, root]);
+  }, [map, screenCenter]);
+
+  useEffect(() => {
+    if (canvas) {
+      canvas.drawActor(oldActor, actor, screenCenter);
+    }
+  }, [actor]);
 
   function handler(event) {
-    switch (event.key) {
-      case "s":
-        setRoot({ x: root.x, y: root.y - 1 })
-        break;
-      case "w":
-        setRoot({ x: root.x, y: root.y + 1 })
-        break;
-      case "a":
-        setRoot({ x: root.x + 1, y: root.y })
-        break;
-      case "d":
-        setRoot({ x: root.x - 1, y: root.y })
-        break;
-      default:
-        break;
+    var offset = InputService.getCameraMoveKeyOffset(event.key);
+    if (!InputService.isZero(offset)) {
+      setScreenCenter(MapService.offset(screenCenter, offset))
+    }
+
+    var offset = InputService.getActorMoveKeyOffset(event.key);
+    if (!InputService.isZero(offset)) {
+      setOldActor(actor)
+      var newActor = MapService.offset(actor, offset);
+      if (MapService.contains(map.tiles, newActor))
+        setActor(newActor)
     }
   }
 
@@ -86,7 +93,7 @@ const Map = (props) => {
       height={props.canvasConfiguration.height}
       onMouseMove={handleCanvasClick}
       onClick={mouseClick}
-      onKeyPress={handler}
+      onKeyDown={handler}
     />
   );
 };
