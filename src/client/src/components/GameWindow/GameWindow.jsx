@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux'
 
 import PlayerStatus from "./PlayerStatus";
-import GameMenu from "./GameMenu";
+import GameMenu from "../GameMenu/GameMenu";
 import InteractionMenu from "./InteractionMenu";
 import ActivityLog from "./ActivityLog";
 import ContextMenu from "./ContextMenu";
