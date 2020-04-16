@@ -74,7 +74,12 @@ const Map = (props) => {
   function mouseClick(e) {
     var canvasElement = canvasRef.current.getBoundingClientRect();
     const newLocation = canvas.mousePosition(e, canvasElement)
-    canvas.clickTile(newLocation);
+    var tileCoords = canvas.tileCoordinates(newLocation);
+    var relative = {x: tileCoords.x - screenCenter.x, y:tileCoords.y - screenCenter.y}
+
+    if (MapService.contains(map.tiles, relative)) {
+      canvas.clickTile(newLocation);
+    }
   }
 
   function handleCanvasClick(e) {
