@@ -1,70 +1,76 @@
 export default class Canvas {
-  constructor(context, options) {
-    this.context = context;
-    this.options = options;
+    constructor(canvasRef, options) {
+        this.canvasRef = canvasRef;
+        this.context = canvasRef.current.getContext('2d');
+        this.options = options;
 
-    this.contentSize = this.options.tileSize - this.options.tilePadding
-  }
+        this.contentSize = this.options.tileSize - this.options.tilePadding
+    }
 
-  drawCanvas() {
-    this.context.fillStyle = this.options.backgroundColor;
-    this.context.fillRect(0, 0, this.context.canvas.width, this.context.canvas.height);
-  }
+    drawCanvas() {
+        this.context.fillStyle = this.options.backgroundColor;
+        this.context.fillRect(0, 0, this.context.canvas.width, this.context.canvas.height);
+    }
 
-  drawMap(map, actor, screenCenter) {
-    this.drawCanvas()
+    drawMap(map, screenCenter) {
+        this.drawCanvas()
 
-    map.tiles.forEach(tile => {
-      this.context.fillStyle = this.options.tileColor;
-      this.drawTileRelative(tile, screenCenter)
-    });
+        map.tiles.forEach(tile => {
+            this.drawFloorRelativeToScreenCenter(tile, screenCenter)
+        });
+    }
 
-    this.context.fillStyle = this.options.rootColor;
-    this.drawTileRelative(actor, screenCenter)
-  }
+    drawActor(actor, screenCenter) {
+        this.context.fillStyle = this.options.actorColor;
+        this.drawTileRelativeToScreenCenter(actor, screenCenter)
+    }
 
-  drawActor(oldHero, actor, screenCenter) {
-    this.context.fillStyle = this.options.tileColor;
-    this.drawTileRelative(oldHero, screenCenter)
+    clickTile(mouseEvent) {
+        var mousePosition = this.mousePosition(mouseEvent)
+        var tile = this.tileCoordinates(mousePosition)
 
-    this.context.fillStyle = this.options.rootColor;
-    this.drawTileRelative(actor, screenCenter)
-  }
+        this.context.fillStyle = this.options.clickedTileColor
+        this.drawTile(tile)
+    }
 
-  clickTile(mousePosition) {
-    this.context.fillStyle = this.options.clickedTileColor
-    var tile = this.tileCoordinates(mousePosition)
+    drawFloorRelativeToScreenCenter(tileCoordinates, screenCenter) {
+        this.context.fillStyle = this.options.tileColor
+        this.drawTileRelativeToScreenCenter(tileCoordinates, screenCenter)
+    }
 
-    this.drawTile(tile)
-  }
+    drawFloor(tileCoordinates) {
+        this.context.fillStyle = this.options.tileColor
+        this.drawTile(tileCoordinates)
+    }
 
-  drawTileRelative(tileCoordinates, screenCenter) {
-    this.context.fillRect(
-      (tileCoordinates.x + screenCenter.x) * this.options.tileSize,
-      (tileCoordinates.y + screenCenter.y) * this.options.tileSize,
-      this.contentSize,
-      this.contentSize);
-  }
+    drawTileRelativeToScreenCenter(tileCoordinates, screenCenter) {
+        this.context.fillRect(
+            (tileCoordinates.x + screenCenter.x) * this.options.tileSize,
+            (tileCoordinates.y + screenCenter.y) * this.options.tileSize,
+            this.contentSize,
+            this.contentSize);
+    }
 
-  drawTile(tileCoordinates) {
-    this.context.fillRect(
-      tileCoordinates.x * this.options.tileSize,
-      tileCoordinates.y * this.options.tileSize,
-      this.contentSize,
-      this.contentSize);
-  }
+    drawTile(tileCoordinates) {
+        this.context.fillRect(
+            tileCoordinates.x * this.options.tileSize,
+            tileCoordinates.y * this.options.tileSize,
+            this.contentSize,
+            this.contentSize);
+    }
 
-  tileCoordinates(mousePosition) {
-    let x = Math.floor(mousePosition.x / this.options.tileSize)
-    let y = Math.floor(mousePosition.y / this.options.tileSize)
+    tileCoordinates(mousePosition) {
+        let x = Math.floor(mousePosition.x / this.options.tileSize)
+        let y = Math.floor(mousePosition.y / this.options.tileSize)
 
-    return { x, y }
-  }
+        return { x, y }
+    }
 
-  mousePosition(mouseEvent, canvasElement) {
-    var x = mouseEvent.pageX - canvasElement.x - window.scrollX
-    var y = mouseEvent.pageY - canvasElement.y - window.scrollY
+    mousePosition(mouseEvent) {
+        var canvasElement = this.canvasRef.current.getBoundingClientRect();
+        var x = mouseEvent.pageX - canvasElement.x - window.scrollX
+        var y = mouseEvent.pageY - canvasElement.y - window.scrollY
 
-    return { x, y }
-  }
+        return { x, y }
+    }
 }
