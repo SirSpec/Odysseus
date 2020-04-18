@@ -13,8 +13,6 @@ export default class Canvas {
     }
 
     drawMap(map, screenCenter) {
-        this.drawCanvas()
-
         map.tiles.forEach(tile => {
             this.drawFloorRelativeToScreenCenter(tile, screenCenter)
         });

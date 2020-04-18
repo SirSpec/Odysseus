@@ -20,7 +20,6 @@ const DisplayOptions = {
 const Map = (props) => {
     const canvasRef = React.useRef(null);
     const [canvas, setCanvas] = useState(null);
-    const [map, setMap] = useState(null);
     const [screenCenter, setScreenCenter] = useState({ x: 0, y: 0 });
     const [selectedTile, setSelectedTile] = useState(null);
     const [actor, setActor] = useState({ x: 0, y: 0 });
@@ -28,29 +27,15 @@ const Map = (props) => {
 
     useEffect(() => {
         setCanvas(new Canvas(canvasRef, DisplayOptions));
-
-        async function fetchMyAPI() {
-            const url = "https://localhost:44301/"
-            var response = await fetch(url);
-            var data = await response.json();
-            setMap(data);
-        }
-
-        fetchMyAPI();
     }, []);
 
     useEffect(() => {
         if (canvas) {
             canvas.drawCanvas();
-        }
-    }, [canvas]);
-
-    useEffect(() => {
-        if (canvas) {
-            canvas.drawMap(map, screenCenter);
+            canvas.drawMap(props.map, screenCenter);
             canvas.drawActor(actor, screenCenter);
         }
-    }, [map, screenCenter]);
+    }, [canvas, screenCenter]);
 
     useEffect(() => {
         if (canvas) {
@@ -70,7 +55,7 @@ const Map = (props) => {
         if (!MapService.isZero(offset)) {
             setOldActor(actor)
             var newActor = MapService.offset(actor, offset);
-            if (MapService.contains(map.tiles, newActor)) {
+            if (MapService.contains(props.map.tiles, newActor)) {
                 setActor(newActor)
             }
         }
@@ -82,7 +67,7 @@ const Map = (props) => {
 
         var relative = MapService.relativeToScreenCenter(tileCoords, screenCenter)
 
-        if (MapService.contains(map.tiles, relative)) {
+        if (MapService.contains(props.map.tiles, relative)) {
             if (selectedTile) {
                 canvas.drawFloor(selectedTile);
             }
@@ -119,6 +104,7 @@ Map.propTypes = {
         height: PropTypes.number.isRequired
     }).isRequired,
     handleCanvasClick: PropTypes.func.isRequired,
+    map: PropTypes.any.isRequired
 };
 
 export default Map;
