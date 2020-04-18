@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux'
 
 import PlayerStatus from "./PlayerStatus";
@@ -51,7 +51,24 @@ const CanvasConfiguration = {
 
 let GameWindow = () => {
     const [hoveredTile, setHoveredTile] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
     const [isRayCastingOpened, setIsRayCastingOpened] = useState(false);
+    const [map, setMap] = useState(null);
+
+    useEffect(() => {
+        async function fetchMyAPI() {
+            const url = "https://localhost:44301/"
+            var response = await fetch(url);
+            var data = await response.json();
+            setMap(data);
+        }
+
+        fetchMyAPI();
+    }, []);
+
+    useEffect(() => {
+        if (map) setIsLoading(false)
+    }, [map]);
 
     function handleCanvasClick(e) {
         setHoveredTile(`${e.x}, ${e.y}`);
@@ -63,14 +80,17 @@ let GameWindow = () => {
 
     return (
         <div className={styles.full_height}>
-            {isRayCastingOpened
-                ? <RayCastingView
-                    canvasConfiguration={CanvasConfiguration}
-                    playerConfiguration={PlayerConfiguration}
-                    map={testRayCastingMap} />
-                : <Map
-                    canvasConfiguration={CanvasConfiguration}
-                    handleCanvasClick={handleCanvasClick} />
+            {!isLoading ?
+                isRayCastingOpened
+                    ? <RayCastingView
+                        canvasConfiguration={CanvasConfiguration}
+                        playerConfiguration={PlayerConfiguration}
+                        map={testRayCastingMap} />
+                    : <Map
+                        map={map}
+                        canvasConfiguration={CanvasConfiguration}
+                        handleCanvasClick={handleCanvasClick} />
+                : null
             }
             <div className={styles.column}>
                 <div className={styles.row}>
