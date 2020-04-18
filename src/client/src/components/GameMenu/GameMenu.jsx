@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from "prop-types";
 
 import Container from "../Container/Container";
 import Button from "../Button/Button";
@@ -6,7 +7,7 @@ import Dialog from "../Dialog/Dialog";
 
 import styles from "../GameWindow/styles.scss";
 
-const GameMenu = () => {
+const GameMenu = (props) => {
   const [isOpened, setIsOpened] = useState(false);
 
   function handleOpenHotkeys(clickEvent) {
@@ -16,6 +17,7 @@ const GameMenu = () => {
   return (
     <Container className={styles.flex1} isCentered>
       <p><Button type={Button.types.PRIMARY} onClick={handleOpenHotkeys}>Hotkeys</Button></p>
+      <p><Button type={Button.types.PRIMARY} onClick={props.handleChangeView}>View</Button></p>
       <p><Button type={Button.types.PRIMARY}>Save</Button> <Button type={Button.types.PRIMARY}>Load</Button></p>
       <p><Button type={Button.types.PRIMARY}>Statistics</Button></p>
       <p><Button type={Button.types.PRIMARY}>Inventory</Button></p>
@@ -33,6 +35,10 @@ const GameMenu = () => {
       </Dialog>
     </Container>
   );
+};
+
+GameMenu.propTypes = {
+  handleChangeView: PropTypes.func.isRequired,
 };
 
 export default GameMenu;
