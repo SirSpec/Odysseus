@@ -1,8 +1,8 @@
 export default class Player {
-    constructor(position, direction, cameraPlane) {
+    constructor(position) {
         this.position = position
-        this.direction = direction
-        this.cameraPlane = cameraPlane
+        this.direction = { x: -1, y: 0 }
+        this.cameraPlane = { x: 0, y: 0.66 }
     }
 
     nextStepX(step) {
