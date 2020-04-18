@@ -7,9 +7,9 @@ export default class RayCasting {
         this.context = canvasRef.current.getContext('2d');
         this.screen = options.screen
         this.map = map
-        this.moveSpeed = options.moveSpeed
-        this.rotationSpeed = options.rotationSpeed
-        this.player = new Player(options.playerPosition)
+        this.moveSpeed = options.playerConfiguration.moveSpeed
+        this.rotationSpeed = options.playerConfiguration.rotationSpeed
+        this.player = new Player(options.playerConfiguration.playerPosition)
     }
 
     forward() {
