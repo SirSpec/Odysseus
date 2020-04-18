@@ -28,11 +28,15 @@ export default class RayCasting {
         this.player.rotate(this.rotationSpeed)
     }
 
+    isWall(x, y) {
+        return !this.map.tiles.some(tile => tile.x === x && tile.y === y);
+    }
+
     move(moveSpeed) {
-        if (this.map[Math.floor(this.player.nextStepX(moveSpeed))][Math.floor(this.player.position.y)] == false)
+        if (this.isWall(Math.floor(this.player.nextStepX(moveSpeed)), Math.floor(this.player.position.y)) == false)
             this.player.moveX(moveSpeed)
 
-        if (this.map[Math.floor(this.player.position.x)][Math.floor(this.player.nextStepY(moveSpeed))] == false)
+        if (this.isWall(Math.floor(this.player.position.x), Math.floor(this.player.nextStepY(moveSpeed))) == false)
             this.player.moveY(moveSpeed)
     }
 
@@ -42,7 +46,7 @@ export default class RayCasting {
         for (var verticalScreenStripe = 0; verticalScreenStripe < this.screen.width; verticalScreenStripe++) {
             var rayDirection = this.rayDirection(verticalScreenStripe)
 
-            var dda = DigitalDifferentialAnalyzer.analyze(this.player.position, rayDirection, (tile) => this.map[tile.x][tile.y] > 0)
+            var dda = DigitalDifferentialAnalyzer.analyze(this.player.position, rayDirection, (tile) => this.isWall(tile.x, tile.y))
             var perpenducilarWallDistance = this.perpenducilarWallDistance(dda, rayDirection)
 
             var lineToDraw = this.lineToDraw(perpenducilarWallDistance)
