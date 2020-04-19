@@ -22,15 +22,10 @@
     "babel-loader": "^8.0.6",
     "clean-webpack-plugin": "^3.0.0",
     "css-loader": "^3.4.2",
-    "express": "^4.17.1",
     "file-loader": "^5.0.2",
     "html-loader": "^0.5.5",
     "html-webpack-plugin": "^3.2.0",
     "node-sass": "^4.13.0",
-    "react": "^16.12.0",
-    "react-dom": "^16.12.0",
-    "react-redux": "^7.2.0",
-    "redux": "^4.0.5",
     "sass-loader": "^8.0.1",
     "style-loader": "^1.1.2",
     "webpack": "^4.41.5",
@@ -38,6 +33,12 @@
     "webpack-dev-middleware": "^3.7.2"
   },
   "dependencies": {
-    "prop-types": "^15.7.2"
+    "@microsoft/signalr": "^3.1.3",
+    "express": "^4.17.1",
+    "prop-types": "^15.7.2",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "react-redux": "^7.2.0",
+    "redux": "^4.0.5"
   }
 }
