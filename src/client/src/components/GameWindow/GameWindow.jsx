@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux'
 
+import * as signalR from "@microsoft/signalr"
+
 import PlayerStatus from "./PlayerStatus";
 import GameMenu from "../GameMenu/GameMenu";
 import InteractionMenu from "./InteractionMenu";
@@ -12,7 +14,7 @@ import RayCastingView from "./RayCastingView";
 import styles from "./styles";
 
 const PlayerConfiguration = {
-    playerPosition: { x: 0, y: 0 },
+    playerPosition: { x: 0.5, y: 0.5 },
     rotationSpeed: 0.1,
     moveSpeed: 0.2
 }
@@ -29,14 +31,19 @@ let GameWindow = () => {
     const [map, setMap] = useState(null);
 
     useEffect(() => {
-        async function fetchMyAPI() {
-            const url = "https://localhost:44301/"
-            var response = await fetch(url);
-            var data = await response.json();
-            setMap(data);
-        }
+        var connection = new signalR.HubConnectionBuilder().withUrl("https://localhost:44301/hub").build()
+        connection.on("ReceiveMap", json => {
+            setMap(json);
+        })
 
-        fetchMyAPI();
+        connection.start().then(() => {
+            console.log("STARTED")
+            connection.invoke("SendMap").catch(err => {
+                console.log(err.toString());
+            });
+        }).catch(err => {
+            console.log(err.toString());
+        });
     }, []);
 
     useEffect(() => {
