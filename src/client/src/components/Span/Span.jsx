@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 
 const Span = (props) => (
-    <span className={props.type ? "nes-text " + props.type : "nes-text"}>
+    <span className={props.type ? "nes-text " + props.type : "nes-text"} onClick={props.onClick}>
         {props.children}
     </span>
 );
@@ -17,7 +17,8 @@ Span.types = {
 
 Span.propTypes = {
     children: PropTypes.any,
-    type: PropTypes.oneOf(Object.values(Span.types))
+    type: PropTypes.oneOf(Object.values(Span.types)),
+    onClick: PropTypes.func
 };
 
 export default Span;
