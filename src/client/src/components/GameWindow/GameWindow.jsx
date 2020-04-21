@@ -6,7 +6,7 @@ import * as signalR from "@microsoft/signalr"
 import PlayerStatus from "./PlayerStatus";
 import GameMenu from "../GameMenu/GameMenu";
 import InteractionMenu from "./InteractionMenu";
-import ActivityLog from "./ActivityLog";
+import ActivityLog from "../ActivityLog/ActivityLog";
 import ContextMenu from "./ContextMenu";
 import Map from "./Map";
 import RayCastingView from "./RayCastingView";
@@ -25,15 +25,26 @@ const CanvasConfiguration = {
 }
 
 let GameWindow = () => {
+    const [connection, setConnection] = useState(null);
     const [hoveredTile, setHoveredTile] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const [isRayCastingOpened, setIsRayCastingOpened] = useState(false);
     const [map, setMap] = useState(null);
+    const [mobs, setMobs] = useState([]);
+    const [logs, setLogs] = useState([]);
 
     useEffect(() => {
         var connection = new signalR.HubConnectionBuilder().withUrl("https://localhost:44301/hub").build()
-        connection.on("ReceiveMap", json => {
-            setMap(json);
+        connection.on("ReceiveMap", map => {
+            setMap(map);
+        })
+
+        connection.on("ReceiveMobs", mobs => {
+            setMobs(mobs);
+        })
+
+        connection.on("ReceiveLog", log => {
+            setLogs(logs => ([log, ...logs]));
         })
 
         connection.start().then(() => {
@@ -44,6 +55,8 @@ let GameWindow = () => {
         }).catch(err => {
             console.log(err.toString());
         });
+
+        setConnection(connection)
     }, []);
 
     useEffect(() => {
@@ -52,6 +65,12 @@ let GameWindow = () => {
 
     function handleCanvasClick(e) {
         setHoveredTile(`${e.x}, ${e.y}`);
+    }
+
+    function handleMobAttack(mobName) {
+        connection.invoke("Attack", mobName).catch(err => {
+            console.log(err)
+        });
     }
 
     function handleChangeView(e) {
@@ -80,9 +99,9 @@ let GameWindow = () => {
                 <div className={`${styles.row} ${styles.flex1}`}>
                     <div className={`${styles.column} ${styles.flex1}`}>
                         <InteractionMenu />
-                        <ActivityLog />
+                        <ActivityLog logs={logs} pageSize={5}/>
                     </div>
-                    <ContextMenu />
+                    <ContextMenu mobs={mobs} handleMobAttack={handleMobAttack} />
                 </div>
             </div>
         </div>
