@@ -1,20 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace Odysseus.DomainModel.GameMechanics
 {
+
     public class Inventory
     {
-        private readonly List<Item> items;
-
-        public IEnumerable<Item> Items => items;
-        public double Weight => Items.Sum(item => item.Weight);
-        public double CarryingCapacity { get; private set; }
+        public Equipment Equipment { get; }
+        public Backpack Backpack { get; }
         public int Gold { get; private set; }
+        public double CarryingCapacity { get; private set; }
 
-        public Inventory(double carryingCapacity) =>
-            (items, CarryingCapacity) = (new List<Item>(), carryingCapacity);
+        public double Weight => Equipment.Weight + Backpack.Weight;
+
+        public Inventory(Equipment equipment, Backpack backpack, double carryingCapacity) =>
+            (Equipment, Backpack, CarryingCapacity) = (equipment, backpack, carryingCapacity);
 
         public void ChangeCarryingCapacity(double carryingCapacity)
         {
@@ -31,15 +31,18 @@ namespace Odysseus.DomainModel.GameMechanics
             else throw new InvalidOperationException($"Not enough gold: {Gold}.");
         }
 
+        public bool CanPickUp(Item item) =>
+            Weight + item.Weight <= CarryingCapacity && !Backpack.IsFull;
+
         public void PickUp(Item item)
         {
-            if (Weight + item.Weight <= CarryingCapacity) items.Add(item);
+            if (CanPickUp(item)) Backpack.Put(item);
             else throw new InvalidOperationException($"Item Weight:{Weight} exceeds Carrying Capacity:{CarryingCapacity}.");
         }
 
         public void RemoveItem(Item item)
         {
-            if (items.Contains(item)) items.Remove(item);
+            if (Backpack.Contains(item)) Backpack.Remove(item);
             else throw new InvalidOperationException($"Item {item} does not exists.");
         }
     }
