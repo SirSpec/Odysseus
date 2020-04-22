@@ -8,7 +8,7 @@
         public Requirements(Experience experience, Attributes attributes) =>
             (Experience, Attributes) = (experience, attributes);
 
-        public bool AreSufficient(Experience experience, Attributes attributes) =>
+        public bool AreMet(Experience experience, Attributes attributes) =>
             Experience.Level >= experience.Level &&
             Attributes.Strength >= attributes.Strength &&
             Attributes.Dexterity >= attributes.Dexterity &&
