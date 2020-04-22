@@ -13,8 +13,7 @@ namespace Odysseus.DomainModel.GameMechanics
             Experience.LeveledUp += OnLeveledUpHandler;
 
             Health = new Health(5, 5);
-            Inventory = new Inventory(10);
-            Equipment = new Equipment();
+            Inventory = new Inventory(new Equipment(), new Backpack(10), 10);
             SpellBook = new SpellBook();
         }
 
@@ -28,7 +27,6 @@ namespace Odysseus.DomainModel.GameMechanics
         public Resistances Resistances { get; }
 
         public Inventory Inventory { get; }
-        public Equipment Equipment { get; }
         public SpellBook SpellBook { get; }
 
         public void IncreaseAttribute(Func<Attributes, Attributes> action)
@@ -49,7 +47,7 @@ namespace Odysseus.DomainModel.GameMechanics
 
         public void Learn(Spell spell)
         {
-            if (spell.Requirements.AreSufficient(Experience, Attributes) && !SpellBook.Contains(spell))
+            if (spell.Requirements.AreMet(Experience, Attributes) && !SpellBook.Contains(spell))
             {
                 SpellBook.Add(spell);
                 //Event added
@@ -67,9 +65,8 @@ namespace Odysseus.DomainModel.GameMechanics
 
         public void Equip(Item item)
         {
-            if (item.Requirements.AreSufficient(Experience, Attributes))
+            if (item.Requirements.AreMet(Experience, Attributes))
             {
-                Equipment.Equip(item);
                 //Event added
             }
             else
