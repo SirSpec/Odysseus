@@ -31,9 +31,7 @@ namespace Odysseus.DomainModel.GameMechanics
             else throw new ArgumentException($"{nameof(experience)}:{experience} cannot be less than 0.");
         }
 
-        private int CalculateLevel(int experience)
-        {
-            return 1;
-        }
+        private int CalculateLevel(int experience) =>
+            (int)Math.Floor((25 + Math.Sqrt(625 + 100 * experience)) / 50);
     }
 }
