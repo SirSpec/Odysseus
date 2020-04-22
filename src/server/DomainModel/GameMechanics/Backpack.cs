@@ -6,7 +6,7 @@ namespace Odysseus.DomainModel.GameMechanics
 {
     public class Backpack
     {
-        private readonly List<Item> items;
+        private readonly IList<Item> items;
 
         public int Capacity { get; }
         public IEnumerable<Item> Items => items;

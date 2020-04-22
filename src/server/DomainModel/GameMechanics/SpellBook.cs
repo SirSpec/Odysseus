@@ -19,7 +19,7 @@ namespace Odysseus.DomainModel.GameMechanics
         public void Add(Spell spell)
         {
             if (!Contains(spell)) spells.Add(spell);
-            else throw new InvalidOperationException($"{nameof(SpellBook)} already contains {nameof(Spell)}:{spell.Name}.");
+            else throw new InvalidOperationException($"{nameof(SpellBook)} already contains {nameof(Spell)}:{spell}.");
         }
     }
 }
