@@ -1,13 +1,12 @@
 ﻿namespace Odysseus.DomainModel.GameMechanics
 {
-    public class Health : EnergyPool
+    public readonly struct Health
     {
-        public Health(int total) : base(total)
-        {
-        }
+        public int Value { get; }
 
-        public Health(int current, int total) : base(current, total)
+        public Health(Experience experience, Attributes attributes)
         {
+            Value = experience.Level + attributes.Strength;
         }
     }
 }

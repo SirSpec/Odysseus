@@ -4,24 +4,13 @@ using Xunit;
 
 namespace Odysseus.DomainModel.GameMechanicsTest
 {
-    public class EnergyPoolStub : EnergyPool
-    {
-        public EnergyPoolStub(int total) : base(total)
-        {
-        }
-
-        public EnergyPoolStub(int current, int total) : base(current, total)
-        {
-        }
-    }
-
     public class EnergyPoolTest
     {
         [Fact]
         public void Constructor_NegativeInput_ThrowsArgumentException()
         {
             //Arrange
-            Action sut = () => new EnergyPoolStub(-1);
+            Action sut = () => new EnergyPool(-1);
 
             //Assert
             Assert.Throws<ArgumentException>(sut);
@@ -31,8 +20,8 @@ namespace Odysseus.DomainModel.GameMechanicsTest
         public void Constructor_NegativeInputs_ThrowsArgumentException()
         {
             //Arrange
-            Action sut1 = () => new EnergyPoolStub(-1, 1);
-            Action sut2 = () => new EnergyPoolStub(1, -1);
+            Action sut1 = () => new EnergyPool(-1, 1);
+            Action sut2 = () => new EnergyPool(1, -1);
 
             //Assert
             Assert.Throws<ArgumentException>(sut1);
@@ -43,7 +32,7 @@ namespace Odysseus.DomainModel.GameMechanicsTest
         public void Constructor_InvalidInputs_ThrowsArgumentException()
         {
             //Arrange
-            Action sut = () => new EnergyPoolStub(2, 1);
+            Action sut = () => new EnergyPool(2, 1);
 
             //Assert
             Assert.Throws<ArgumentException>(sut);
@@ -54,7 +43,7 @@ namespace Odysseus.DomainModel.GameMechanicsTest
         {
             //Arrange
             var total = 5;
-            var sut = new EnergyPoolStub(1, total);
+            var sut = new EnergyPool(1, total);
 
             //Act
             sut.Increase(10);
@@ -69,7 +58,7 @@ namespace Odysseus.DomainModel.GameMechanicsTest
         {
             //Arrange
             var total = 5;
-            var sut = new EnergyPoolStub(total);
+            var sut = new EnergyPool(total);
 
             //Act
             sut.Decrease(10);

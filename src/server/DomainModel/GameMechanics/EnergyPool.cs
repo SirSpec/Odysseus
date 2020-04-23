@@ -2,7 +2,7 @@
 
 namespace Odysseus.DomainModel.GameMechanics
 {
-    public abstract class EnergyPool
+    public class EnergyPool
     {
         public int Current { get; private set; }
         public int Total { get; }

@@ -1,9 +1,12 @@
 ﻿namespace Odysseus.DomainModel.GameMechanics
 {
-    public class Mana : EnergyPool
+    public readonly struct Mana
     {
-        public Mana(int current, int total) : base(current, total)
+        public int Value { get; }
+
+        public Mana(Experience experience, Attributes attributes)
         {
+            Value = experience.Level + attributes.Inteligence;
         }
     }
 }
