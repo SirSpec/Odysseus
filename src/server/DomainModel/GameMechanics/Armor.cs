@@ -1,13 +1,22 @@
-﻿namespace Odysseus.DomainModel.GameMechanics
+﻿using System;
+
+namespace Odysseus.DomainModel.GameMechanics
 {
-    public class Armor : Item
+    public readonly struct Armor : IEquatable<Armor>
     {
+        private const int Minimum = 0;
+
         public int Value { get; }
 
-        public Armor(string name, int weight, Requirements requirements, int value)
-            : base(name, weight, requirements)
+        public Armor(int value)
         {
+            if (value < Minimum)
+                throw new ArgumentException($"{nameof(value)}:{value} cannot be negative.");
+
             Value = value;
         }
+
+        public bool Equals(Armor other) =>
+            Value == other.Value;
     }
 }
