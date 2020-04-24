@@ -4,12 +4,14 @@ namespace Odysseus.DomainModel.GameMechanics
 {
     public class EnergyPool
     {
+        private const int Minimum = 0;
+
         public int Current { get; private set; }
         public int Total { get; }
 
         public EnergyPool(int total)
         {
-            if (total < 0)
+            if (total < Minimum)
                 throw new ArgumentException($"{nameof(total)}:{total} cannot be negative.");
 
             (Current, Total) = (total, total);
@@ -17,7 +19,7 @@ namespace Odysseus.DomainModel.GameMechanics
 
         public EnergyPool(int current, int total)
         {
-            if (current < 0 || total < 0 || current > total)
+            if (current < Minimum || total < Minimum || current > total)
                 throw new ArgumentException($"{nameof(current)}:{current} and {nameof(total)}:{total} are invalid.");
 
             (Current, Total) = (current, total);
@@ -29,8 +31,8 @@ namespace Odysseus.DomainModel.GameMechanics
                 : Current + value;
 
         public void Decrease(int value) =>
-            Current = Current - value <= 0
-                ? 0
+            Current = Current - value <= Minimum
+                ? Minimum
                 : Current - value;
     }
 }
