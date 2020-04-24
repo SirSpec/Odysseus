@@ -1,12 +1,17 @@
-﻿namespace Odysseus.DomainModel.GameMechanics
+﻿using System;
+
+namespace Odysseus.DomainModel.GameMechanics
 {
-    public readonly struct Health
+    public readonly struct Health : IEquatable<Health>
     {
+        private const int HealthPerLevel = 12;
+
         public int Value { get; }
 
-        public Health(Experience experience, Attributes attributes)
-        {
-            Value = experience.Level + attributes.Strength;
-        }
+        public Health(Level level, CharacterAttribute strength) =>
+            Value = HealthPerLevel * level.Value + strength.Value;
+
+        public bool Equals(Health other) =>
+            Value == other.Value;
     }
 }
