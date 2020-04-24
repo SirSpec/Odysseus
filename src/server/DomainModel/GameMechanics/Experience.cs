@@ -4,34 +4,36 @@ namespace Odysseus.DomainModel.GameMechanics
 {
     public class Experience
     {
-        public event EventHandler<int>? LeveledUp;
+        private const int Minimum = 0;
 
-        public int Level { get; private set; }
+        public event EventHandler<Level>? LeveledUp;
+
+        public Level Level { get; private set; }
         public int Points { get; private set; }
 
         public Experience(int points)
         {
-            if (points < 0)
-                throw new ArgumentException($"{nameof(points)}:{points} cannot be less than 0.");
+            if (points < Minimum)
+                throw new ArgumentException($"{nameof(points)}:{points} cannot be less than {Minimum}.");
 
             (Points, Level) = (points, CalculateLevel(points));
         }
 
         public void Gain(int experience)
         {
-            if (experience > 0)
+            if (experience > Minimum)
             {
                 Points += experience;
 
                 var level = CalculateLevel(Points);
-                if (level > Level) LeveledUp?.Invoke(this, level);
+                if (level.Value > Level.Value) LeveledUp?.Invoke(this, level);
 
                 Level = level;
             }
-            else throw new ArgumentException($"{nameof(experience)}:{experience} cannot be less than 0.");
+            else throw new ArgumentException($"{nameof(experience)}:{experience} cannot be less than {Minimum}.");
         }
 
-        private int CalculateLevel(int experience) =>
-            (int)Math.Floor((25 + Math.Sqrt(625 + 100 * experience)) / 50);
+        private Level CalculateLevel(int experience) =>
+            new Level((int)Math.Floor((25 + Math.Sqrt(625 + 100 * experience)) / 50));
     }
 }

@@ -23,7 +23,7 @@ namespace Odysseus.DomainModel.GameMechanicsTest
             var sut = new Experience(0);
 
             //Act
-            var result = sut.Level;
+            var result = sut.Level.Value;
 
             //Assert
             Assert.Equal(1, result);
