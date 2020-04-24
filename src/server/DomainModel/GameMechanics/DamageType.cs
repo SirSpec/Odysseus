@@ -2,7 +2,8 @@
 {
     public enum DamageType
     {
-        Physical,
+        Melee,
+        Ranged,
         Fire,
         Ice,
         Lightning
