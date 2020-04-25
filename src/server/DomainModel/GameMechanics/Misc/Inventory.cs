@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Linq;
 
 namespace Odysseus.DomainModel.GameMechanics
 {
-
     public class Inventory
     {
         public Equipment Equipment { get; }
@@ -31,16 +29,16 @@ namespace Odysseus.DomainModel.GameMechanics
             else throw new InvalidOperationException($"Not enough gold: {Gold}.");
         }
 
-        public bool CanPickUp(Item item) =>
+        public bool CanPickUp(IItem item) =>
             Weight + item.Weight <= CarryingCapacity && !Backpack.IsFull;
 
-        public void PickUp(Item item)
+        public void PickUp(IItem item)
         {
             if (CanPickUp(item)) Backpack.Put(item);
             else throw new InvalidOperationException($"Item Weight:{Weight} exceeds Carrying Capacity:{CarryingCapacity}.");
         }
 
-        public void RemoveItem(Item item)
+        public void RemoveItem(IItem item)
         {
             if (Backpack.Contains(item)) Backpack.Remove(item);
             else throw new InvalidOperationException($"Item {item} does not exists.");
