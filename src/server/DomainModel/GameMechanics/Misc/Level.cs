@@ -2,12 +2,14 @@
 
 namespace Odysseus.DomainModel.GameMechanics
 {
-    public readonly struct Level : IEquatable<Level>
+    public class Level : IEquatable<Level>
     {
         private const int Minimum = 1;
         private const int Maximum = 100;
 
         public int Value { get; }
+
+        public static Level One => new Level(Minimum);
 
         public Level(int level)
         {
