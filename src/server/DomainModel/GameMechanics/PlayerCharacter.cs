@@ -5,6 +5,12 @@ namespace Odysseus.DomainModel.GameMechanics
     public class PlayerCharacter
     {
         public string Name { get; }
+        public int SkillPoints { get; private set; }
+        public Statistics Statistics { get; }
+        public Experience Experience { get; }
+        public Inventory Inventory { get; }
+        public SpellBook SpellBook { get; }
+        public EnergyPool EnergyPool { get; }
 
         public PlayerCharacter(string name)
         {
@@ -12,73 +18,26 @@ namespace Odysseus.DomainModel.GameMechanics
             Experience = new Experience(0);
             Experience.LeveledUp += OnLeveledUpHandler;
 
-            Health = new Health(5, 5);
+            Statistics = new Statistics();
             Inventory = new Inventory(new Equipment(), new Backpack(10), 10);
             SpellBook = new SpellBook();
+            EnergyPool = new EnergyPool(Statistics.GetStatistic<Health>().Value);
         }
 
-        public Experience Experience { get; }
-        public int SkillPoints { get; private set; }
-
-        public Health Health { get; set; }
-        public Mana Mana { get; }
-
-        public Attributes Attributes { get; private set; }
-        public Resistances Resistances { get; }
-
-        public Inventory Inventory { get; }
-        public SpellBook SpellBook { get; }
-
-        public void IncreaseAttribute(Func<Attributes, Attributes> action)
+        public MeleeDamage Attack()
         {
-            Attributes = action(Attributes);
+            return new MeleeDamage(1);
         }
 
-        public Damage Attack()
+        public void TakeDamage(MeleeDamage damage)
         {
-            return new Damage(1, DamageType.Physical);
+            EnergyPool.Decrease(damage.Value);
         }
 
-        public Effect Cast(Spell spell)
+        private void OnLeveledUpHandler(object sender, Level level)
         {
-            if (SpellBook.Contains(spell)) return spell.Effect;
-            else throw new ArgumentException($"{nameof(SpellBook)} does not contain {nameof(spell)}:{spell.Name}.");
-        }
-
-        public void Learn(Spell spell)
-        {
-            if (spell.Requirements.AreMet(Experience, Attributes) && !SpellBook.Contains(spell))
-            {
-                SpellBook.Add(spell);
-                //Event added
-            }
-            else
-            {
-                //Not added Event
-            }
-        }
-
-        public void ReceiveDamage(Damage damage)
-        {
-            Health = Health.Decrease(damage.Value);
-        }
-
-        public void Equip(Item item)
-        {
-            if (item.Requirements.AreMet(Experience, Attributes))
-            {
-                //Event added
-            }
-            else
-            {
-                //Not added Event
-            }
-        }
-
-        private void OnLeveledUpHandler(object sender, int level)
-        {
-            if (level > Experience.Level)
-                SkillPoints += level - Experience.Level;
+            if (level.Value > Experience.Level.Value)
+                SkillPoints += level.Value - Experience.Level.Value;
         }
     }
 }

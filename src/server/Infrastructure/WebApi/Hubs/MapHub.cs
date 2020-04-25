@@ -36,11 +36,11 @@ namespace Odysseus.Infrastructure.WebApi.Hubs
             if (mob != null)
             {
                 var dmg = Hero.Attack();
-                mob.ReceiveDamage(dmg);
+                mob.TakeDamage(dmg);
                 await Clients.All.SendAsync("ReceiveLog", $"Hero dealt {dmg.Value} damage to mob: {mob.Name}.");
             }
 
-            if (mob.Health.IsDead)
+            if (mob.EnergyPool.Current == 0)
             {
                 Mobs.Remove(mob);
                 await Clients.All.SendAsync("ReceiveLog", $"Hero killed mob: {mob.Name}.");
