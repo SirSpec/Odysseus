@@ -10,7 +10,7 @@ namespace Odysseus.DomainModel.GameMechanicsTest
         public void Constructor_NegativeInput_ThrowsArgumentException()
         {
             //Arrange
-            Action sut = () => new Fire(-1);
+            Action sut = () => new FireResistance(-1);
 
             //Assert
             Assert.Throws<ArgumentException>(sut);
@@ -21,7 +21,7 @@ namespace Odysseus.DomainModel.GameMechanicsTest
         {
             //Arrange
             const int testValue = 71;
-            var sut = new Fire(testValue);
+            var sut = new FireResistance(testValue);
 
             //Act
             var value = sut.Value;

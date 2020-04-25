@@ -2,17 +2,17 @@
 
 namespace Odysseus.DomainModel.GameMechanics
 {
-    public class Fire : IStatistic
+    public class LightningResistance : IStatistic
     {
         private const int Minimum = 0;
         private const int Maximum = 70;
 
         public int Value { get; }
 
-        public Fire() =>
+        public LightningResistance() =>
             Value = Minimum;
 
-        public Fire(int value)
+        public LightningResistance(int value)
         {
             if (value < Minimum)
                 throw new ArgumentException($"{nameof(value)}:{value} cannot be less than {Minimum}.");
