@@ -2,20 +2,21 @@
 
 namespace Odysseus.DomainModel.GameMechanics
 {
-    public readonly struct Resistance
+    public class Lightning : IStatistic
     {
         private const int Minimum = 0;
         private const int Maximum = 70;
 
-        public int UncappedValue { get; }
         public int Value { get; }
 
-        public Resistance(int value)
+        public Lightning() =>
+            Value = Minimum;
+
+        public Lightning(int value)
         {
             if (value < Minimum)
                 throw new ArgumentException($"{nameof(value)}:{value} cannot be less than {Minimum}.");
 
-            UncappedValue = value;
             Value = CalculateResistance(value);
         }
 
