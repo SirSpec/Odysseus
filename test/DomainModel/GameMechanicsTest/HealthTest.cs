@@ -6,10 +6,23 @@ namespace Odysseus.DomainModel.GameMechanicsTest
     public class HealthTest
     {
         [Fact]
+        public void Constructor_Default_13()
+        {
+            //Arrange
+            var sut = new Health();
+
+            //Act
+            var result = sut.Value;
+
+            //Assert
+            Assert.Equal(13, result);
+        }
+
+        [Fact]
         public void Constructor_NewCharacter_13()
         {
             //Arrange
-            var sut = new Health(new Level(1), new CharacterAttribute(1));
+            var sut = new Health(new Level(1), new Strength(1));
 
             //Act
             var result = sut.Value;
@@ -22,7 +35,7 @@ namespace Odysseus.DomainModel.GameMechanicsTest
         public void Constructor_MaxLevelCharacterWithNoStrenght_1201()
         {
             //Arrange
-            var sut = new Health(new Level(100), new CharacterAttribute(1));
+            var sut = new Health(new Level(100), new Strength(1));
 
             //Act
             var result = sut.Value;
@@ -35,7 +48,7 @@ namespace Odysseus.DomainModel.GameMechanicsTest
         public void Constructor_MaxLevelCharacterWith100Strenght_1300()
         {
             //Arrange
-            var sut = new Health(new Level(100), new CharacterAttribute(100));
+            var sut = new Health(new Level(100), new Strength(100));
 
             //Act
             var result = sut.Value;
