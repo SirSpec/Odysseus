@@ -10,7 +10,7 @@ namespace Odysseus.DomainModel.GameMechanicsTest
         public void Constructor_NegativeInput_ThrowsArgumentException()
         {
             //Arrange
-            Action sut = () => new Damage(-1, DamageType.Melee);
+            Action sut = () => new MeleeDamage(-1);
 
             //Assert
             Assert.Throws<ArgumentException>(sut);
