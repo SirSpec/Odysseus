@@ -2,11 +2,14 @@
 
 namespace Odysseus.DomainModel.GameMechanics
 {
-    public readonly struct Armor : IEquatable<Armor>
+    public class Armor : IStatistic, IEquatable<Armor>
     {
         private const int Minimum = 0;
 
         public int Value { get; }
+
+        public Armor() =>
+            Value = Minimum;
 
         public Armor(int value)
         {
