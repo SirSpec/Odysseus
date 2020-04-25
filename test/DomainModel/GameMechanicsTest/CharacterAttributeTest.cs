@@ -10,7 +10,7 @@ namespace Odysseus.DomainModel.GameMechanicsTest
         public void Constructor_InputBelowMinimumValue_ThrowsArgumentException()
         {
             //Arrange
-            Action sut = () => new CharacterAttribute(0);
+            Action sut = () => new Strength(0);
 
             //Assert
             Assert.Throws<ArgumentException>(sut);
@@ -20,8 +20,8 @@ namespace Odysseus.DomainModel.GameMechanicsTest
         public void Equals_TheSameValues_True()
         {
             //Arrange
-            var sut1 = new CharacterAttribute(1);
-            var sut2 = new CharacterAttribute(1);
+            var sut1 = new Strength(1);
+            var sut2 = new Strength(1);
 
             //Act
             var result1 = sut1.Equals(sut2);
@@ -38,8 +38,8 @@ namespace Odysseus.DomainModel.GameMechanicsTest
         public void Equals_DifferentValues_False()
         {
             //Arrange
-            var sut1 = new CharacterAttribute(1);
-            var sut2 = new CharacterAttribute(2);
+            var sut1 = new Strength(1);
+            var sut2 = new Strength(2);
 
             //Act
             var result1 = sut1.Equals(sut2);
