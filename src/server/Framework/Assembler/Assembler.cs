@@ -10,7 +10,7 @@ namespace Odysseus.Framework.Assembler
         public static IEnumerable<TType> CreateImplementationOf<TType>()
         {
             var assembly = Assembly.GetAssembly(typeof(TType));
-            var types = GetTypes<TType>(assembly);
+            var types = GetTypes<TType>(assembly).Where(type => !type.IsAbstract);
 
             foreach (var type in types)
                 if (Activator.CreateInstance(type) is TType instance)
@@ -23,6 +23,6 @@ namespace Odysseus.Framework.Assembler
                 .Where(type => DoesImplement<TType>(type));
 
         public static bool DoesImplement<TType>(Type type) =>
-            type.BaseType == typeof(TType) || type.GetInterfaces().Contains(typeof(TType));
+            type.IsSubclassOf(typeof(TType)) || type.GetInterfaces().Contains(typeof(TType));
     }
 }
