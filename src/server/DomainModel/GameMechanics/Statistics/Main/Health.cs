@@ -2,26 +2,25 @@
 
 namespace Odysseus.DomainModel.GameMechanics
 {
-    public class Health : IStatistic, IEquatable<Health>
+    public class Health : Statistic, IEquatable<Health>
     {
         private const int Minimum = 0;
         private const int HealthPerLevel = 12;
-
-        public int Value { get; }
+        protected override int BaseValue { get; }
 
         public Health() =>
-            Value = CalculateHealth(Level.One, Strength.Initial);
+            BaseValue = CalculateHealth(Level.One, Strength.Initial);
 
         public Health(int value)
         {
             if (value < Minimum)
                 throw new ArgumentException($"{nameof(value)}:{value} cannot be less than {Minimum}.");
 
-            Value = value;
+            BaseValue = value;
         }
 
         public Health(Level level, Strength strength) =>
-            Value = CalculateHealth(level, strength);
+            BaseValue = CalculateHealth(level, strength);
 
         private int CalculateHealth(Level level, Strength strength) =>
             HealthPerLevel * level.Value + strength.Value;

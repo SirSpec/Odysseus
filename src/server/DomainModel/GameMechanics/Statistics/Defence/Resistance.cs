@@ -2,22 +2,21 @@
 
 namespace Odysseus.DomainModel.GameMechanics
 {
-    public class FireResistance : IStatistic
+    public abstract class Resistance : Statistic
     {
         private const int Minimum = 0;
         private const int Maximum = 70;
+        protected override int BaseValue { get; }
 
-        public int Value { get; }
+        public Resistance() =>
+            BaseValue = Minimum;
 
-        public FireResistance() =>
-            Value = Minimum;
-
-        public FireResistance(int value)
+        public Resistance(int value)
         {
             if (value < Minimum)
                 throw new ArgumentException($"{nameof(value)}:{value} cannot be less than {Minimum}.");
 
-            Value = CalculateResistance(value);
+            BaseValue = CalculateResistance(value);
         }
 
         private static int CalculateResistance(int value) =>

@@ -2,21 +2,20 @@
 
 namespace Odysseus.DomainModel.GameMechanics
 {
-    public class MeleeDamage : IStatistic
+    public abstract class Damage : Statistic
     {
+        protected override int BaseValue { get; }
         private const int Minimum = 0;
 
-        public int Value { get; }
+        public Damage() =>
+            BaseValue = Minimum;
 
-        public MeleeDamage() =>
-            Value = Minimum;
-
-        public MeleeDamage(int value)
+        public Damage(int value)
         {
             if (value < Minimum)
                 throw new ArgumentException($"{nameof(value)}:{value} cannot be negative.");
 
-            Value = value;
+            BaseValue = value;
         }
     }
 }
