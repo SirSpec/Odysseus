@@ -7,6 +7,6 @@ namespace Odysseus.DomainModel.GameMechanics
         public string Name { get; }
         public double Weight { get; }
         public Requirements Requirements { get; }
-        public IEnumerable<IModifier<IStatistic>> Modifiers { get; }
+        public IEnumerable<IModifier<Statistic>> Modifiers { get; }
     }
 }
