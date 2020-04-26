@@ -1,7 +1,7 @@
 ﻿namespace Odysseus.DomainModel.GameMechanics
 {
-    public interface IModifier<out TType> where TType : IStatistic
+    public interface IModifier<out TStatistic> where TStatistic : Statistic
     {
-        IStatistic Modify(IStatistic statistic);
+        int Modify(int value);
     }
 }

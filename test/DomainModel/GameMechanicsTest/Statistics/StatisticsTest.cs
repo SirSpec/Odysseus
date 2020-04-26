@@ -55,7 +55,7 @@ namespace Odysseus.DomainModel.GameMechanicsTest
         {
             //Arrange
             var statistics = new Statistics();
-            var sut = new HealthModifier(10);
+            var sut = new FlatModifier<Health>(10);
             statistics.Apply(sut);
 
 
