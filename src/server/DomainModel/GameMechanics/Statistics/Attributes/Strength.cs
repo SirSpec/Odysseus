@@ -1,6 +1,6 @@
 ﻿namespace Odysseus.DomainModel.GameMechanics
 {
-    public class Strength : Attribute
+    public class Strength : CharacterAttribute
     {
         public static Strength Initial => new Strength();
 
@@ -12,6 +12,6 @@
         {
         }
 
-        public override Attribute Increase() => new Strength(BaseValue + 1);
+        public override CharacterAttribute Increase() => new Strength(BaseValue + 1);
     }
 }

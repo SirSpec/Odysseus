@@ -2,12 +2,12 @@ using Odysseus.DomainModel.GameMechanics;
 using System;
 using Xunit;
 
-namespace Odysseus.DomainModel.GameMechanicsTest
+namespace Odysseus.DomainModel.GameMechanicsTest.Statistics
 {
     public class CharacterAttributeTest
     {
         [Fact]
-        public void Constructor_InputBelowMinimumValue_ThrowsArgumentException()
+        public void StrengthConstructor_InputBelowMinimumValue_ThrowsArgumentException()
         {
             //Arrange
             Action sut = () => new Strength(0);
@@ -17,37 +17,62 @@ namespace Odysseus.DomainModel.GameMechanicsTest
         }
 
         [Fact]
-        public void Equals_TheSameValues_True()
+        public void DexterityConstructor_InputBelowMinimumValue_ThrowsArgumentException()
         {
             //Arrange
-            var sut1 = new Strength(1);
-            var sut2 = new Strength(1);
-
-            //Act
-            var result1 = sut1.Equals(sut2);
-            var result2 = sut2.Equals(sut1);
-            var result3 = sut1.Equals(sut1);
+            Action sut = () => new Dexterity(0);
 
             //Assert
-            Assert.True(result1);
-            Assert.True(result2);
-            Assert.True(result3);
+            Assert.Throws<ArgumentException>(sut);
         }
 
         [Fact]
-        public void Equals_DifferentValues_False()
+        public void IntelligenceConstructor_InputBelowMinimumValue_ThrowsArgumentException()
         {
             //Arrange
-            var sut1 = new Strength(1);
-            var sut2 = new Strength(2);
-
-            //Act
-            var result1 = sut1.Equals(sut2);
-            var result2 = sut2.Equals(sut1);
+            Action sut = () => new Intelligence(0);
 
             //Assert
-            Assert.False(result1);
-            Assert.False(result2);
+            Assert.Throws<ArgumentException>(sut);
+        }
+
+        [Fact]
+        public void StrengthIncrease_MethodCalled_IncreaseAttributeValue()
+        {
+            //Arrange
+            var sut = new Strength();
+
+            //Act
+            var result = sut.Increase();
+
+            //Assert
+            Assert.Equal(2, result.Value);
+        }
+
+        [Fact]
+        public void DexterityIncrease_MethodCalled_IncreaseAttributeValue()
+        {
+            //Arrange
+            var sut = new Dexterity();
+
+            //Act
+            var result = sut.Increase();
+
+            //Assert
+            Assert.Equal(2, result.Value);
+        }
+
+        [Fact]
+        public void IntelligenceIncrease_MethodCalled_IncreaseAttributeValue()
+        {
+            //Arrange
+            var sut = new Intelligence();
+
+            //Act
+            var result = sut.Increase();
+
+            //Assert
+            Assert.Equal(2, result.Value);
         }
     }
 }
