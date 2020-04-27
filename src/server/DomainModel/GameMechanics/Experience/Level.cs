@@ -1,15 +1,14 @@
 ﻿using System;
 
-namespace Odysseus.DomainModel.GameMechanics
+namespace Odysseus.DomainModel.GameMechanics.Experience
 {
-    public class Level : IEquatable<Level>
+    public class Level
     {
-        private const int Minimum = 1;
-        private const int Maximum = 100;
+        public const int Minimum = 1;
+        public const int Maximum = 100;
 
         public int Value { get; }
-
-        public static Level One => new Level(Minimum);
+        public bool IsMaximum => Value == Maximum;
 
         public Level(int level)
         {
@@ -18,8 +17,5 @@ namespace Odysseus.DomainModel.GameMechanics
 
             Value = level;
         }
-
-        public bool Equals(Level other) =>
-            Value == other.Value;
     }
 }
