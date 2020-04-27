@@ -2,15 +2,15 @@
 
 namespace Odysseus.DomainModel.GameMechanics
 {
-    public abstract class Attribute : Statistic, IEquatable<Attribute>
+    public abstract class CharacterAttribute : Statistic
     {
         protected const int Minimum = 1;
         protected override int BaseValue { get; }
 
-        public Attribute() =>
+        public CharacterAttribute() =>
             BaseValue = Minimum;
 
-        public Attribute(int value)
+        public CharacterAttribute(int value)
         {
             if (value < Minimum)
                 throw new ArgumentException($"{nameof(value)}:{value} cannot be less than {Minimum}.");
@@ -18,9 +18,6 @@ namespace Odysseus.DomainModel.GameMechanics
             BaseValue = value;
         }
 
-        public abstract Attribute Increase();
-
-        public bool Equals(Attribute other) =>
-            Value == other.Value;
+        public abstract CharacterAttribute Increase();
     }
 }

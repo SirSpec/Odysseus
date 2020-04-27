@@ -1,6 +1,6 @@
 ﻿namespace Odysseus.DomainModel.GameMechanics
 {
-    public class Intelligence : Attribute
+    public class Intelligence : CharacterAttribute
     {
         public static Intelligence Initial => new Intelligence();
 
@@ -12,6 +12,6 @@
         {
         }
 
-        public override Attribute Increase() => new Intelligence(BaseValue + 1);
+        public override CharacterAttribute Increase() => new Intelligence(BaseValue + 1);
     }
 }
