@@ -7,22 +7,19 @@ namespace Odysseus.Framework.Assembler
 {
     public class Assembler
     {
-        public static IEnumerable<TType> CreateImplementationOf<TType>()
+        public static IEnumerable<TType> CreateImplementationsOf<TType>()
         {
             var assembly = Assembly.GetAssembly(typeof(TType));
-            var types = GetTypes<TType>(assembly).Where(type => !type.IsAbstract);
+            var types = GetAssignableTypesOf<TType>(assembly).Where(type => !type.IsAbstract);
 
             foreach (var type in types)
                 if (Activator.CreateInstance(type) is TType instance)
                     yield return instance;
         }
 
-        public static IEnumerable<Type> GetTypes<TType>(Assembly assembly) =>
+        private static IEnumerable<Type> GetAssignableTypesOf<TType>(Assembly assembly) =>
             assembly
                 .GetTypes()
-                .Where(type => DoesImplement<TType>(type));
-
-        public static bool DoesImplement<TType>(Type type) =>
-            type.IsSubclassOf(typeof(TType)) || type.GetInterfaces().Contains(typeof(TType));
+                .Where(type => typeof(TType).IsAssignableFrom(type));
     }
 }
