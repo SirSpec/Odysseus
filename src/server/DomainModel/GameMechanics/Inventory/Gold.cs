@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Odysseus.DomainModel.GameMechanics
+namespace Odysseus.DomainModel.GameMechanics.Inventory
 {
     public readonly struct Gold : IEquatable<Gold>
     {
@@ -15,6 +15,12 @@ namespace Odysseus.DomainModel.GameMechanics
 
             Value = value;
         }
+
+        public static Gold operator +(Gold left, Gold right) =>
+            new Gold(left.Value + right.Value);
+
+        public static Gold operator -(Gold left, Gold right) =>
+            new Gold(left.Value - right.Value);
 
         public bool Equals(Gold other) =>
             Value == other.Value;
