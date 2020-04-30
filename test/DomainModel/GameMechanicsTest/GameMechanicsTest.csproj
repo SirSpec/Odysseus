@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\src\server\DomainModel\GameMechanics\GameMechanics.csproj" />
+    <ProjectReference Include="..\..\..\src\server\Framework\Randomizer\Randomizer.csproj" />
   </ItemGroup>
 
 </Project>

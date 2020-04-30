@@ -1,4 +1,8 @@
-﻿using System;
+﻿using Odysseus.DomainModel.GameMechanics.Experience;
+using Odysseus.DomainModel.GameMechanics.Statistics.Implementations.Offence;
+using Odysseus.DomainModel.GameMechanics.Statistics;
+using System;
+using Odysseus.DomainModel.GameMechanics.Inventory;
 
 namespace Odysseus.DomainModel.GameMechanics
 {
@@ -6,10 +10,10 @@ namespace Odysseus.DomainModel.GameMechanics
     {
         public string Name { get; }
         public int SkillPoints { get; private set; }
-        public Experience Experience { get; }
-        public Statistics BaseStatistics { get; }
+        public ExperiencePool Experience { get; }
+        public StatisticsSet BaseStatistics { get; }
         public EnergyPool EnergyPool { get; }
-        public Inventory Inventory { get; }
+        public InventorySet Inventory { get; }
         public SpellBook SpellBook { get; }
 
         public PlayerCharacter(string name)
@@ -17,60 +21,63 @@ namespace Odysseus.DomainModel.GameMechanics
             Name = name;
 
             SkillPoints = 1;
-            Experience = new Experience(0);
+            Experience = new ExperiencePool(0);
             Experience.LeveledUp += OnLeveledUpHandler;
 
-            BaseStatistics = new Statistics();
-            EnergyPool = new EnergyPool(BaseStatistics.GetStatistic<Health>().Value);
+            BaseStatistics = new StatisticsSet();
+            //EnergyPool = new EnergyPool(BaseStatistics.GetStatistic<Health>().Value);
             var eq = new Equipment();
             eq.Equiped += OnEquiped;
 
-            Inventory = new Inventory(eq, new Backpack(10), 10);
+            Inventory = new InventorySet(eq, new Backpack(10), 10);
             SpellBook = new SpellBook();
         }
 
-        public Damage Attack()
+        public int Attack()
         {
-            return BaseStatistics.GetStatistic<Damage>();
+            return 0;//BaseStatistics.GetStatistic<MeleeDamage>();
         }
 
-        public void TakeDamage(Damage damage)
+        public void TakeDamage(MeleeDamage damage)
         {
-            EnergyPool.Decrease(damage.Value);
+            //var d = damage switch
+            //{
+            //    Damage dmg when dmg is MeleeDamage || dmg is RangedDamage => dmg.Value - BaseStatistics.GetStatistic<Armor>().Value,
+            //    FireDamage dmg => dmg.Value - BaseStatistics.GetStatistic<FireResistance>().Value,
+            //    IceDamage dmg => dmg.Value - BaseStatistics.GetStatistic<IceDamage>().Value,
+            //    LightningDamage dmg => dmg.Value - BaseStatistics.GetStatistic<LightningDamage>().Value,
+            //    _ => throw new InvalidCastException(),
+            //};
+
+            //EnergyPool.Decrease(d);
         }
 
         public void OnEquiped(object _, EquipedEventArgs args)
         {
-            var oldMods = args.OldItem.Modifiers;
-            foreach (var mod in oldMods)
-            {
-                BaseStatistics.Remove(mod);
-            }
+            //var oldMods = args.OldItem?.Modifiers ?? Enumerable.Empty<IModifier<Statistic>>();
+            //foreach (var mod in oldMods)
+            //{
+            //    BaseStatistics.Remove(mod);
+            //}
 
-            var newMods = args.OldItem.Modifiers;
-            foreach (var mod in newMods)
-            {
-                BaseStatistics.Apply(mod);
-            }
+            //var newMods = args.NewItem?.Modifiers ?? Enumerable.Empty<IModifier<Statistic>>();
+            //foreach (var mod in newMods)
+            //{
+            //    BaseStatistics.Apply(mod);
+            //}
         }
 
         public void IncreaseStrength()
         {
             if (SkillPoints > 0)
             {
-                var strength = BaseStatistics.GetStatistic<Strength>();
-                var newStrength = new Strength(strength.Value + 1);
-                BaseStatistics.Change(newStrength);
-                --SkillPoints;
-
-                var newHealth = new Health(Experience.Level, newStrength);
-                BaseStatistics.Change(newHealth);
-
-                var newArmor = ((Armor)BaseStatistics.GetStatistic<Armor>()).Scale(newStrength);
-                BaseStatistics.Change(newArmor);
-
-                var meleeDamage = ((MeleeDamage)BaseStatistics.GetStatistic<MeleeDamage>()).Scale(newStrength);
-                BaseStatistics.Change(meleeDamage);
+                //var strength = BaseStatistics.GetStatistic<Strength>();
+                //var newStrength = new Strength(strength.Value + 1);
+                //BaseStatistics.Change(newStrength);
+                //--SkillPoints;
+                ////might not be needed
+                //var newHealth = new Health(Experience.Level, newStrength);
+                //BaseStatistics.Change(newHealth);
             }
             else throw new InvalidOperationException($"Not enough {nameof(SkillPoints)}:{SkillPoints}.");
         }
@@ -79,14 +86,14 @@ namespace Odysseus.DomainModel.GameMechanics
         {
             if (level.Value > Experience.Level.Value)
             {
-                SkillPoints += level.Value - Experience.Level.Value;
-                var strength = BaseStatistics.GetStatistic<Strength>();
-                var newHealth = new Health(Experience.Level, new Strength(strength.Value));
-                BaseStatistics.Change(newHealth);
+                //SkillPoints += level.Value - Experience.Level.Value;
+                //var strength = BaseStatistics.GetStatistic<Strength>();
+                //var newHealth = new Health(Experience.Level, new Strength(strength.Value));
+                //BaseStatistics.Change(newHealth);
 
-                var intelligence = BaseStatistics.GetStatistic<Intelligence>();
-                var newMana = new Mana(Experience.Level, new Intelligence(intelligence.Value));
-                BaseStatistics.Change(newMana);
+                //var intelligence = BaseStatistics.GetStatistic<Intelligence>();
+                //var newMana = new Mana(Experience.Level, new Intelligence(intelligence.Value));
+                //BaseStatistics.Change(newMana);
             }
         }
     }

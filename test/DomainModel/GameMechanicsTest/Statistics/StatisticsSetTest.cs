@@ -1,12 +1,12 @@
 using System;
-using Odysseus.DomainModel.Statistics;
-using Odysseus.DomainModel.Statistics.Base;
-using Odysseus.DomainModel.Statistics.Enhancements;
-using Odysseus.DomainModel.Statistics.Implementations.Attributes;
-using Odysseus.DomainModel.Statistics.Implementations.Main;
+using Odysseus.DomainModel.GameMechanics.Statistics;
+using Odysseus.DomainModel.GameMechanics.Statistics.Base;
+using Odysseus.DomainModel.GameMechanics.Enhancements;
+using Odysseus.DomainModel.GameMechanics.Statistics.Implementations.Attributes;
+using Odysseus.DomainModel.GameMechanics.Statistics.Implementations.Main;
 using Xunit;
 
-namespace Odysseus.DomainModel.StatisticsTest
+namespace Odysseus.DomainModel.GameMechanics.StatisticsTest
 {
     public class StatisticsSetTest
     {

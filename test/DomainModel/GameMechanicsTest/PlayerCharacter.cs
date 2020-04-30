@@ -4,16 +4,18 @@ using Xunit;
 
 namespace Odysseus.DomainModel.GameMechanicsTest
 {
-    public class GoldTest
+    public class PlayerCharacterTest
     {
         [Fact]
-        public void Constructor_NegativeInput_ThrowsArgumentException()
+        public void Default()
         {
             //Arrange
-            Action sut = () => new Gold(-1);
+            var sut = new PlayerCharacter("TestSut");
+
+            //Act
 
             //Assert
-            Assert.Throws<ArgumentException>(sut);
+            Assert.True(true);
         }
     }
 }
