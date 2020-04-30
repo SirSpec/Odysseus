@@ -1,11 +1,11 @@
-﻿using Odysseus.DomainModel.Statistics.Base;
-using Odysseus.DomainModel.Statistics.Enhancements;
+﻿using Odysseus.DomainModel.GameMechanics.Statistics.Base;
+using Odysseus.DomainModel.GameMechanics.Statistics.Enhancements;
 using Odysseus.Framework.Assembler;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Odysseus.DomainModel.Statistics
+namespace Odysseus.DomainModel.GameMechanics.Statistics
 {
     public class StatisticsSet
     {

@@ -1,6 +1,6 @@
-﻿using Odysseus.DomainModel.Statistics.Enhancements;
+﻿using Odysseus.DomainModel.GameMechanics.Statistics.Enhancements;
 
-namespace Odysseus.DomainModel.Statistics.Base
+namespace Odysseus.DomainModel.GameMechanics.Statistics.Base
 {
     public interface IStatistic
     {

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Odysseus.DomainModel.Statistics.Base
+namespace Odysseus.DomainModel.GameMechanics.Statistics.Base
 {
     public interface IDerivedStatistic : IStatistic
     {

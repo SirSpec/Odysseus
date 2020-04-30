@@ -1,9 +1,9 @@
-﻿using Odysseus.DomainModel.Statistics.Base;
+﻿using Odysseus.DomainModel.GameMechanics.Statistics.Base;
 using System.Linq;
 
-namespace Odysseus.DomainModel.Statistics.Implementations.Attributes
+namespace Odysseus.DomainModel.GameMechanics.Statistics.Implementations.Attributes
 {
-    public class Strength : Statistic, IPrimaryStatistic, ILevelable
+    public class Intelligence : Statistic, IPrimaryStatistic, ILevelable
     {
         private const int Minimum = 1;
         public int Value => BaseValue + Enhancements.Sum(e => e.Enhance(BaseValue));

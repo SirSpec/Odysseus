@@ -1,6 +1,6 @@
-﻿using Odysseus.DomainModel.Statistics.Base;
+﻿using Odysseus.DomainModel.GameMechanics.Statistics.Base;
 
-namespace Odysseus.DomainModel.Statistics.Enhancements
+namespace Odysseus.DomainModel.GameMechanics.Statistics.Enhancements
 {
     public class FlatEnhancement<TStatistic> : IEnhancement<TStatistic> where TStatistic : class, IStatistic
     {

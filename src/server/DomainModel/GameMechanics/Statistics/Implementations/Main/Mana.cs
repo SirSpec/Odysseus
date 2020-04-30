@@ -1,10 +1,9 @@
-﻿using Odysseus.DomainModel.Statistics;
-using Odysseus.DomainModel.Statistics.Base;
-using Odysseus.DomainModel.Statistics.Implementations.Attributes;
+﻿using Odysseus.DomainModel.GameMechanics.Statistics.Base;
+using Odysseus.DomainModel.GameMechanics.Statistics.Implementations.Attributes;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Odysseus.DomainModel.GameMechanics.Statistics.Main
+namespace Odysseus.DomainModel.GameMechanics.Statistics.Implementations.Main
 {
     public class Mana : Statistic, IDerivedStatistic, ILevelable
     {

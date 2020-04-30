@@ -1,8 +1,8 @@
-﻿using Odysseus.DomainModel.Statistics.Enhancements;
+﻿using Odysseus.DomainModel.GameMechanics.Statistics.Enhancements;
 using System;
 using System.Collections.Generic;
 
-namespace Odysseus.DomainModel.Statistics.Base
+namespace Odysseus.DomainModel.GameMechanics.Statistics.Base
 {
     public abstract class Statistic : IStatistic
     {

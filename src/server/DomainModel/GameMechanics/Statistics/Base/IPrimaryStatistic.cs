@@ -1,4 +1,4 @@
-﻿namespace Odysseus.DomainModel.Statistics.Base
+﻿namespace Odysseus.DomainModel.GameMechanics.Statistics.Base
 {
     public interface IPrimaryStatistic : IStatistic
     {
