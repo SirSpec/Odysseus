@@ -10,16 +10,18 @@ namespace Odysseus.DomainModel.GameMechanics.Items
     {
         public string Name { get; }
         public Weight Weight { get; }
-        public MeleeDamage Damage { get; }
+        public Damage Damage { get; }
         public Requirements Requirements { get; }
-        public IEnumerable<IEnhancement<IStatistic>> Modifiers { get; }
+        public IEnumerable<IEnhancement<IStatistic>> Enhancements { get; }
+        public EquipableItemType Type { get; }
 
         public Weapon(
             string name,
             Weight weight,
             Requirements requirements,
-            MeleeDamage damage,
-            IEnumerable<IEnhancement<IStatistic>> modifiers) =>
-               (Name, Weight, Requirements, Damage, Modifiers) = (name, weight, requirements, damage, modifiers);
+            Damage damage,
+            EquipableItemType type,
+            IEnumerable<IEnhancement<IStatistic>> enhancements) =>
+               (Name, Weight, Requirements, Damage, Type, Enhancements) = (name, weight, requirements, damage, type, enhancements);
     }
 }
