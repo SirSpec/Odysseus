@@ -13,7 +13,7 @@ namespace Odysseus.DomainModel.GameMechanics.Inventory
         public int Capacity { get; }
         public IEnumerable<IItem> Items => items;
         public bool IsFull => Items.Count() == Capacity;
-        public int Weight => Items.Sum(item => item.Weight.Value);
+        public Weight Weight => Items.Aggregate(Weight.Zero, (seed, next) => seed += next.Weight);
 
         public Backpack(int capacity)
         {

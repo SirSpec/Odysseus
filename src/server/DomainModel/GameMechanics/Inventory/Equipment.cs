@@ -1,54 +1,37 @@
 ﻿using Odysseus.DomainModel.GameMechanics.Items;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Odysseus.DomainModel.GameMechanics.Inventory
 {
     public class Equipment
     {
         public event EventHandler<EquipedEventArgs>? Equiped;
-
-        private readonly Slot bodyArmour, boots, gloves, helmet, mainHand, offHand;
         
-        public IItem BodyArmour => bodyArmour.Item;
-        public IItem Boots => boots.Item;
-        public IItem Gloves => gloves.Item;
-        public IItem Helmet => helmet.Item;
-        public IItem MainHand => mainHand.Item;
-        public IItem OffHand => offHand.Item;
+        //Chest, Boots, Gloves, Helmet, MainHand, OffHand
+        private readonly IList<Slot> slots;
+        public IEnumerable<IEquipable> EquipedItems => slots.Where(slot => !slot.IsEmpty).Select(slot => slot.Item);
+        
+        public Equipment() =>
+            slots = new List<Slot>();
 
-        public Equipment()
+        public void Equip(IEquipable item)
         {
-            bodyArmour = new Slot();
-            boots = new Slot();
-            gloves = new Slot();
-            helmet = new Slot();
-            mainHand = new Slot();
-            offHand = new Slot();
-        }
-
-        public void Equip(IItem item)
-        {
-            if(item is BodyArmor)
+            if(EquipedItems.Any(item => item.Type == item.Type))
             {
-                if(bodyArmour.IsEmpty)
-                {
-                    var oldItem = bodyArmour.Item;
-                    bodyArmour.Item = item;
-                    Equiped?.Invoke(this, new EquipedEventArgs());
-                } else
-                {
-                    bodyArmour.Item = item;
-                    Equiped?.Invoke(this, new EquipedEventArgs());
-                }
+                var oldItem = slots.First().Item;
+                slots.First().Item = item;
+                Equiped?.Invoke(this, new EquipedEventArgs());
+            }
+            else
+            {
+                slots.Add(new Slot { Item = item });
+                Equiped?.Invoke(this, new EquipedEventArgs());
             }
         }
 
         public Weight Weight =>
-            BodyArmour.Weight +
-            Boots.Weight +
-            Gloves.Weight +
-            Helmet.Weight +
-            MainHand.Weight +
-            OffHand.Weight ;
+            EquipedItems.Aggregate(Weight.Zero, (seed, next) => seed += next.Weight);
     }
 }

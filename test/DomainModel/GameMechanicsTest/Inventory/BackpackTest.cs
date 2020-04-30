@@ -41,7 +41,7 @@ namespace Odysseus.DomainModel.GameMechanicsTest.Inventory
 
             //Assert
             Assert.True(sut.IsFull);
-            Assert.Equal(item.Weight.Value, sut.Weight);
+            Assert.Equal(item.Weight.Value, sut.Weight.Value);
         }
 
         [Fact]
@@ -89,7 +89,7 @@ namespace Odysseus.DomainModel.GameMechanicsTest.Inventory
             sut.Put(item2);
 
             //Assert
-            Assert.Equal((item1.Weight + item2.Weight).Value, sut.Weight);
+            Assert.Equal(item1.Weight + item2.Weight, sut.Weight);
         }
 
         [Fact]

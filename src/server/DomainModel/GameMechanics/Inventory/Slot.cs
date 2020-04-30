@@ -5,9 +5,9 @@ namespace Odysseus.DomainModel.GameMechanics.Inventory
 {
     public class Slot
     {
-        private IItem? item;
+        private IEquipable? item;
         public bool IsEmpty => item is null;
-        public IItem Item
+        public IEquipable Item
         {
             get => item ?? throw new InvalidOperationException();
             set => item = value;
