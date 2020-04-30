@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Odysseus.DomainModel.GameMechanics.Items;
+using System;
 
-namespace Odysseus.DomainModel.GameMechanics
+namespace Odysseus.DomainModel.GameMechanics.Inventory
 {
     public class EquipedEventArgs : EventArgs
     {
-        public IItem? OldItem { get; }
-        public IItem? NewItem { get; }
+        public IEquipable? OldItem { get; }
+        public IEquipable? NewItem { get; }
     }
 }

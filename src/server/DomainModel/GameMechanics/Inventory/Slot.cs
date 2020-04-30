@@ -1,6 +1,7 @@
-﻿using System;
+﻿using Odysseus.DomainModel.GameMechanics.Items;
+using System;
 
-namespace Odysseus.DomainModel.GameMechanics
+namespace Odysseus.DomainModel.GameMechanics.Inventory
 {
     public class Slot
     {

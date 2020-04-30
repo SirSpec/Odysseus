@@ -1,28 +1,36 @@
-﻿using System;
+﻿using Odysseus.DomainModel.GameMechanics.Items;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Odysseus.DomainModel.GameMechanics
+namespace Odysseus.DomainModel.GameMechanics.Inventory
 {
     public class Backpack
     {
+        private const int Minimum = 0;
         private readonly IList<IItem> items;
 
         public int Capacity { get; }
         public IEnumerable<IItem> Items => items;
         public bool IsFull => Items.Count() == Capacity;
-        public double Weight => Items.Sum(item => item.Weight);
+        public int Weight => Items.Sum(item => item.Weight.Value);
 
-        public Backpack(int capacity) =>
+        public Backpack(int capacity)
+        {
+            if (capacity < Minimum)
+                throw new ArgumentException($"{nameof(capacity)}:{capacity} cannot be less than {Minimum}.");
+
             (items, Capacity) = (new List<IItem>(), capacity);
+        }
 
         public bool Contains(IItem item) =>
             Items.Contains(item);
 
         public void Put(IItem item)
         {
-            if (!IsFull) items.Add(item);
-            else throw new InvalidOperationException($"{nameof(Backpack)} of {nameof(Capacity)}:{Capacity} is already full.");
+            if (!IsFull && !items.Contains(item)) items.Add(item);
+            else throw new InvalidOperationException(
+                $"{nameof(Backpack)} of {nameof(Capacity)}:{Capacity} is already full or {nameof(item)}:{item} already added.");
         }
 
         public void Remove(IItem item)

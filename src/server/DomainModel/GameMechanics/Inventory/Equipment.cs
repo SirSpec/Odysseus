@@ -1,12 +1,12 @@
-﻿using System;
+﻿using Odysseus.DomainModel.GameMechanics.Items;
+using System;
 
-namespace Odysseus.DomainModel.GameMechanics
+namespace Odysseus.DomainModel.GameMechanics.Inventory
 {
     public class Equipment
     {
         public event EventHandler<EquipedEventArgs>? Equiped;
 
-        //TODO: turn into list
         private readonly Slot bodyArmour, boots, gloves, helmet, mainHand, offHand;
         
         public IItem BodyArmour => bodyArmour.Item;
@@ -25,7 +25,7 @@ namespace Odysseus.DomainModel.GameMechanics
             mainHand = new Slot();
             offHand = new Slot();
         }
-        //turn into list
+
         public void Equip(IItem item)
         {
             if(item is BodyArmor)
@@ -43,12 +43,12 @@ namespace Odysseus.DomainModel.GameMechanics
             }
         }
 
-        public double Weight =>
-            BodyArmour?.Weight ?? 0.0 +
-            Boots?.Weight ?? 0.0 +
-            Gloves?.Weight ?? 0.0 +
-            Helmet?.Weight ?? 0.0 +
-            MainHand?.Weight ?? 0.0 +
-            OffHand?.Weight ?? 0.0;
+        public Weight Weight =>
+            BodyArmour.Weight +
+            Boots.Weight +
+            Gloves.Weight +
+            Helmet.Weight +
+            MainHand.Weight +
+            OffHand.Weight ;
     }
 }
