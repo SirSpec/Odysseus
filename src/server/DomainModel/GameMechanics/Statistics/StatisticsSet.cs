@@ -1,5 +1,5 @@
 ﻿using Odysseus.DomainModel.GameMechanics.Statistics.Base;
-using Odysseus.DomainModel.GameMechanics.Statistics.Enhancements;
+using Odysseus.DomainModel.GameMechanics.Enhancements;
 using Odysseus.Framework.Assembler;
 using System;
 using System.Collections.Generic;

@@ -1,4 +1,4 @@
-﻿using Odysseus.DomainModel.GameMechanics.Statistics.Enhancements;
+﻿using Odysseus.DomainModel.GameMechanics.Enhancements;
 
 namespace Odysseus.DomainModel.GameMechanics.Statistics.Base
 {
