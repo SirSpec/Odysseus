@@ -8,16 +8,16 @@ namespace Odysseus.DomainModel.GameMechanics.Inventory
         public Equipment Equipment { get; }
         public Backpack Backpack { get; }
         public Gold Gold { get; private set; }
-        public double CarryingCapacity { get; private set; }
+        public Weight CarryingCapacity { get; private set; }
 
-        public int Weight => Equipment.Weight.Value + Backpack.Weight;
+        public Weight Weight => Equipment.Weight + Backpack.Weight;
 
-        public InventorySet(Equipment equipment, Backpack backpack, double carryingCapacity) =>
+        public InventorySet(Equipment equipment, Backpack backpack, Weight carryingCapacity) =>
             (Equipment, Backpack, CarryingCapacity) = (equipment, backpack, carryingCapacity);
 
-        public void ChangeCarryingCapacity(double carryingCapacity)
+        public void ChangeCarryingCapacity(Weight carryingCapacity)
         {
-            if (carryingCapacity >= Weight) CarryingCapacity = carryingCapacity;
+            if (carryingCapacity.Value >= Weight.Value) CarryingCapacity = carryingCapacity;
             else throw new InvalidOperationException($"{nameof(carryingCapacity)}:{carryingCapacity} is smaller than Weight of items:{Weight}.");
         }
 
@@ -31,7 +31,7 @@ namespace Odysseus.DomainModel.GameMechanics.Inventory
         }
 
         public bool CanPickUp(IItem item) =>
-            Weight + item.Weight.Value <= CarryingCapacity && !Backpack.IsFull;
+            (Weight + item.Weight).Value <= CarryingCapacity.Value && !Backpack.IsFull;
 
         public void PickUp(IItem item)
         {
