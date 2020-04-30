@@ -6,7 +6,8 @@ namespace Odysseus.DomainModel.GameMechanics.Items
 {
     public interface IEquipable : IItem
     {
+        public EquipableItemType Type { get; }
         public Requirements Requirements { get; }
-        public IEnumerable<IEnhancement<IStatistic>> Modifiers { get; }
+        public IEnumerable<IEnhancement<IStatistic>> Enhancements { get; }
     }
 }

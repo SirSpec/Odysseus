@@ -12,7 +12,9 @@ namespace Odysseus.DomainModel.GameMechanics.Items
         public Weight Weight { get; }
         public Armor Armor { get; }
         public Requirements Requirements { get; }
-        public IEnumerable<IEnhancement<IStatistic>> Modifiers { get; }
+        public IEnumerable<IEnhancement<IStatistic>> Enhancements { get; }
+
+        public EquipableItemType Type => throw new System.NotImplementedException();
 
         public BodyArmor(
             string name,
@@ -20,6 +22,6 @@ namespace Odysseus.DomainModel.GameMechanics.Items
             Requirements requirements,
             Armor armor,
             IEnumerable<IEnhancement<IStatistic>> modifiers) =>
-                (Name, Weight, Requirements, Armor, Modifiers) = (name, weight, requirements, armor, modifiers);
+                (Name, Weight, Requirements, Armor, Enhancements) = (name, weight, requirements, armor, modifiers);
     }
 }
