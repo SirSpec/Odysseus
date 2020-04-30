@@ -5,11 +5,9 @@ using System.Linq;
 
 namespace Odysseus.DomainModel.GameMechanics.Statistics.Implementations.Offence
 {
-    public class IceDamage : Statistic, IDerivedStatistic
+    public class IceDamage : Damage
     {
-        public int Value { get; }
-
-        public int DeriveValue(IEnumerable<IPrimaryStatistic> statistics)
+        public override int DeriveValue(IEnumerable<IPrimaryStatistic> statistics)
         {
             var intelligence = statistics.Single(s => s is Intelligence);
             var baseValue = (Value + intelligence.Value);
