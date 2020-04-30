@@ -1,7 +1,7 @@
-﻿using Odysseus.DomainModel.Statistics.Base;
+﻿using Odysseus.DomainModel.GameMechanics.Statistics.Base;
 using System.Linq;
 
-namespace Odysseus.DomainModel.Statistics.Implementations.Attributes
+namespace Odysseus.DomainModel.GameMechanics.Statistics.Implementations.Attributes
 {
     public class Dexterity : Statistic, IPrimaryStatistic, ILevelable
     {

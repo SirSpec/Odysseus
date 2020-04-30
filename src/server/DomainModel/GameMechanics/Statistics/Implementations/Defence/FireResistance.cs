@@ -1,8 +1,8 @@
-﻿using Odysseus.DomainModel.Statistics.Base;
+﻿using Odysseus.DomainModel.GameMechanics.Statistics.Base;
 
-namespace Odysseus.DomainModel.Statistics.Implementations.Defence
+namespace Odysseus.DomainModel.GameMechanics.Statistics.Implementations.Defence
 {
-    public class LightningResistance : Statistic, IPrimaryStatistic, ILevelable
+    public class FireResistance : Statistic, IPrimaryStatistic, ILevelable
     {
         private const int Minimum = 0;
         private const int Maximum = 70;

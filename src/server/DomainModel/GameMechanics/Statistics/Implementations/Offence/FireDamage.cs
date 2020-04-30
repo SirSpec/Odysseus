@@ -1,11 +1,11 @@
-﻿using Odysseus.DomainModel.Statistics.Base;
-using Odysseus.DomainModel.Statistics.Implementations.Attributes;
+﻿using Odysseus.DomainModel.GameMechanics.Statistics.Base;
+using Odysseus.DomainModel.GameMechanics.Statistics.Implementations.Attributes;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Odysseus.DomainModel.GameMechanics.Statistics.Offence
+namespace Odysseus.DomainModel.GameMechanics.Statistics.Implementations.Offence
 {
-    public class LightningDamage : Statistic, IDerivedStatistic
+    public class FireDamage : Statistic, IDerivedStatistic
     {
         public int Value { get; }
 
