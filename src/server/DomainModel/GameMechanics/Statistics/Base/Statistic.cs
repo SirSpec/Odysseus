@@ -1,4 +1,4 @@
-﻿using Odysseus.DomainModel.GameMechanics.Statistics.Enhancements;
+﻿using Odysseus.DomainModel.GameMechanics.Enhancements;
 using System;
 using System.Collections.Generic;
 
