@@ -1,12 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using Odysseus.DomainModel.GameMechanics.Inventory;
 
-namespace Odysseus.DomainModel.GameMechanics
+namespace Odysseus.DomainModel.GameMechanics.Items
 {
     public interface IItem
     {
         public string Name { get; }
-        public double Weight { get; }
-        public Requirements Requirements { get; }
-        public IEnumerable<IModifier<Statistic>> Modifiers { get; }
+        public Weight Weight { get; }
     }
 }

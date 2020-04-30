@@ -1,16 +1,25 @@
-﻿using System.Collections.Generic;
+﻿using Odysseus.DomainModel.GameMechanics.Statistics.Implementations.Offence;
+using Odysseus.DomainModel.GameMechanics.Statistics.Base;
+using Odysseus.DomainModel.GameMechanics.Enhancements;
+using System.Collections.Generic;
+using Odysseus.DomainModel.GameMechanics.Inventory;
 
-namespace Odysseus.DomainModel.GameMechanics
+namespace Odysseus.DomainModel.GameMechanics.Items
 {
-    public class Weapon : IItem
+    public class Weapon : IEquipable
     {
         public string Name { get; }
-        public double Weight { get; }
-        public Requirements Requirements { get; }
-        public IEnumerable<IModifier<Statistic>> Modifiers { get; }
+        public Weight Weight { get; }
         public MeleeDamage Damage { get; }
+        public Requirements Requirements { get; }
+        public IEnumerable<IEnhancement<IStatistic>> Modifiers { get; }
 
-        public Weapon(string name, double weight, Requirements requirements, IEnumerable<IModifier<Statistic>> modifiers, MeleeDamage damage) =>
-            (Name, Weight, Requirements, Modifiers, Damage) = (name, weight, requirements, modifiers, damage);
+        public Weapon(
+            string name,
+            Weight weight,
+            Requirements requirements,
+            MeleeDamage damage,
+            IEnumerable<IEnhancement<IStatistic>> modifiers) =>
+               (Name, Weight, Requirements, Damage, Modifiers) = (name, weight, requirements, damage, modifiers);
     }
 }
