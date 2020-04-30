@@ -1,8 +1,8 @@
-using Odysseus.DomainModel.Statistics.Base;
-using Odysseus.DomainModel.Statistics.Enhancements;
+using Odysseus.DomainModel.GameMechanics.Statistics.Base;
+using Odysseus.DomainModel.GameMechanics.Enhancements;
 using Xunit;
 
-namespace Odysseus.DomainModel.StatisticsTest.Enhancements
+namespace Odysseus.DomainModel.GameMechanics.StatisticsTest.Enhancements
 {
     public class EnhancementTest
     {
