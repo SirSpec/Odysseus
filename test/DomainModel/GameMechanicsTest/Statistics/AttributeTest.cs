@@ -2,7 +2,7 @@ using Odysseus.DomainModel.GameMechanics.Enhancements;
 using Odysseus.DomainModel.GameMechanics.Statistics.Implementations.Attributes;
 using Xunit;
 
-namespace Odysseus.DomainModel.GameMechanics.StatisticsTest
+namespace Odysseus.DomainModel.GameMechanicsTest.Statistics
 {
     public class AttributeTest
     {

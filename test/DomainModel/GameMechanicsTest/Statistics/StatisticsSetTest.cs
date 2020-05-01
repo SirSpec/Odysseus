@@ -6,7 +6,7 @@ using Odysseus.DomainModel.GameMechanics.Statistics.Implementations.Attributes;
 using Odysseus.DomainModel.GameMechanics.Statistics.Implementations.Main;
 using Xunit;
 
-namespace Odysseus.DomainModel.GameMechanics.StatisticsTest
+namespace Odysseus.DomainModel.GameMechanicsTest.Statistics
 {
     public class StatisticsSetTest
     {
