@@ -18,9 +18,9 @@ namespace Odysseus.DomainModel.GameMechanics.Statistics.Implementations.Main
 
         public int DeriveValue(IEnumerable<IPrimaryStatistic> statistics)
         {
-            var intelligence = statistics.Single(s => s is Intelligence);
+            var intelligence = statistics.Single(statistic => statistic is Intelligence);
             var baseValue = (ManaPerLevel * Level + intelligence.Value);
-            return baseValue + Enhancements.Sum(en => en.Enhance(baseValue));
+            return baseValue + Enhancements.Sum(enhancement => enhancement.Enhance(baseValue));
         }
     }
 }

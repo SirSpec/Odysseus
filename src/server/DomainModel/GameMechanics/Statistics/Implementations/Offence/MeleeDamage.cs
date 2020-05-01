@@ -9,9 +9,9 @@ namespace Odysseus.DomainModel.GameMechanics.Statistics.Implementations.Offence
     {
         public override int DeriveValue(IEnumerable<IPrimaryStatistic> statistics)
         {
-            var intelligence = statistics.Single(s => s is Strength);
-            var baseValue = (Value + intelligence.Value);
-            return baseValue + Enhancements.Sum(en => en.Enhance(baseValue));
+            var strength = statistics.Single(statistic => statistic is Strength);
+            var derivedValue = (baseValue + strength.Value);
+            return derivedValue + Enhancements.Sum(enhancement => enhancement.Enhance(derivedValue));
         }
     }
 }
