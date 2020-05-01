@@ -17,8 +17,9 @@ namespace Odysseus.DomainModel.GameMechanics
         public string Name { get; }
         public int SkillPoints { get; private set; }
         public ExperiencePool Experience { get; }
-        public StatisticsSet BaseStatistics { get; }
-        public EnergyPool EnergyPool { get; }
+        public StatisticsSet StatisticsSet { get; }
+        public EnergyPool HealthPool { get; }
+        public EnergyPool ManaPool { get; }
         public InventorySet Inventory { get; }
         public SpellBook SpellBook { get; }
 
@@ -30,32 +31,34 @@ namespace Odysseus.DomainModel.GameMechanics
             Experience = new ExperiencePool(0);
             Experience.LeveledUp += OnLeveledUpHandler;
 
-            BaseStatistics = new StatisticsSet();
-            EnergyPool = new EnergyPool(BaseStatistics.GetDerivedStatistic<Health>());
-            var eq = new Equipment();
-            eq.Equiped += OnEquiped;
+            StatisticsSet = new StatisticsSet();
 
-            Inventory = new InventorySet(eq, new Backpack(10), new Weight(10));
+            HealthPool = new EnergyPool(StatisticsSet.GetDerivedStatistic<Health>());
+            ManaPool = new EnergyPool(StatisticsSet.GetDerivedStatistic<Mana>());
+
+            var equipment = new Equipment();
+            equipment.Equiped += OnEquiped;
+
+            Inventory = new InventorySet(equipment, new Backpack(10), new Weight(10));
             SpellBook = new SpellBook();
         }
 
         public int Attack()
         {
-            return BaseStatistics.GetDerivedStatistic<MeleeDamage>();
+            return StatisticsSet.GetDerivedStatistic<MeleeDamage>();
         }
 
-        public void TakeDamage(Damage damage)
+        public void TakeDamage(int damage)
         {
-            var d = damage switch
-            {
-                Damage dmg when dmg is MeleeDamage || dmg is RangedDamage => dmg.Value - BaseStatistics.GetPrimaryStatistic<Armor>(),
-                FireDamage dmg => dmg.Value - BaseStatistics.GetPrimaryStatistic<FireResistance>(),
-                IceDamage dmg => dmg.Value - BaseStatistics.GetPrimaryStatistic<IceResistance>(),
-                LightningDamage dmg => dmg.Value - BaseStatistics.GetPrimaryStatistic<LightningResistance>(),
-                _ => throw new InvalidCastException(),
-            };
-
-            EnergyPool.Decrease(d);
+            //var d = damage switch
+            //{
+            //    Damage dmg when dmg is MeleeDamage || dmg is RangedDamage => StatisticsSet.GetPrimaryStatistic<Armor>(),
+            //    FireDamage dmg => StatisticsSet.GetPrimaryStatistic<FireResistance>(),
+            //    IceDamage dmg => StatisticsSet.GetPrimaryStatistic<IceResistance>(),
+            //    LightningDamage dmg => StatisticsSet.GetPrimaryStatistic<LightningResistance>(),
+            //    _ => throw new InvalidCastException(),
+            //};
+            HealthPool.Decrease(damage);
         }
 
         public void OnEquiped(object _, EquipedEventArgs args)
@@ -63,13 +66,13 @@ namespace Odysseus.DomainModel.GameMechanics
             var oldMods = args.OldItem?.Enhancements ?? Enumerable.Empty<IEnhancement<IStatistic>>();
             foreach (var mod in oldMods)
             {
-                BaseStatistics.Remove(mod);
+                StatisticsSet.Remove(mod);
             }
 
             var newMods = args.NewItem?.Enhancements ?? Enumerable.Empty<IEnhancement<IStatistic>>();
             foreach (var mod in newMods)
             {
-                BaseStatistics.Apply(mod);
+                StatisticsSet.Apply(mod);
             }
         }
 
@@ -77,7 +80,7 @@ namespace Odysseus.DomainModel.GameMechanics
         {
             if (SkillPoints > 0)
             {
-                BaseStatistics.GetStatistics<Strength>().Single().LevelUp();
+                StatisticsSet.GetStatistics<Strength>().Single().LevelUp();
                 --SkillPoints;
             }
             else throw new InvalidOperationException($"Not enough {nameof(SkillPoints)}:{SkillPoints}.");
@@ -88,8 +91,8 @@ namespace Odysseus.DomainModel.GameMechanics
             if (level.Value > Experience.Level.Value)
             {
                 SkillPoints += level.Value - Experience.Level.Value;
-                BaseStatistics.GetStatistics<Health>().Single().LevelUp();
-                BaseStatistics.GetStatistics<Mana>().Single().LevelUp();
+                StatisticsSet.GetStatistics<Health>().Single().LevelUp();
+                StatisticsSet.GetStatistics<Mana>().Single().LevelUp();
             }
         }
     }
