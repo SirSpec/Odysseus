@@ -11,16 +11,13 @@ namespace Odysseus.DomainModel.GameMechanics.Statistics.Implementations.Main
         private const int HealthPerLevel = 12;
         private int Level { get; set; } = Minimum;
 
-        public void LevelUp()
-        {
-            Level++;
-        }
+        public void LevelUp() => Level++;
 
         public int DeriveValue(IEnumerable<IPrimaryStatistic> statistics)
         {
-            var strength = statistics.Single(s => s is Strength);
+            var strength = statistics.Single(statistic => statistic is Strength);
             var baseValue = (HealthPerLevel * Level + strength.Value);
-            return baseValue + Enhancements.Sum(en => en.Enhance(baseValue));
+            return baseValue + Enhancements.Sum(enhancement => enhancement.Enhance(baseValue));
         }
     }
 }
