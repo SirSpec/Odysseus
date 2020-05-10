@@ -9,7 +9,6 @@ namespace Odysseus.DomainModel.GameMechanics.Statistics.Implementations.Attribut
         private int BaseValue { get; set; } = Minimum;
         public int Value => BaseValue + Enhancements.Sum(Enhancement => Enhancement.Enhance(BaseValue));
 
-        public void LevelUp() =>
-            BaseValue++;
+        public void LevelUp() => BaseValue++;
     }
 }
