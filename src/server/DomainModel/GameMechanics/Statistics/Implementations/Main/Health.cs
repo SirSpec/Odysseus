@@ -16,7 +16,7 @@ namespace Odysseus.DomainModel.GameMechanics.Statistics.Implementations.Main
         public int DeriveValue(IEnumerable<IPrimaryStatistic> statistics)
         {
             var strength = statistics.Single(statistic => statistic is Strength);
-            var baseValue = (HealthPerLevel * Level + strength.Value);
+            var baseValue = HealthPerLevel * Level + strength.Value;
             return baseValue + Enhancements.Sum(enhancement => enhancement.Enhance(baseValue));
         }
     }
