@@ -11,15 +11,12 @@ namespace Odysseus.DomainModel.GameMechanics.Statistics.Implementations.Main
         private const int ManaPerLevel = 6;
         private int Level { get; set; } = Minimum;
 
-        public void LevelUp()
-        {
-            Level++;
-        }
+        public void LevelUp() => Level++;
 
         public int DeriveValue(IEnumerable<IPrimaryStatistic> statistics)
         {
             var intelligence = statistics.Single(statistic => statistic is Intelligence);
-            var baseValue = (ManaPerLevel * Level + intelligence.Value);
+            var baseValue = ManaPerLevel * Level + intelligence.Value;
             return baseValue + Enhancements.Sum(enhancement => enhancement.Enhance(baseValue));
         }
     }
