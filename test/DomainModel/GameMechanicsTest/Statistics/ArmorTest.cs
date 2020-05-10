@@ -33,7 +33,7 @@ namespace Odysseus.DomainModel.GameMechanicsTest.Statistics
         }
 
         [Fact]
-        public void BaseValueSetter_Positive_Zero()
+        public void BaseValueSetter_PositiveValue_PositiveValue()
         {
             //Arrange
             const int testValue = 5;
