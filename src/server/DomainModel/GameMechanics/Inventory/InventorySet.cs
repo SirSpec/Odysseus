@@ -26,12 +26,12 @@ namespace Odysseus.DomainModel.GameMechanics.Inventory
 
         public void Spend(Gold gold)
         {
-            if ((Gold - gold).Value >= 0) Gold -= gold;
+            if (Gold.Value - gold.Value >= 0) Gold -= gold;
             else throw new InvalidOperationException($"Not enough gold: {Gold}.");
         }
 
         public bool CanPickUp(IItem item) =>
-            (Weight + item.Weight).Value <= CarryingCapacity.Value && !Backpack.IsFull;
+            Weight + item.Weight <= CarryingCapacity && !Backpack.IsFull;
 
         public void PickUp(IItem item)
         {
@@ -42,6 +42,16 @@ namespace Odysseus.DomainModel.GameMechanics.Inventory
         public void RemoveItem(IItem item)
         {
             if (Backpack.Contains(item)) Backpack.Remove(item);
+            else throw new InvalidOperationException($"Item {item} does not exists.");
+        }
+
+        public void Equip(IEquipable item)
+        {
+            if (Backpack.Contains(item))
+            {
+                Equipment.Equip(item);
+                Backpack.Remove(item);
+            }
             else throw new InvalidOperationException($"Item {item} does not exists.");
         }
     }

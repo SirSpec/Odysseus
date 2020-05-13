@@ -8,10 +8,10 @@ namespace Odysseus.DomainModel.GameMechanics.Inventory
     public class Equipment
     {
         public event EventHandler<EquipedEventArgs>? Equiped;
-        
+
         private readonly IList<Slot> slots;
         public IEnumerable<IEquipable> EquipedItems => slots.Where(slot => !slot.IsEmpty).Select(slot => slot.Item);
-        
+
         public Equipment()
         {
             slots = new List<Slot>();
@@ -23,7 +23,7 @@ namespace Odysseus.DomainModel.GameMechanics.Inventory
         {
             var slot = slots.Single(slot => slot.Type == item.SlotType);
 
-            if(slot.IsEmpty)
+            if (slot.IsEmpty)
             {
                 slot.Item = item;
                 Equiped?.Invoke(this, new EquipedEventArgs(item));
