@@ -1,4 +1,4 @@
-﻿using Odysseus.DomainModel.GameMechanics.Items;
+﻿using Odysseus.DomainModel.GameMechanics.Items.Base;
 using System;
 
 namespace Odysseus.DomainModel.GameMechanics.Inventory

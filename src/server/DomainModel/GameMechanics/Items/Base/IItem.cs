@@ -1,6 +1,6 @@
 ﻿using Odysseus.DomainModel.GameMechanics.Inventory;
 
-namespace Odysseus.DomainModel.GameMechanics.Items
+namespace Odysseus.DomainModel.GameMechanics.Items.Base
 {
     public interface IItem
     {
