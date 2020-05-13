@@ -18,6 +18,9 @@ namespace Odysseus.DomainModel.GameMechanics.Statistics
             FindStatistics(typeof(TStatistic))
                 .Select(statistic => (TStatistic)statistic);
 
+        public TStatistic GetStatistic<TStatistic>() where TStatistic : IStatistic =>
+            (TStatistic)FindStatistics(typeof(TStatistic)).Single();
+
         public int GetPrimaryStatistic<TStatistic>() where TStatistic : IPrimaryStatistic =>
             GetStatistics<TStatistic>()
                 .Single()

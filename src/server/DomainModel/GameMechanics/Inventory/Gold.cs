@@ -7,6 +7,7 @@ namespace Odysseus.DomainModel.GameMechanics.Inventory
         private const int Minimum = 0;
 
         public int Value { get; }
+        public static Gold Zero => new Gold(Minimum);
 
         public Gold(int value)
         {

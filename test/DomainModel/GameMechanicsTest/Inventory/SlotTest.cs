@@ -10,7 +10,7 @@ namespace Odysseus.DomainModel.GameMechanicsTest.Inventory
         public void Constructor_IsEmpty_True()
         {
             //Arrange
-            var sut = new Slot();
+            var sut = new Slot(SlotType.Chest);
 
             //Assert
             Assert.True(sut.IsEmpty);
@@ -20,24 +20,38 @@ namespace Odysseus.DomainModel.GameMechanicsTest.Inventory
         public void ItemGetter_EmptySlot_ThrowsInvalidOperationException()
         {
             //Arrange
-            var sut = new Slot();
+            var sut = new Slot(SlotType.Chest);
 
             //Assert
             Assert.Throws<InvalidOperationException>(() => sut.Item);
         }
 
         [Fact]
-        public void ItemSetterGetter_SetItem_Item()
+        public void ItemSetterGetter_SetItemOfTheSameSlotType_Item()
         {
             //Arrange
-            var sut = new Slot();
-            var item = new ItemStub();
+            var sut = new Slot(SlotType.Chest);
+            var item = new ItemStub(SlotType.Chest);
 
             //Act
             sut.Item = item;
 
             //Assert
             Assert.Equal(item, sut.Item);
+        }
+
+        [Fact]
+        public void ItemSetterGetter_SetItemOfDifferentSlotType_ThrowsInvalidOperationException()
+        {
+            //Arrange
+            var sut = new Slot(SlotType.Chest);
+            var item = new ItemStub(SlotType.Gloves);
+
+            //Act
+            Action action = () => sut.Item = item;
+
+            //Assert
+            Assert.Throws<InvalidOperationException>(action);
         }
     }
 }
