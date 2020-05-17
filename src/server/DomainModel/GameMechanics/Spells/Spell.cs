@@ -1,16 +1,16 @@
-﻿using Odysseus.DomainModel.GameMechanics.Statistics.Base;
-using Odysseus.DomainModel.GameMechanics.Enhancements;
-using Odysseus.DomainModel.GameMechanics.Items;
+﻿using Odysseus.DomainModel.GameMechanics.Items;
+using Odysseus.DomainModel.GameMechanics.Spells.Effects;
 
-namespace Odysseus.DomainModel.GameMechanics
+namespace Odysseus.DomainModel.GameMechanics.Spells
 {
     public readonly struct Spell
     {
         public string Name { get; }
-        public IEnhancement<IStatistic> Effect { get; }
+        public IEffect Effect { get; }
         public Requirements Requirements { get; }
+        public int Cost { get; }
 
-        public Spell(string name, IEnhancement<IStatistic> effect, Requirements requirements) =>
-            (Name, Effect, Requirements) = (name, effect, requirements);
+        public Spell(string name, IEffect effect, int cost, Requirements requirements) =>
+            (Name, Effect, Cost, Requirements) = (name, effect, cost, requirements);
     }
 }
