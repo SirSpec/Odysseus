@@ -10,6 +10,8 @@ namespace Odysseus.Framework.Mathematica
         private readonly IList<Node<TKey, TValue>> nodes;
 
         public IEnumerable<Node<TKey, TValue>> Nodes => nodes;
+        public int Count => nodes.Count;
+        public bool IsEmpty => Count == 0;
 
         public BinaryHeap() =>
             nodes = new List<Node<TKey, TValue>>();
