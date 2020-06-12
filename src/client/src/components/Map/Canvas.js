@@ -23,6 +23,14 @@ export default class Canvas {
         this.drawTileRelativeToScreenCenter(actor, screenCenter)
     }
 
+    drawMobs(mobs, screenCenter) {
+        this.context.fillStyle = this.options.mobsColor;
+
+        mobs.forEach(mob => {
+            this.drawTileRelativeToScreenCenter(mob, screenCenter)
+        });
+    }
+
     clickTile(mouseEvent) {
         var mousePosition = this.mousePosition(mouseEvent)
         var tile = this.tileCoordinates(mousePosition)
