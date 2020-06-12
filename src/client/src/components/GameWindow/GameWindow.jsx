@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux'
 
 import * as signalR from "@microsoft/signalr"
 
-import PlayerStatus from "./PlayerStatus";
+import PlayerStatusContainer from "../PlayerStatus/PlayerStatusContainer";
 import GameMenu from "../GameMenu/GameMenu";
-import InteractionMenu from "./InteractionMenu";
-import ActivityLog from "../ActivityLog/ActivityLog";
-import ContextMenu from "./ContextMenu";
-import Map from "./Map";
-import RayCastingView from "./RayCastingView";
+import InteractionMenuContainer from "../InteractionMenu/InteractionMenuContainer";
+import ActivityLogContainer from "../ActivityLog/ActivityLogContainer";
+import ContextMenuContainer from "../ContextMenu/ContextMenuContainer";
+import MapContainer from "../Map/MapContainer";
+import RayCastingViewContainer from "../RayCasting/RayCastingViewContainer";
 
 import styles from "./styles";
 
@@ -24,23 +23,19 @@ const CanvasConfiguration = {
     height: window.innerHeight
 }
 
-let GameWindow = () => {
+let GameWindow = (props) => {
     const [connection, setConnection] = useState(null);
-    const [hoveredTile, setHoveredTile] = useState(null);
-    const [isLoading, setIsLoading] = useState(true);
     const [isRayCastingOpened, setIsRayCastingOpened] = useState(false);
-    const [map, setMap] = useState(null);
-    const [mobs, setMobs] = useState([]);
     const [logs, setLogs] = useState([]);
 
     useEffect(() => {
         var connection = new signalR.HubConnectionBuilder().withUrl("https://localhost:44301/hub").build()
         connection.on("ReceiveMap", map => {
-            setMap(map);
+            props.setMap(map);
         })
 
-        connection.on("ReceiveMobs", mobs => {
-            setMobs(mobs);
+        connection.on("ReceiveMobsPosition", mobsPosition => {
+            props.setMobs(mobsPosition);
         })
 
         connection.on("ReceiveLog", log => {
@@ -48,7 +43,7 @@ let GameWindow = () => {
         })
 
         connection.start().then(() => {
-            console.log("STARTED")
+            console.log("GameWindow component connection started.")
             connection.invoke("SendMap").catch(err => {
                 console.log(err.toString());
             });
@@ -59,67 +54,29 @@ let GameWindow = () => {
         setConnection(connection)
     }, []);
 
-    useEffect(() => {
-        if (map) setIsLoading(false)
-    }, [map]);
-
-    function handleCanvasClick(e) {
-        setHoveredTile(`${e.x}, ${e.y}`);
-    }
-
-    function handleMobAttack(mobName) {
-        connection.invoke("Attack", mobName).catch(err => {
-            console.log(err)
-        });
-    }
-
-    function handleChangeView(e) {
-        setIsRayCastingOpened(!isRayCastingOpened)
-    }
-
     return (
         <div className={styles.full_height}>
-            {!isLoading ?
-                isRayCastingOpened
-                    ? <RayCastingView
-                        canvasConfiguration={CanvasConfiguration}
-                        playerConfiguration={PlayerConfiguration}
-                        map={map} />
-                    : <Map
-                        map={map}
-                        canvasConfiguration={CanvasConfiguration}
-                        handleCanvasClick={handleCanvasClick} />
-                : null
+            {isRayCastingOpened
+                ? <RayCastingViewContainer
+                    canvasConfiguration={CanvasConfiguration}
+                    playerConfiguration={PlayerConfiguration} />
+                : <MapContainer canvasConfiguration={CanvasConfiguration} />
             }
             <div className={styles.column}>
                 <div className={styles.row}>
-                    <PlayerStatus hoveredTile={hoveredTile} />
-                    <GameMenu handleChangeView={handleChangeView} />
+                    <PlayerStatusContainer />
+                    <GameMenu handleChangeView={() => setIsRayCastingOpened(!isRayCastingOpened)} />
                 </div>
                 <div className={`${styles.row} ${styles.flex1}`}>
                     <div className={`${styles.column} ${styles.flex1}`}>
-                        <InteractionMenu />
-                        <ActivityLog logs={logs} pageSize={5}/>
+                        <InteractionMenuContainer />
+                        <ActivityLogContainer />
                     </div>
-                    <ContextMenu mobs={mobs} handleMobAttack={handleMobAttack} />
+                    <ContextMenuContainer />
                 </div>
             </div>
         </div>
     );
 };
-
-const mapStateToProps = state => {
-    return {
-        // todos: getVisibleTodos(state.todos, state.visibilityFilter)
-    }
-}
-
-const mapDispatchToProps = dispatch => {
-    return {
-        // onTodoClick: id => dispatch(toggleTodo(id))
-    }
-}
-
-GameWindow = connect(mapStateToProps, mapDispatchToProps)(GameWindow)
 
 export default GameWindow;
