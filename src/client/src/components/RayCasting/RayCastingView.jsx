@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from "prop-types";
 
 import RayCasting from "./RayCasting";
-import styles from "./styles";
+import styles from "../GameWindow/styles";
 
 const RayCastingView = (props) => {
     const canvasRef = React.useRef(null);

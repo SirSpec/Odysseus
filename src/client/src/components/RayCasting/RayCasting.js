@@ -1,4 +1,4 @@
-import Player from "./Player";
+import Player from "../GameWindow/Player";
 import DigitalDifferentialAnalyzer from "./DigitalDifferentialAnalyzer";
 
 export default class RayCasting {
