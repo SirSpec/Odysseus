@@ -1,11 +1,11 @@
 import React from 'react';
-import GameWindow from "./components/GameWindow/GameWindow";
+import GameWindowContainer from "./components/GameWindow/GameWindowContainer";
 
 import "./styles/global";
 
 const App = () => {
   return (
-    <GameWindow />
+    <GameWindowContainer />
   );
 };
 
