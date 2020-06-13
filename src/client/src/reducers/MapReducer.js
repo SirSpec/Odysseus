@@ -1,4 +1,4 @@
-import MapActions from './MapActions';
+import MapActions from '../actions/MapActions';
 
 const initialState = {
     selectedTile: null,

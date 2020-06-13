@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux'
 
-import gameWindow from "./components/GameWindow/GameWindowReducer"
-import logs from "./components/ActivityLog/LogsReducer"
-import map from "./components/Map/MapReducer"
+import gameWindow from "./reducers/GameWindowReducer"
+import logs from "./reducers/LogsReducer"
+import map from "./reducers/MapReducer"
 
 const rootReducer = combineReducers({
     gameWindow,

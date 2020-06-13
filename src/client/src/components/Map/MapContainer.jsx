@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { setSelectedTile, setHoveredTile, setPlayerPosition } from "./MapActionCreators"
+import { setSelectedTile, setHoveredTile, setPlayerPosition } from "../../actionCreators/MapActionCreators"
 
 import Map from './Map'
 
