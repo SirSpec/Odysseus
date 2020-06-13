@@ -1,4 +1,4 @@
-import LogActions from './LogActions';
+import LogActions from '../actions/LogActions';
 
 function logs(state = [], action) {
     switch (action.type) {

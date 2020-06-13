@@ -1,4 +1,4 @@
-import LogActions from "./LogActions"
+import LogActions from "../actions/LogActions"
 
 export function addLog(text) {
     return {

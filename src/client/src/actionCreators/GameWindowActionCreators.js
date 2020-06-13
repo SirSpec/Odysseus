@@ -1,4 +1,4 @@
-import GameWindowActions from "./GameWindowActions"
+import GameWindowActions from "../actions/GameWindowActions"
 
 export function setMap(map) {
     return {
