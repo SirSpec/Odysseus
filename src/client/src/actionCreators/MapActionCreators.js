@@ -13,9 +13,3 @@ export function setHoveredTile(tile) {
         tile
     }
 }
-export function setPlayerPosition(position) {
-    return {
-        type: MapActions.SET_PLAYER_POSITION,
-        position
-    }
-}
