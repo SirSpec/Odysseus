@@ -1,12 +1,12 @@
 import { connect } from 'react-redux'
-import { setSelectedTile, setHoveredTile } from "../../actionCreators/MapActionCreators"
+import { selectTile, setHoveredTile } from "../../actionCreators/gameWindowActionCreators"
 import { setPlayerPosition } from "../../actionCreators/playerActionCreators"
 
 import Map from './Map'
 
 const mapStateToProps = state => {
     return {
-        map: state.gameWindow.map,
+        map: state.map,
         mobs: state.gameWindow.mobs,
         playerPosition: state.player.position,
     }
@@ -14,7 +14,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        setSelectedTile: tile => dispatch(setSelectedTile(tile)),
+        selectTile: tile => dispatch(selectTile(tile)),
         setHoveredTile: tile => dispatch(setHoveredTile(tile)),
         setPlayerPosition: position => dispatch(setPlayerPosition(position)),
     }

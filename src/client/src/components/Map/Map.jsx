@@ -53,7 +53,7 @@ const Map = (props) => {
         var offset = InputService.getScreenCenterOffset(event.key);
         if (!MapService.isZero(offset)) {
             setScreenCenter(MapService.offset(screenCenter, offset))
-            props.setSelectedTile(null)
+            props.selectTile(null)
         }
 
         var offset = InputService.getActorOffset(event.key);
@@ -80,7 +80,7 @@ const Map = (props) => {
                 canvas.drawFloor(props.selectedTile);
             }
             canvas.clickTile(clickEvent);
-            props.setSelectedTile(tileCoords)
+            props.selectTile(tileCoords)
         }
     }
 

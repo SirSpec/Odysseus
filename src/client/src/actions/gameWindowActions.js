@@ -1,0 +1,5 @@
+export default {
+    SET_MOBS: "SET_MOBS",
+    SELECT_TILE: "SELECT_TILE",
+    SET_HOVERED_TILE: "SET_HOVERED_TILE",
+}
