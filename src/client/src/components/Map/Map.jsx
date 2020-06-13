@@ -4,7 +4,8 @@ import * as signalR from "@microsoft/signalr"
 import Canvas from "./Canvas";
 import InputService from "./InputService";
 import MapService from "./MapService";
-import styles from "../GameWindow/styles";
+
+import styles from "../../styles/gameWindow";
 
 const DisplayOptions = {
     tileSize: 20,

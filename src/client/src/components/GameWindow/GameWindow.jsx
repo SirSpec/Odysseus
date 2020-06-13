@@ -10,7 +10,7 @@ import ContextMenuContainer from "../ContextMenu/ContextMenuContainer";
 import MapContainer from "../Map/MapContainer";
 import RayCastingViewContainer from "../RayCasting/RayCastingViewContainer";
 
-import styles from "./styles";
+import styles from "../../styles/gameWindow";
 
 const PlayerConfiguration = {
     playerPosition: { x: 0.5, y: 0.5 },

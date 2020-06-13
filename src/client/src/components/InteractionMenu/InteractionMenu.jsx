@@ -2,7 +2,7 @@ import React from 'react';
 import Container from "../Container/Container";
 import Span from "../Span/Span";
 
-import styles from "../GameWindow/styles";
+import styles from "../../styles/gameWindow";
 
 const InteractionMenu = () => {
   return (
