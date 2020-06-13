@@ -3,7 +3,7 @@ import PlayerStatus from './PlayerStatus'
 
 const mapStateToProps = state => {
     return {
-        hoveredTile: state.map.hoveredTile,
+        hoveredTile: state.gameWindow.hoveredTile,
     }
 }
 

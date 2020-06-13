@@ -1,8 +1,8 @@
-import LogActions from '../actions/LogActions';
+import LogsActions from '../actions/logsActions';
 
 function logs(state = [], action) {
     switch (action.type) {
-        case LogActions.ADD_LOG:
+        case LogsActions.ADD_LOG:
             return [
                 ...state,
                 {
