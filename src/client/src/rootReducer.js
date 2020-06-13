@@ -1,12 +1,12 @@
 import { combineReducers } from 'redux'
 
-import gameWindow from "./reducers/gameWindowReducer"
+import userContext from "./reducers/userContextReducer"
 import logs from "./reducers/logsReducer"
 import map from "./reducers/mapReducer"
 import player from "./reducers/playerReducer"
 
 const rootReducer = combineReducers({
-    gameWindow,
+    userContext,
     logs,
     map,
     player

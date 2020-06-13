@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import { setMap } from "../../actionCreators/mapActionCreators"
-import { setMobs } from "../../actionCreators/gameWindowActionCreators"
+import { setMobs } from "../../actionCreators/userContextActionCreators"
 
 import GameWindow from './GameWindow'
 
