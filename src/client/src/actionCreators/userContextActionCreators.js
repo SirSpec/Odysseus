@@ -1,22 +1,22 @@
-import GameWindowActions from "../actions/gameWindowActions"
+import UserContextActions from "../actions/userContextActions"
 
 export function setMobs(mobs) {
     return {
-        type: GameWindowActions.SET_MOBS,
+        type: UserContextActions.SET_MOBS,
         mobs
     }
 }
 
 export function selectTile(tile) {
     return {
-        type: GameWindowActions.SELECT_TILE,
+        type: UserContextActions.SELECT_TILE,
         tile
     }
 }
 
 export function setHoveredTile(tile) {
     return {
-        type: GameWindowActions.SET_HOVERED_TILE,
+        type: UserContextActions.SET_HOVERED_TILE,
         tile
     }
 }

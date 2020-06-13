@@ -1,4 +1,4 @@
-import GameWindowActions from '../actions/gameWindowActions';
+import UserContextActions from '../actions/userContextActions';
 
 const initialState = {
     mobs: [],
@@ -6,17 +6,17 @@ const initialState = {
     hoveredTile: null,
 }
 
-function gameWindow(state = initialState, action) {
+function userContext(state = initialState, action) {
     switch (action.type) {
-        case GameWindowActions.SET_MOBS:
+        case UserContextActions.SET_MOBS:
             return { ...state, mobs: action.mobs }
-        case GameWindowActions.SELECT_TILE:
+        case UserContextActions.SELECT_TILE:
             return { ...state, selectedTile: action.tile }
-        case GameWindowActions.SET_HOVERED_TILE:
+        case UserContextActions.SET_HOVERED_TILE:
             return { ...state, hoveredTile: action.tile }
         default:
             return state;
     }
 }
 
-export default gameWindow
+export default userContext
