@@ -1,7 +1,7 @@
 import React from 'react';
 import Container from "../Container/Container";
 
-import styles from "../GameWindow/styles";
+import styles from "../../styles/gameWindow";
 
 const ContextMenu = (props) => {
   return (
