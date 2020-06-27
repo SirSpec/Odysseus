@@ -9,6 +9,8 @@ using Odysseus.DomainModel.GameMechanics.Statistics.Base;
 using Odysseus.DomainModel.GameMechanics.Enhancements;
 using Odysseus.DomainModel.GameMechanics.Statistics.Implementations.Attributes;
 using Odysseus.DomainModel.GameMechanics.Statistics.Implementations.Defence;
+using Odysseus.DomainModel.GameMechanics.Items.Weapons;
+using Odysseus.DomainModel.GameMechanics.Spells;
 
 namespace Odysseus.DomainModel.GameMechanics
 {
@@ -43,22 +45,34 @@ namespace Odysseus.DomainModel.GameMechanics
             SpellBook = new SpellBook();
         }
 
-        public int Attack()
+        public DamageDealt Attack()
         {
-            return StatisticsSet.GetDerivedStatistic<MeleeDamage>();
+            return Inventory.Equipment.IsUnarmed
+                ? new DamageDealt(StatisticsSet.GetDerivedStatistic<MeleeDamage>(), DamageType.Melee)
+                : new DamageDealt(Inventory.Equipment.WeaponDamageType switch
+                {
+                    DamageType.Melee => StatisticsSet.GetDerivedStatistic<MeleeDamage>(),
+                    DamageType.Ranged => StatisticsSet.GetDerivedStatistic<RangedDamage>(),
+                    DamageType.Fire => StatisticsSet.GetDerivedStatistic<FireDamage>(),
+                    DamageType.Ice => StatisticsSet.GetDerivedStatistic<IceDamage>(),
+                    DamageType.Lightning => StatisticsSet.GetDerivedStatistic<LightningDamage>(),
+                    _ => throw new ArgumentException()
+                }, Inventory.Equipment.WeaponDamageType);
         }
 
-        public void TakeDamage(int damage)
+        public void TakeDamage(DamageDealt damage)
         {
-            //var d = damage switch
-            //{
-            //    Damage dmg when dmg is MeleeDamage || dmg is RangedDamage => StatisticsSet.GetPrimaryStatistic<Armor>(),
-            //    FireDamage dmg => StatisticsSet.GetPrimaryStatistic<FireResistance>(),
-            //    IceDamage dmg => StatisticsSet.GetPrimaryStatistic<IceResistance>(),
-            //    LightningDamage dmg => StatisticsSet.GetPrimaryStatistic<LightningResistance>(),
-            //    _ => throw new InvalidCastException(),
-            //};
-            HealthPool.Decrease(damage);
+            var reducedDamage = damage.Type switch
+            {
+                DamageType.Melee => damage.Value - StatisticsSet.GetPrimaryStatistic<Armor>(),
+                DamageType.Ranged => damage.Value - StatisticsSet.GetPrimaryStatistic<Armor>(),
+                DamageType.Fire => damage.Value - damage.Value * StatisticsSet.GetPrimaryStatistic<FireResistance>() / 100,
+                DamageType.Ice => damage.Value - damage.Value * StatisticsSet.GetPrimaryStatistic<IceResistance>() / 100,
+                DamageType.Lightning => damage.Value - damage.Value * StatisticsSet.GetPrimaryStatistic<LightningResistance>() / 100,
+                _ => throw new ArgumentException()
+            };
+
+            HealthPool.Decrease(reducedDamage);
         }
 
         public void OnEquiped(object _, EquipedEventArgs args)
@@ -80,7 +94,7 @@ namespace Odysseus.DomainModel.GameMechanics
         {
             if (SkillPoints > 0)
             {
-                StatisticsSet.GetStatistics<Strength>().Single().LevelUp();
+                StatisticsSet.GetStatistic<Strength>().LevelUp();
                 --SkillPoints;
             }
             else throw new InvalidOperationException($"Not enough {nameof(SkillPoints)}:{SkillPoints}.");
@@ -91,8 +105,8 @@ namespace Odysseus.DomainModel.GameMechanics
             if (level.Value > Experience.Level.Value)
             {
                 SkillPoints += level.Value - Experience.Level.Value;
-                StatisticsSet.GetStatistics<Health>().Single().LevelUp();
-                StatisticsSet.GetStatistics<Mana>().Single().LevelUp();
+                StatisticsSet.GetStatistic<Health>().LevelUp();
+                StatisticsSet.GetStatistic<Mana>().LevelUp();
             }
         }
     }
