@@ -38,6 +38,10 @@ let GameWindow = (props) => {
             props.setMobs(mobsPosition);
         })
 
+        connection.on("GetScaned", targets => {
+            props.setTargets(targets);
+        })
+
         connection.on("ReceiveLog", log => {
             setLogs(logs => ([log, ...logs]));
         })
