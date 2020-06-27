@@ -1,4 +1,5 @@
 ﻿using Odysseus.DomainModel.GameMechanics.Items.Base;
+using Odysseus.DomainModel.GameMechanics.Items.Weapons;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,8 @@ namespace Odysseus.DomainModel.GameMechanics.Inventory
 
         private readonly IList<Slot> slots;
         public IEnumerable<IEquipable> EquipedItems => slots.Where(slot => !slot.IsEmpty).Select(slot => slot.Item);
+        public bool IsUnarmed => slots.Single(slot => slot.Type == SlotType.MainHand).IsEmpty;
+        public DamageType WeaponDamageType => ((Weapon)slots.Single(slot => slot.Type == SlotType.MainHand).Item).Damage.Type;
 
         public Equipment()
         {
