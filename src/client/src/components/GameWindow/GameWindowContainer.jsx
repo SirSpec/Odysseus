@@ -8,7 +8,6 @@ const mapDispatchToProps = dispatch => {
     return {
         setMap: map => dispatch(setMap(map)),
         setMobs: mobs => dispatch(setMobs(mobs)),
-        setMobs: mobs => dispatch(setMobs(mobs)),
         setTargets: targets => dispatch(setTargets(targets)),
     }
 }

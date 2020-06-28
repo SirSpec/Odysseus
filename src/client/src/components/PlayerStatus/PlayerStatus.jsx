@@ -24,7 +24,7 @@ const PlayerStatus = (props) => {
       <Span>Right Hand: Small Round Shield<br /></Span>
       <Span>Skill Points: 1<br /></Span>
       <Span>Stenght/Dexterity/Inteligence: 5/3/8<br /></Span>
-      <Span>Status: Curse(Slow) Bleed|4 DUPA Blada Znowu<br /></Span>
+      <Span>Status: Curse(Slow) Bleed|4<br /></Span>
       <br />
       <div className={styles.row}>
         <div className={styles.flex1}>

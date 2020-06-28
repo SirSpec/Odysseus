@@ -113,7 +113,7 @@ Map.propTypes = {
     }).isRequired,
     setHoveredTile: PropTypes.func.isRequired,
     map: PropTypes.any.isRequired,
-    mobs: PropTypes.array.isRequired,
+    mobs: PropTypes.any.isRequired,
 };
 
 export default Map;
