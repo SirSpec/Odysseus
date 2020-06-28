@@ -22,7 +22,7 @@ namespace Odysseus.DomainServices.MapGenerator
             var rooms = roomsGenerator.Generate();
             var corridors = corridorsGenerator.Generate(rooms);
 
-            var tiles = rooms.SelectMany(GetTile).Concat(corridors.SelectMany(GetTile));
+            var tiles = rooms.SelectMany(GetTile).Concat(corridors.SelectMany(GetTile)).Distinct();
 
             return new Map(tiles);
         }
