@@ -4,7 +4,7 @@ import RayCastingView from './RayCastingView'
 
 const mapStateToProps = state => {
     return {
-        map: state.gameWindow.map,
+        map: state.map,
     }
 }
 

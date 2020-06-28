@@ -26,9 +26,9 @@ export default class Canvas {
     drawMobs(mobs, screenCenter) {
         this.context.fillStyle = this.options.mobsColor;
 
-        mobs.forEach(mob => {
-            this.drawTileRelativeToScreenCenter(mob, screenCenter)
-        });
+        // mobs.forEach(mob => {
+            this.drawTileRelativeToScreenCenter(mobs, screenCenter)
+        // });
     }
 
     clickTile(mouseEvent) {
