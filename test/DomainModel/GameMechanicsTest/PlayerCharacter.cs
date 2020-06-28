@@ -1,5 +1,4 @@
 using Odysseus.DomainModel.GameMechanics;
-using System;
 using Xunit;
 
 namespace Odysseus.DomainModel.GameMechanicsTest
