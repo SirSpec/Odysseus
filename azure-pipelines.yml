@@ -1,19 +1,40 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
-
 trigger:
 - master
+- develop
 
 pool:
   vmImage: 'ubuntu-latest'
 
-steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+stages:
+- stage: Build
+  jobs:
+  - job: BuildFrontend
+    steps:
+      - task: UseNode@1
+        inputs:
+          checkLatest: true
+        displayName: 'Install Node.js'
+      - script: |
+          npm install
+        displayName: 'npm install'
+  - job: BuildBackend
+      steps:
+      - task: DotNetCoreCLI@2
+        inputs:
+          command: 'restore'
+          projects: '**/*.csproj'
+        displayName: 'dotnet restore'
+      - task: DotNetCoreCLI@2
+        inputs:
+          command: 'build'
+          projects: '**/*.csproj'
+        displayName: 'dotnet build'
 
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+- stage: Test
+  jobs:
+  - job: RunBackendUnitTests
+    steps:
+    - task: DotNetCoreCLI@2
+      inputs:
+        command: test
+        projects: '**/*tests/**/*.csproj'
