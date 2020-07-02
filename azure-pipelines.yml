@@ -18,7 +18,7 @@ stages:
           npm install
         displayName: 'npm install'
   - job: BuildBackend
-      steps:
+    steps:
       - task: DotNetCoreCLI@2
         inputs:
           command: 'restore'
