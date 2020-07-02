@@ -17,6 +17,9 @@ stages:
       - script: |
           npm install
         displayName: 'npm install'
+      - script: |
+          npm run prod
+        displayName: 'npm run prod'
   - job: BuildBackend
     steps:
       - task: DotNetCoreCLI@2
@@ -37,4 +40,4 @@ stages:
     - task: DotNetCoreCLI@2
       inputs:
         command: test
-        projects: '**/*tests/**/*.csproj'
+        projects: '**/test/**/*.csproj'
