@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from "prop-types";
 import * as signalR from "@microsoft/signalr"
 import * as PIXI from 'pixi.js'
+
 import MapViewRenderer from "./MapViewRenderer";
 import InputService from "./InputService";
 import MapService from "./MapService";
@@ -85,7 +86,12 @@ const Map = (props) => {
     //     }
     // }
 
-    return (<div id="mapView" tabIndex="0" ref={mapViewRef} className={styles.floatLeft} onKeyDown={onKeyDownHandler} />);
+    return (
+        <div id="mapView"
+            tabIndex="0"
+            ref={mapViewRef}
+            className={`${styles.floatLeft} ${styles.full_height}`}
+            onKeyDown={onKeyDownHandler} />);
 };
 
 Map.propTypes = {
