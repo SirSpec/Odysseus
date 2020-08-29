@@ -2,7 +2,7 @@ import React from 'react';
 import Container from "../Container/Container";
 import Span from "../Span/Span";
 
-import styles from "../../styles/gameWindow";
+import styles from "../../styles/gameWindow.scss";
 
 const PlayerStatus = (props) => {
   return (

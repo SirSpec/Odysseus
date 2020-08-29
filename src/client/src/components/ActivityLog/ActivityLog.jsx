@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import Container from "../Container/Container";
 import Span from "../Span/Span";
 
-import styles from "../../styles/gameWindow";
+import styles from "../../styles/gameWindow.scss";
 
 const ActivityLog = (props) => {
     const [pageNumber, setPageNumber] = useState(1);

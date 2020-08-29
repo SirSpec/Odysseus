@@ -10,7 +10,7 @@ import ContextMenuContainer from "../ContextMenu/ContextMenuContainer";
 import MapContainer from "../Map/MapContainer";
 import RayCastingViewContainer from "../RayCasting/RayCastingViewContainer";
 
-import styles from "../../styles/gameWindow";
+import styles from "../../styles/gameWindow.scss";
 
 const PlayerConfiguration = {
     playerPosition: { x: 0.5, y: 0.5 },
@@ -29,7 +29,7 @@ let GameWindow = (props) => {
     const [logs, setLogs] = useState([]);
 
     useEffect(() => {
-        var connection = new signalR.HubConnectionBuilder().withUrl("https://localhost:44301/hub").build()
+        var connection = new signalR.HubConnectionBuilder().withUrl("https://localhost:5001/hub").build()
         connection.on("ReceiveMap", map => {
             props.setMap(map);
         })

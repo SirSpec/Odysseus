@@ -5,7 +5,7 @@ import Container from "../Container/Container";
 import Button from "../Button/Button";
 import Dialog from "../Dialog/Dialog";
 
-import styles from "../../styles/gameWindow";
+import styles from "../../styles/gameWindow.scss";
 
 const GameMenu = (props) => {
   const [isOpened, setIsOpened] = useState(false);
