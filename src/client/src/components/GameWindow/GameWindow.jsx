@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 
 import * as signalR from "@microsoft/signalr"
 
-import PlayerStatusContainer from "../PlayerStatus/PlayerStatusContainer";
 import GameMenu from "../GameMenu/GameMenu";
 import InteractionMenuContainer from "../InteractionMenu/InteractionMenuContainer";
 import ActivityLogContainer from "../ActivityLog/ActivityLogContainer";
@@ -68,7 +67,6 @@ let GameWindow = (props) => {
             }
             <div className={styles.column}>
                 <div className={styles.row}>
-                    <PlayerStatusContainer />
                     <GameMenu handleChangeView={() => setIsRayCastingOpened(!isRayCastingOpened)} />
                 </div>
                 <div className={`${styles.row} ${styles.flex1}`}>
