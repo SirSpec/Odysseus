@@ -1,3 +1,4 @@
+# Dungeon Generator
 ```
  ██████╗ ██████╗ ██╗   ██╗███████╗███████╗███████╗██╗   ██╗███████╗
 ██╔═══██╗██╔══██╗╚██╗ ██╔╝██╔════╝██╔════╝██╔════╝██║   ██║██╔════╝
@@ -6,8 +7,6 @@
 ╚██████╔╝██████╔╝   ██║   ███████║███████║███████╗╚██████╔╝███████║
  ╚═════╝ ╚═════╝    ╚═╝   ╚══════╝╚══════╝╚══════╝ ╚═════╝ ╚══════╝
 ```
-![GitHub](https://img.shields.io/github/license/SirSpec/Odysseus)
-
 # How to use
 ## Install npm packages
 ```
@@ -28,5 +27,7 @@ npm install
 npm run storybook
 ```
 
-# Versioning
-Semantic versioning three-part version number: MAJOR.MINOR.PATCH
+## Backend server
+```
+dotnet run
+```
