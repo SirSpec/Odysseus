@@ -12,8 +12,8 @@ namespace Odysseus.Framework.Mathematica
         public Edge(Vertex<TValue> tail, Vertex<TValue> head, double weight) =>
             (Tail, Head, Weight) = (tail, head, weight);
 
-        public bool Equals(Edge<TValue> other) =>
+        public bool Equals(Edge<TValue>? other) =>
             this == other ||
-            (Weight == other.Weight && Tail.Equals(other.Tail) && Head.Equals(other.Head));
+            (other is not null && Weight == other.Weight && Tail.Equals(other.Tail) && Head.Equals(other.Head));
     }
 }

@@ -9,7 +9,9 @@ namespace Odysseus.Framework.Assembler
     {
         public static IEnumerable<TType> CreateImplementationsOf<TType>()
         {
-            var assembly = Assembly.GetAssembly(typeof(TType));
+            var assembly = Assembly.GetAssembly(typeof(TType))
+                ?? throw new NullReferenceException($"Assembly of type:{typeof(TType).Name} not found.");
+
             var types = GetAssignableTypesOf<TType>(assembly).Where(type => !type.IsAbstract);
 
             foreach (var type in types)
