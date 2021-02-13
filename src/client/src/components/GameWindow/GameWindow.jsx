@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react';
 import * as signalR from "@microsoft/signalr"
 
 import GameMenu from "../GameMenu/GameMenu";
-import InteractionMenuContainer from "../InteractionMenu/InteractionMenuContainer";
 import ActivityLogContainer from "../ActivityLog/ActivityLogContainer";
 import MapContainer from "../Map/MapContainer";
 import RayCastingViewContainer from "../RayCasting/RayCastingViewContainer";
@@ -17,7 +16,7 @@ const PlayerConfiguration = {
 }
 
 const CanvasConfiguration = {
-    width: Math.floor(window.innerWidth / 2.5),
+    width: Math.floor(window.innerWidth / 1.5),
     height: window.innerHeight
 }
 
@@ -70,7 +69,6 @@ let GameWindow = (props) => {
                 </div>
                 <div className={`${styles.row} ${styles.flex1}`}>
                     <div className={`${styles.column} ${styles.flex1}`}>
-                        <InteractionMenuContainer />
                         <ActivityLogContainer />
                     </div>
                 </div>
