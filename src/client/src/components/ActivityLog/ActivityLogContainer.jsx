@@ -6,7 +6,8 @@ const LogsNumberPerPage = 5
 const mapStateToProps = state => {
     return {
         logs: state.logs,
-        pageSize: LogsNumberPerPage
+        pageSize: LogsNumberPerPage,
+        hoveredTile: state.userContext.hoveredTile,
     }
 }
 
