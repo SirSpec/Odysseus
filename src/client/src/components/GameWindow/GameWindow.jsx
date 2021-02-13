@@ -5,7 +5,6 @@ import * as signalR from "@microsoft/signalr"
 import GameMenu from "../GameMenu/GameMenu";
 import InteractionMenuContainer from "../InteractionMenu/InteractionMenuContainer";
 import ActivityLogContainer from "../ActivityLog/ActivityLogContainer";
-import ContextMenuContainer from "../ContextMenu/ContextMenuContainer";
 import MapContainer from "../Map/MapContainer";
 import RayCastingViewContainer from "../RayCasting/RayCastingViewContainer";
 
@@ -74,7 +73,6 @@ let GameWindow = (props) => {
                         <InteractionMenuContainer />
                         <ActivityLogContainer />
                     </div>
-                    <ContextMenuContainer />
                 </div>
             </div>
         </div>
