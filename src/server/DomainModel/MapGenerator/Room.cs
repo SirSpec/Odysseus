@@ -12,7 +12,7 @@ namespace Odysseus.DomainModel.MapGenerator
         {
             if (topLeft.X > bottomRight.X || topLeft.Y < bottomRight.Y)
             {
-                throw new ArgumentException($"Arguments " + 
+                throw new ArgumentException($"Arguments " +
                     $"{nameof(topLeft)}({topLeft.X}, {topLeft.Y}), " +
                     $"{nameof(bottomRight)}({bottomRight.X}, {bottomRight.Y}) are invalid.");
             }
@@ -31,8 +31,9 @@ namespace Odysseus.DomainModel.MapGenerator
         public void Deconstruct(out Tile topLeft, out Tile bottomRight, out Size size) =>
             (topLeft, bottomRight, size) = (TopLeft, BottomRight, Size);
 
-        public bool Equals(Room other) => 
-            this == other || (TopLeft.Equals(other.TopLeft) && BottomRight.Equals(other.BottomRight));
+        public bool Equals(Room? other) =>
+            this == other ||
+            (other is not null && TopLeft.Equals(other.TopLeft) && BottomRight.Equals(other.BottomRight));
 
         public Room OffsetBy(Offset offset) =>
             new Room(TopLeft.OffsetBy(offset), BottomRight.OffsetBy(offset));
