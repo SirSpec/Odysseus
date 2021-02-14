@@ -3,6 +3,8 @@ import PropTypes from "prop-types";
 import * as signalR from "@microsoft/signalr"
 import * as PIXI from 'pixi.js'
 
+import Configuration from "../../constants/Configuration"
+
 import MapViewRenderer from "./MapViewRenderer";
 import InputService from "./InputService";
 import MapService from "./MapService";
@@ -16,7 +18,7 @@ const Map = (props) => {
     const [screenCenter, setScreenCenter] = useState({ x: 0, y: 0 });
 
     useEffect(() => {
-        var connection = new signalR.HubConnectionBuilder().withUrl("https://localhost:5001/hub").build()
+        var connection = new signalR.HubConnectionBuilder().withUrl(Configuration.BackendHubUrl).build()
 
         connection.start().then(() => {
             console.log("Map component connection started.")
@@ -63,28 +65,6 @@ const Map = (props) => {
             }
         }
     }
-
-    // function mouseClick(clickEvent) {
-    //     const newLocation = canvas.mousePosition(clickEvent, mapViewRef.current)
-    //     var tileCoords = canvas.tileCoordinates(newLocation);
-
-    //     var relative = MapService.relativeToScreenCenter(tileCoords, screenCenter)
-
-    //     if (MapService.contains(props.map.tiles, relative)) {
-    //         // if (props.selectedTile) {
-    //         //     canvas.drawFloor(props.selectedTile);
-    //         // }
-    //         canvas.clickTile(clickEvent);
-    //         props.selectTile(tileCoords)
-    //     }
-    // }
-
-    // function handleCanvasClick(e) {
-    //     if (canvas) {
-    //         var mouseOnCanvas = canvas.mousePosition(e)
-    //         props.setHoveredTile(canvas.tileCoordinates(mouseOnCanvas))
-    //     }
-    // }
 
     return (
         <div id="mapView"
