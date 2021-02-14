@@ -4,7 +4,8 @@
     {
         private static IRandomNumberEngine randomNumberEngine;
 
-        static Randomizer() => randomNumberEngine = new RandomAdapter();
+        static Randomizer() =>
+            randomNumberEngine = new RandomAdapter();
 
         public static int RandomInteger(int minimum, int maximum) =>
             randomNumberEngine.RandomInteger(new ConstraintRange<int>(minimum, maximum));
