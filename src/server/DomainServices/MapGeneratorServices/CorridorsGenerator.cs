@@ -5,7 +5,6 @@ using System.Linq;
 
 namespace Odysseus.DomainServices.MapGenerator
 {
-    //TODO: Fix corridors logic
     public class CorridorsGenerator : ICorridorsGenerator
     {
         private readonly double roomRatioThreshold;
