@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 
 import * as signalR from "@microsoft/signalr"
 
+import Configuration from "../../constants/Configuration"
+
 import GameMenu from "../GameMenu/GameMenu";
 import ActivityLogContainer from "../ActivityLog/ActivityLogContainer";
 import MapContainer from "../Map/MapContainer";
@@ -26,7 +28,7 @@ let GameWindow = (props) => {
     const [logs, setLogs] = useState([]);
 
     useEffect(() => {
-        var connection = new signalR.HubConnectionBuilder().withUrl("https://localhost:5001/hub").build()
+        var connection = new signalR.HubConnectionBuilder().withUrl(Configuration.BackendHubUrl).build()
         connection.on("ReceiveMap", map => {
             props.setMap(map);
         })
