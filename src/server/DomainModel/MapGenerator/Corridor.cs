@@ -6,7 +6,10 @@ namespace Odysseus.DomainModel.MapGenerator
     {
         public Vector Vector { get; }
 
-        public Corridor(Vector vector) => (Vector) = (vector);
-        public bool Equals(Corridor other) => Vector.Equals(other.Vector);
+        public Corridor(Vector vector) =>
+            Vector = vector;
+
+        public bool Equals(Corridor other) =>
+            Vector.Equals(other.Vector);
     }
 }

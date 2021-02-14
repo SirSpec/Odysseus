@@ -13,9 +13,7 @@ namespace Odysseus.DomainModel.MapGenerator
 
             Grid = new Grid();
             foreach (var tile in tiles)
-            {
                 Grid.Add(tile);
-            }
         }
     }
 }
