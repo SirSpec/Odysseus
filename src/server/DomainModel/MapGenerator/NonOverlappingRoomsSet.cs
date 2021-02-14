@@ -8,10 +8,8 @@ namespace Odysseus.DomainModel.MapGenerator
         private readonly IList<Room> rooms;
         public IEnumerable<Room> Rooms => rooms;
 
-        public NonOverlappingRoomsSet()
-        {
+        public NonOverlappingRoomsSet() =>
             rooms = new List<Room>();
-        }
 
         public Room this[int index] =>
             rooms[index];
@@ -26,10 +24,10 @@ namespace Odysseus.DomainModel.MapGenerator
             else return false;
         }
 
-        private bool AreOverlapping(Room a, Room b)
+        private bool AreOverlapping(Room first, Room second)
         {
-            if (a.TopLeft.X > b.BottomRight.X || b.TopLeft.X > a.BottomRight.X) return false;
-            if (a.TopLeft.Y < b.BottomRight.Y || b.TopLeft.Y < a.BottomRight.Y) return false;
+            if (first.TopLeft.X > second.BottomRight.X || second.TopLeft.X > first.BottomRight.X) return false;
+            if (first.TopLeft.Y < second.BottomRight.Y || second.TopLeft.Y < first.BottomRight.Y) return false;
 
             return true;
         }

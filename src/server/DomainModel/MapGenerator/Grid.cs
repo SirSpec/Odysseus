@@ -24,8 +24,9 @@ namespace Odysseus.DomainModel.MapGenerator
 
         public void Add(Tile tile)
         {
-            if (tiles.Contains(tile)) throw new InvalidOperationException($"{nameof(tile)}:{tile} already exists.");
-            else tiles.Add(tile);
+            if (tiles.Contains(tile) is false)
+                tiles.Add(tile);
+            else throw new InvalidOperationException($"{nameof(tile)}:{tile} already exists.");
         }
 
         public IEnumerable<Tile> Neighbors(Tile tile)
