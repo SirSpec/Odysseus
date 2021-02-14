@@ -1,24 +1,35 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
+using Odysseus.Infrastructure.WebApi.Configurations;
 using Odysseus.Infrastructure.WebApi.Hubs;
 
 namespace Odysseus.Infrastructure.WebApi
 {
     public class Startup
     {
-        // This method gets called by the runtime. Use this method to add services to the container.
-        // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
+        private readonly IConfiguration configuration;
+
+        public Startup(IConfiguration configuration) =>
+            this.configuration = configuration;
+
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<MapHubOptions>(
+                configuration.GetSection(MapHubOptions.MapHub));
+
             services.AddCors();
             services.AddSignalR();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(
+            IApplicationBuilder app,
+            IWebHostEnvironment env,
+            IOptions<MapHubOptions> mapHubOptions)
         {
             if (env.IsDevelopment())
             {
@@ -26,7 +37,7 @@ namespace Odysseus.Infrastructure.WebApi
             }
 
             app.UseCors(builder =>
-                builder.WithOrigins("http://localhost:3000")
+                builder.WithOrigins(mapHubOptions.Value.Url)
                     .AllowAnyHeader()
                     .WithMethods("GET", "POST")
                     .AllowCredentials()
