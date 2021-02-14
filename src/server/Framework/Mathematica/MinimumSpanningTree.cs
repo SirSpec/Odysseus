@@ -7,10 +7,8 @@ namespace Odysseus.Framework.Mathematica
     public class MinimumSpanningTree<TValue> : Graph<TValue>
         where TValue : notnull
     {
-        public MinimumSpanningTree(Graph<TValue> graph) : base()
-        {
+        public MinimumSpanningTree(Graph<TValue> graph) : base() =>
             CalculateMinimumSpanningTree(graph);
-        }
 
         private void CalculateMinimumSpanningTree(Graph<TValue> graph)
         {

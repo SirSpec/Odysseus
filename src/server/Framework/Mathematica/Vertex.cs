@@ -7,9 +7,11 @@ namespace Odysseus.Framework.Mathematica
     {
         public TValue Value { get; }
 
-        public Vertex(TValue value) => Value = value;
+        public Vertex(TValue value) =>
+            Value = value;
 
-        public bool Equals(Vertex<TValue>? other) => this == other;
+        public bool Equals(Vertex<TValue>? other) =>
+            this == other;
 
         public override string ToString() =>
             Value.ToString() ?? string.Empty;

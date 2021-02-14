@@ -9,10 +9,8 @@ namespace Odysseus.Framework.Mathematica
     {
         private readonly IList<(TValue Element, TValue Parent)> set;
 
-        public DisjointSet(IEnumerable<TValue> values)
-        {
+        public DisjointSet(IEnumerable<TValue> values) =>
             set = values.Select(value => (value, value)).ToList();
-        }
 
         public bool HaveTheSameRoot(TValue elementA, TValue elementB)
         {
