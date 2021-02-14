@@ -29,5 +29,6 @@ npm run storybook
 
 ## Backend server
 ```
+cd src/server/Infrastructure/WebApi
 dotnet run
 ```
