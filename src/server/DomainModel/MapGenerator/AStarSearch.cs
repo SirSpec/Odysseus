@@ -1,4 +1,4 @@
-﻿using Odysseus.Framework.Mathematica;
+﻿using Odysseus.Framework.Mathematica.Graphs;
 using System;
 using System.Collections.Generic;
 

@@ -1,7 +1,7 @@
 using Xunit;
 using System.Collections.Generic;
 using System.Linq;
-using Odysseus.Framework.Mathematica;
+using Odysseus.Framework.Mathematica.Graphs;
 
 namespace Odysseus.Framework.MathematicaTest
 {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Odysseus.Framework.Mathematica
+namespace Odysseus.Framework.Mathematica.Graphs
 {
     // https://en.wikipedia.org/wiki/Binary_heap
     public class BinaryHeap<TKey, TValue> where TKey : IComparable<TKey>
