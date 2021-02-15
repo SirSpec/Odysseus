@@ -28,17 +28,16 @@ let GameWindow = (props) => {
     const [logs, setLogs] = useState([]);
 
     useEffect(() => {
-        var connection = new signalR.HubConnectionBuilder().withUrl(Configuration.BackendHubUrl).build()
+        var connection = new signalR.HubConnectionBuilder()
+            .withUrl(Configuration.BackendHubUrl)
+            .build();
+
         connection.on("ReceiveMap", map => {
             props.setMap(map);
         })
 
         connection.on("ReceiveMobsPosition", mobsPosition => {
             props.setMobs(mobsPosition);
-        })
-
-        connection.on("GetScaned", targets => {
-            props.setTargets(targets);
         })
 
         connection.on("ReceiveLog", log => {

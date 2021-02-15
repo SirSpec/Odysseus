@@ -7,43 +7,47 @@ using System.Threading.Tasks;
 
 namespace Odysseus.Infrastructure.WebApi.Hubs
 {
-    public static class GameContext
-    {
-        public static (int x, int y) EnemyPosition = (10, 10);
-
-        public static Map Map;
-
-        static GameContext()
-        {
-            var config = new AdjacentRoomsGeneratorConfiguration(10, 3, new ConstraintRange<int>(5, 10), new ConstraintRange<int>(5, 10));
-            var generator = new ConnectedRoomsDungeonGenerator(new AdjacentRoomsGenerator(config), new CorridorsGenerator(0.4, 2));
-            Map = generator.Generate();
-        }
-    }
-
     public class MapHub : Hub
     {
+        private readonly ConnectedRoomsDungeonGenerator roomsDungeonGenerator;
+        private static Map map;
+        private static (int x, int y) enemyPosition = (10, 10);
+
+        public MapHub()
+        {
+            var roomsGeneratorConfiguration = new AdjacentRoomsGeneratorConfiguration(
+                iterations: 10,
+                surroundingIterations: 3,
+                roomWidthRange: new ConstraintRange<int>(5, 10),
+                roomHeightRange: new ConstraintRange<int>(5, 10)
+            );
+
+            roomsDungeonGenerator = new ConnectedRoomsDungeonGenerator(
+                new AdjacentRoomsGenerator(roomsGeneratorConfiguration),
+                new CorridorsGenerator(
+                    roomRatioThreshold: 0.4,
+                    neighborsNumber: 2
+                )
+            );
+        }
+
         public async Task SendMap()
         {
-            await Clients.All.SendAsync("ReceiveMap", GameContext.Map);
-            await Clients.All.SendAsync("ReceiveMobsPosition", new { GameContext.EnemyPosition.x, GameContext.EnemyPosition.y });
+            map = roomsDungeonGenerator.Generate();
+
+            await Clients.All.SendAsync("ReceiveMap", map);
+            await Clients.All.SendAsync("ReceiveMobsPosition", new { enemyPosition.x, enemyPosition.y });
         }
 
         public async Task Search(int x, int y)
         {
-            var searcher = new AStarSearch(GameContext.Map.Grid);
-            var path = searcher.GetPath(new Tile(GameContext.EnemyPosition.x, GameContext.EnemyPosition.y), new Tile(x, y)).ToList();
-            if (path.Count > 1) GameContext.EnemyPosition = (path[1].X, path[1].Y);
+            var path = new AStarSearch(map.Grid)
+                .GetPath(new Tile(enemyPosition.x, enemyPosition.y), new Tile(x, y))
+                .ToList();
 
-            await Clients.All.SendAsync("ReceiveMobsPosition", new { GameContext.EnemyPosition.x, GameContext.EnemyPosition.y });
-        }
+            if (path.Count > 1) enemyPosition = (path[1].X, path[1].Y);
 
-        static bool CanAttack(int x, int y, (int x, int y) mobPosition)
-        {
-            var h = x == mobPosition.x || x == mobPosition.x - 1 || x == mobPosition.x + 1;
-            var v = y == mobPosition.y || y == mobPosition.y - 1 || y == mobPosition.y + 1;
-
-            return h && v;
+            await Clients.All.SendAsync("ReceiveMobsPosition", new { enemyPosition.x, enemyPosition.y });
         }
     }
 }

@@ -9,6 +9,7 @@ namespace Odysseus.DomainModel.MapGenerator
 
         public Vector(Tile start, Tile end) =>
             (Start, End) = (start, end);
+
         public void Deconstruct(out Tile start, out Tile end) =>
             (start, end) = (Start, End);
 

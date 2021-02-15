@@ -7,13 +7,6 @@ export function setMobs(mobs) {
     }
 }
 
-export function setTargets(targets) {
-    return {
-        type: UserContextActions.SET_TARGETS,
-        targets
-    }
-}
-
 export function selectTile(tile) {
     return {
         type: UserContextActions.SELECT_TILE,
