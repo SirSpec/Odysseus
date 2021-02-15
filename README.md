@@ -10,6 +10,7 @@
 # How to use
 ## Install npm packages
 ```
+cd src/client
 npm install
 ```
 
@@ -24,6 +25,7 @@ npm install
 
 ## Storybook
 ```
+cd src/client
 npm run storybook
 ```
 

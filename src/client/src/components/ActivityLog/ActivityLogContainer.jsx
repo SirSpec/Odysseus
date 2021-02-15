@@ -8,6 +8,7 @@ const mapStateToProps = state => {
         logs: state.logs,
         pageSize: LogsNumberPerPage,
         hoveredTile: state.userContext.hoveredTile,
+        selectedTile: state.userContext.selectedTile, 
     }
 }
 

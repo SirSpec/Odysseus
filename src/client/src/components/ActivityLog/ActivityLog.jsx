@@ -36,7 +36,7 @@ const ActivityLog = (props) => {
             {logs().map((log, index) => <p key={index}>{log}</p>)}
             <Span onClick={handleDecrementPage}>{'<'}</Span>
             <Span> {pageNumber} </Span>
-            <Span onClick={handleIncrementPage}>{'>'} {props.hoveredTile?.x} {props.hoveredTile?.y}</Span>
+            <Span onClick={handleIncrementPage}>{'>'} {props.hoveredTile?.x} {props.hoveredTile?.y} - {props.selectedTile?.x} {props.selectedTile?.y}</Span>
         </Container>
     );
 };
