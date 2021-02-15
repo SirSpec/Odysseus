@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Odysseus.Framework.Mathematica
+namespace Odysseus.Framework.Mathematica.Graphs
 {
     public class Node<TKey, TValue> where TKey : IComparable<TKey>
     {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Odysseus.Framework.Mathematica
+namespace Odysseus.Framework.Mathematica.Graphs
 {
     // https://en.wikipedia.org/wiki/Disjoint-set_data_structure
     public class DisjointSet<TValue> where TValue : notnull, IEquatable<TValue>

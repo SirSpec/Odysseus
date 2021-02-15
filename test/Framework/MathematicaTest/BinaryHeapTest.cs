@@ -1,6 +1,6 @@
 using Xunit;
-using Odysseus.Framework.Mathematica;
 using System.Collections.Generic;
+using Odysseus.Framework.Mathematica.Graphs;
 
 namespace Odysseus.Framework.MathematicaTest
 {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Odysseus.Framework.Mathematica
+namespace Odysseus.Framework.Mathematica.Graphs
 {
     public class Vertex<TValue> : IEquatable<Vertex<TValue>>
         where TValue : notnull

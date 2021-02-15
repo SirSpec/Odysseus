@@ -1,5 +1,6 @@
 ﻿using Odysseus.DomainModel.MapGenerator;
 using Odysseus.Framework.Mathematica;
+using Odysseus.Framework.Mathematica.Graphs;
 using System.Collections.Generic;
 using System.Linq;
 
